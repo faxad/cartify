@@ -1,0 +1,91 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        {{ pageTitle }}
+        <create-item> </create-item>
+    </div>
+    <!-- Filter the Products   -->
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-4'>
+                <input type='text'
+                       [(ngModel)]='filterBy'/>
+            </div>
+        </div>
+        <div class='row'>
+            <a data-toggle="modal" href="#itemCreateModal" class="btn btn-primary" role="button">Create</a>
+        </div>
+        <div class='row'>
+            <div class='col-md-6'>
+                <h3>Filtered by: {{ filterBy }}</h3>
+            </div>
+        </div>
+
+        <div class='has-error'></div>
+
+        <div class='table-responsive'>
+            <table class='table' *ngIf='items && items.length'>
+                <thead>
+                    <tr>
+                        <th>
+                            <button class='btn btn-primary'
+                            		(click)='toggleImg()'>
+                            	    {{ showImg ? 'Hide' : 'Show' }} Image
+                            </button>
+                        </th>
+                        <th>Product</th>
+                        <th>Code</th>
+                        <th>Available</th>
+                        <th>Price</th>
+                        <th>5 Star Rating</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                	<tr *ngFor='let item of items | itemFilter:filterBy'>
+                		<td>
+                			<img *ngIf='showImg'
+                				 [src]='item.imageUrl'
+                			     [style.width.px]='imgWidth'
+                			     [style.margin.px]='imgMargin'>
+                		</td>
+                		<td>{{ item.productName }}</td>
+                		<td>{{ item.productCode | lowercase }}</td>
+                		<td>{{ item.releaseDate }}</td>
+                		<td>{{ item.price }}</td>
+                		<td><stars [rating]='item.starRating' (ratingClicked)='onRatingClicked($event)'></stars></td>
+                        <td>
+                            <a data-toggle="modal" href="#{{item.productId}}Modal" class="btn btn-primary" role="button">Update</a>
+                        </td>
+                        <!-- Modal -->
+                        <div class="modal fade" id="{{item.productId}}Modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                              </div>
+                              <div class="modal-body">
+                                <form>
+                                  <div class="form-group">
+                                    <label for="productName">Product Name</label>
+                                    <input class="form-control" id="productName" placeholder="Name" [(ngModel)]="item.productName">
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="productCode">Product Code</label>
+                                    <input class="form-control" id="productCode" placeholder="Code" [(ngModel)]="item.productCode">
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Save & Close</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                	</tr>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
