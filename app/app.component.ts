@@ -1,17 +1,12 @@
 import { Component } from '@angular/core';
-import { ItemListComponent } from './items/item-list.component';
+import { ItemComponent } from './items/item/item.component';
 
 
 @Component({
 	selector: 'app-content',
 	template: `
-	<div>
-		<h3>AJS 2.0 App - {{sampleMsg}}</h3>
-		<item></item>
-	</div>
+		<item-main></item-main>
 	`,
-	directives: [ItemListComponent] // using component as directive
+	directives: [ItemComponent] // using component as directive
 })
-export class AppComponent { 
-	sampleMsg: string = 'Hello World!'; // will be displayed using interpolation
-}
+export class AppComponent { }
