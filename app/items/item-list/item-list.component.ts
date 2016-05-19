@@ -16,9 +16,9 @@ import { ItemUpdateComponent } from '../item-update/item-update.component';
 })
 export class ItemListComponent implements OnInit {
 	pageTitle: string = 'Item List';
-	imgWidth: number = 50;
-	imgMargin: number = 2;
-	showImg: boolean = false;
+	imgWidth: number = 100;
+	imgMargin: number = 10;
+	showImg: boolean = true;
 	filterBy: string;
 	items: IItem[];
 

@@ -17,9 +17,9 @@ var ItemListComponent = (function () {
     function ItemListComponent(itemService) {
         this.itemService = itemService;
         this.pageTitle = 'Item List';
-        this.imgWidth = 50;
-        this.imgMargin = 2;
-        this.showImg = false;
+        this.imgWidth = 100;
+        this.imgMargin = 10;
+        this.showImg = true;
     }
     ItemListComponent.prototype.toggleImg = function () {
         this.showImg = !this.showImg;

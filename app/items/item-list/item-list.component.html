@@ -1,57 +1,66 @@
 <div class='panel-body'>
-    <div class='row'>
-        <div class='col-md-2'>Filter by:</div>
-        <div class='col-md-4'>
-            <input type='text'
-                   [(ngModel)]='filterBy'/>
+  <div class='row'>
+    <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+        <input type='text' [(ngModel)]='filterBy'/>
+      </div>
+    </div>
+  <div class='row'>
+    <div class='col-md-6'>
+      {{ pageTitle }}
+      <h3>Filtered by: {{ filterBy }}</h3>
+    </div>
+  </div>
+  <div class='has-error'></div>
+  <div class="row" *ngIf='items && items.length'>
+    <div class="col-sm-6 col-md-4" *ngFor='let item of items | itemFilter:filterBy'>
+      <div class="thumbnail">
+        <div class="media">
+          <div class="row">
+            <div class="col-md-11">
+              <h4 class="media-heading">Media heading</h4>
+            </div>
+            <a data-toggle="modal" href="#{{item.productId}}Modal">
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            </a>
+          </div>
+          <div class="media-body">
+            <div class="caption">
+              <h4>Thumbnail label</h4>
+              <p>Product: {{ item.productName }}</p>
+              <p>Code: {{ item.productCode }}</p>
+              <p>Price: {{ item.price }}</p>
+              <p>Rating: <stars [rating]='item.starRating' (ratingClicked)='onRatingClicked($event)'></stars> </p>
+            </div>
+          </div>
+          <div class="media-right media-middle">
+            <img *ngIf='showImg'
+               [src]='item.imageUrl'
+               [style.width.px]='imgWidth'
+               [style.margin.px]='imgMargin'>
+          </div>
+          <div class="row">
+            <div class="col-md-5">
+              <a href="#" class="btn btn-primary" role="button">Buy</a>
+              <a href="#" class="btn btn-default btn disabled" role="button">
+                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">4</span>
+              </a>
+              <button type="button" class="btn btn-default btn-xs">Comment</button>
+              
+              <!-- <button class='btn btn-primary'
+                      (click)='toggleImg()'>
+                  {{ showImg ? 'Hide' : 'Show' }} Image
+              </button> -->
+              <update-item [item]='item'></update-item>
+            </div>
+            <div class="col-md-0">
+              <textarea></textarea>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div class='row'>
-        <div class='col-md-6'>
-            {{ pageTitle }}
-            <h3>Filtered by: {{ filterBy }}</h3>
-        </div>
-    </div>
-
-    <div class='has-error'></div>
-
-    <div class='table-responsive'>
-        <table class='table' *ngIf='items && items.length'>
-            <thead>
-                <tr>
-                    <th>
-                        <button class='btn btn-primary'
-                        		(click)='toggleImg()'>
-                        	    {{ showImg ? 'Hide' : 'Show' }} Image
-                        </button>
-                    </th>
-                    <th>Product</th>
-                    <th>Code</th>
-                    <th>Available</th>
-                    <th>Price</th>
-                    <th>5 Star Rating</th>
-                    <th></th>
-                </tr>
-            </thead>
-            	<tr *ngFor='let item of items | itemFilter:filterBy'>
-            		<td>
-            			<img *ngIf='showImg'
-            				 [src]='item.imageUrl'
-            			     [style.width.px]='imgWidth'
-            			     [style.margin.px]='imgMargin'>
-            		</td>
-            		<td>{{ item.productName }}</td>
-            		<td>{{ item.productCode | lowercase }}</td>
-            		<td>{{ item.releaseDate }}</td>
-            		<td>{{ item.price }}</td>
-            		<td><stars [rating]='item.starRating' (ratingClicked)='onRatingClicked($event)'></stars></td>
-                    <td>
-                        <a data-toggle="modal" href="#{{item.productId}}Modal" class="btn btn-primary" role="button">Update</a>
-                    </td>
-                    <update-item [item]='item'></update-item>
-            	</tr>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
+  </div>
 </div>
+
+
