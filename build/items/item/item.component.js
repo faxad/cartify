@@ -19,7 +19,7 @@ var ItemComponent = (function () {
     }
     ItemComponent = __decorate([
         core_1.Component({
-            selector: 'item-main',
+            //selector: 'item-main',
             templateUrl: 'app/items/item/item.component.html',
             directives: [item_list_component_1.ItemListComponent, item_create_component_1.ItemCreateComponent],
             providers: [item_service_1.ItemService]

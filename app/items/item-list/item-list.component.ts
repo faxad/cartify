@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 import { IItem } from '../shared/item.interface';
 import { ItemService } from '../shared/item.service';
@@ -12,7 +13,7 @@ import { ItemUpdateComponent } from '../item-update/item-update.component';
 	templateUrl: 'app/items/item-list/item-list.component.html', // template defined as linked template
 	styleUrls: ['app/items/item-list/item-list.component.css'],
 	pipes: [ItemFilterPipe],
-	directives: [StarComponent, ItemUpdateComponent],
+	directives: [StarComponent, ItemUpdateComponent, ROUTER_DIRECTIVES],
 })
 export class ItemListComponent implements OnInit {
 	pageTitle: string = 'Item List';

@@ -1,10 +1,14 @@
 <div class='panel-body'>
   <div class='row'>
-    <div class='col-md-2'>Filter by:</div>
-      <div class='col-md-4'>
-        <input type='text' [(ngModel)]='filterBy'/>
-      </div>
+    <div class='col-md-4'>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="searchForm">Search/Filter by:</label>
+          <input type="text" class="form-control" [(ngModel)]='filterBy'>
+        </div>
+      </form>
     </div>
+  </div>
   <div class='row'>
     <div class='col-md-6'>
       {{ pageTitle }}
@@ -40,12 +44,15 @@
                [style.margin.px]='imgMargin'>
           </div>
           <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-10">
               <a href="#" class="btn btn-primary" role="button">Buy</a>
               <a href="#" class="btn btn-default btn disabled" role="button">
                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">4</span>
               </a>
-              <button type="button" class="btn btn-default btn-xs">Comment</button>
+              <a [routerLink]="['Detail', {id: item.productId}]" class="btn btn-success" role="button">
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+              </a>
+              <!-- <button type="button" class="btn btn-default btn-xs">Comment</button> -->
               
               <!-- <button class='btn btn-primary'
                       (click)='toggleImg()'>
@@ -53,9 +60,9 @@
               </button> -->
               <update-item [item]='item'></update-item>
             </div>
-            <div class="col-md-0">
+<!--             <div class="col-md-0">
               <textarea></textarea>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

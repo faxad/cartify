@@ -6,7 +6,7 @@ import { ItemService } from '../shared/item.service';
 
 
 @Component({
-	selector: 'item-main',
+	//selector: 'item-main',
 	templateUrl: 'app/items/item/item.component.html',
 	directives: [ItemListComponent, ItemCreateComponent], // using component as directive
 	providers: [ItemService]

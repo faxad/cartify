@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var item_service_1 = require('../shared/item.service');
 var star_component_1 = require('../shared/star.component');
 var item_filter_pipe_1 = require('./item-filter.pipe');
@@ -37,7 +38,7 @@ var ItemListComponent = (function () {
             templateUrl: 'app/items/item-list/item-list.component.html',
             styleUrls: ['app/items/item-list/item-list.component.css'],
             pipes: [item_filter_pipe_1.ItemFilterPipe],
-            directives: [star_component_1.StarComponent, item_update_component_1.ItemUpdateComponent],
+            directives: [star_component_1.StarComponent, item_update_component_1.ItemUpdateComponent, router_deprecated_1.ROUTER_DIRECTIVES],
         }), 
         __metadata('design:paramtypes', [item_service_1.ItemService])
     ], ItemListComponent);
