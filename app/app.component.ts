@@ -19,13 +19,7 @@ import { ItemDetailComponent } from './items/item-detail/item-detail.component';
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	          </button>
-	          <a class="navbar-brand" href="#">Project name</a>
-	        </div>
-	        <div id="navbar" class="collapse navbar-collapse">
-	          <ul class="nav navbar-nav">
-	            <li class="active"><a href="#">Home</a></li>
-	            <li><a [routerLink]="['Items']">Items</a></li>
-	          </ul>
+	          <a class="navbar-brand" href="#">Smart Cart</a>
 	        </div>
 	      </div>
 	    </nav>
@@ -38,7 +32,7 @@ import { ItemDetailComponent } from './items/item-detail/item-detail.component';
 	`,
 })
 @RouteConfig([
-		{ path: '/items', name: 'Items', component: ItemComponent },
+		{ path: '/items', name: 'Items', component: ItemComponent, useAsDefault: true },
 		{ path: '/item/:id', name: 'Detail', component: ItemDetailComponent }
 ])
 export class AppComponent { }
