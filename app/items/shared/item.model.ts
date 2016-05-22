@@ -1,4 +1,7 @@
-export interface IItem {
+import { IItem } from './item.interface';
+
+
+export class Item implements IItem {
 	itemId: number;
 	itemName: string;
 	itemCode: string;

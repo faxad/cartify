@@ -45,8 +45,4 @@ var ItemListComponent = (function () {
     return ItemListComponent;
 }());
 exports.ItemListComponent = ItemListComponent;
-// interpolation
-// property binding
-// event binding
-// two-way binding
 //# sourceMappingURL=item-list.component.js.map

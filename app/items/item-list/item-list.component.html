@@ -22,7 +22,7 @@
           <img src="http://placehold.it/320x150" alt="">
           <div class="caption">
               <h4 class="pull-right">${{ item.price }}</h4>
-              <h4><a href="#">{{ item.productName }}</a>
+              <h4><a href="#">{{ item.itemName }}</a>
               <a data-toggle="modal" href="#{{item.productId}}Modal">
               <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             </a>
@@ -41,7 +41,7 @@
               <a href="#" class="btn btn-default btn disabled" role="button">
                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">4</span>
               </a>
-              <a [routerLink]="['Detail', {id: item.productId}]" class="btn btn-success" role="button">
+              <a [routerLink]="['Detail', {id: item.itemId}]" class="btn btn-success" role="button">
                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
               </a>
               <!-- <button type="button" class="btn btn-default btn-xs">Comment</button> -->

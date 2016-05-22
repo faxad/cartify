@@ -10,20 +10,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
+var item_service_1 = require('../shared/item.service');
 var ItemDetailComponent = (function () {
-    function ItemDetailComponent(_routerParams, _router) {
+    function ItemDetailComponent(_routerParams, _router, itemService) {
         this._routerParams = _routerParams;
         this._router = _router;
+        this.itemService = itemService;
         this.parmValue = this._routerParams.get('id');
     }
+    ItemDetailComponent.prototype.ngOnInit = function () {
+        this.item = this.itemService.getItem();
+    };
     ItemDetailComponent.prototype.goBack = function () {
         this._router.navigate(['Items']);
     };
     ItemDetailComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/items/item-detail/item-detail.component.html',
+            providers: [item_service_1.ItemService]
         }), 
-        __metadata('design:paramtypes', [router_deprecated_1.RouteParams, router_deprecated_1.Router])
+        __metadata('design:paramtypes', [router_deprecated_1.RouteParams, router_deprecated_1.Router, item_service_1.ItemService])
     ], ItemDetailComponent);
     return ItemDetailComponent;
 }());

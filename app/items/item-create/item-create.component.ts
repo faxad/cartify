@@ -8,15 +8,15 @@ import { ItemService } from '../shared/item.service';
 	templateUrl: 'app/items/item-create/item-create.component.html',
 })
 export class ItemCreateComponent {
-	productName: string;
-	productCode: string;
+	itemName: string;
+	itemCode: string;
 
 	constructor(private itemService: ItemService) { }
 
 	submitItem(): void {
 		console.log(this.itemService.getItems());
-		this.itemService.setItem(this.productName, this.productCode);
-		this.productName = '';
-		this.productCode = '';
+		this.itemService.setItem(this.itemName, this.itemCode);
+		this.itemName = '';
+		this.itemCode = '';
 	}
 }

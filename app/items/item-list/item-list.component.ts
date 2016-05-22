@@ -10,7 +10,7 @@ import { ItemUpdateComponent } from '../item-update/item-update.component';
 
 @Component({
 	selector: 'list-item',
-	templateUrl: 'app/items/item-list/item-list.component.html', // template defined as linked template
+	templateUrl: 'app/items/item-list/item-list.component.html',
 	styleUrls: ['app/items/item-list/item-list.component.css'],
 	pipes: [ItemFilterPipe],
 	directives: [StarComponent, ItemUpdateComponent, ROUTER_DIRECTIVES],
@@ -38,9 +38,3 @@ export class ItemListComponent implements OnInit {
 		this.pageTitle = 'Item List: ' + message;
 	}
 }
-
-
-// interpolation
-// property binding
-// event binding
-// two-way binding

@@ -16,9 +16,9 @@ var ItemCreateComponent = (function () {
     }
     ItemCreateComponent.prototype.submitItem = function () {
         console.log(this.itemService.getItems());
-        this.itemService.setItem(this.productName, this.productCode);
-        this.productName = '';
-        this.productCode = '';
+        this.itemService.setItem(this.itemName, this.itemCode);
+        this.itemName = '';
+        this.itemCode = '';
     };
     ItemCreateComponent = __decorate([
         core_1.Component({
