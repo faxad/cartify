@@ -13,6 +13,12 @@ import { ItemService } from '../shared/item.service';
 })
 export class ItemComponent { 
 	title: string = '[placeholdder]'; // will be displayed using interpolation
+	isAdmin: boolean = false;
 
-	constructor (private itemService: ItemService) { }
+	constructor (private itemService: ItemService) {
+		let profile = JSON.parse(localStorage.getItem('profile'));
+		if (profile) {
+			this.isAdmin = profile['role'] == 'admin' ? true : false;
+		}
+	}
 }

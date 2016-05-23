@@ -16,6 +16,11 @@ var ItemComponent = (function () {
     function ItemComponent(itemService) {
         this.itemService = itemService;
         this.title = '[placeholdder]'; // will be displayed using interpolation
+        this.isAdmin = false;
+        var profile = JSON.parse(localStorage.getItem('profile'));
+        if (profile) {
+            this.isAdmin = profile['role'] == 'admin' ? true : false;
+        }
     }
     ItemComponent = __decorate([
         core_1.Component({
