@@ -3,12 +3,13 @@ import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig } from '@angular/route
 
 import { ItemComponent } from './items/item/item.component';
 import { ItemDetailComponent } from './items/item-detail/item-detail.component';
+import { AuthService } from './items/shared/auth.service'
 
 
 @Component({
 	selector: 'app-content',
 	directives: [ROUTER_DIRECTIVES, ItemComponent], // using component as directive
-	providers: [ROUTER_PROVIDERS],
+	providers: [ROUTER_PROVIDERS, AuthService],
 	template: `
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="container">
@@ -21,6 +22,12 @@ import { ItemDetailComponent } from './items/item-detail/item-detail.component';
 	          </button>
 	          <a class="navbar-brand" href="#">Smart Cart</a>
 	        </div>
+	        <div id="navbar" class="navbar-collapse collapse">
+	          <form class="navbar-form navbar-right">
+	            <button (click)="auth.login()" *ngIf="!auth.loggedIn()" class="btn btn-success">Sign in</button>
+	            <button (click)="auth.logout()" *ngIf="auth.loggedIn()" class="btn btn-success">Sign out</button>
+	          </form>
+	        </div><!--/.navbar-collapse -->
 	      </div>
 	    </nav>
 	    <div class="container">
@@ -35,4 +42,9 @@ import { ItemDetailComponent } from './items/item-detail/item-detail.component';
 		{ path: '/items', name: 'Items', component: ItemComponent, useAsDefault: true },
 		{ path: '/item/:id', name: 'Detail', component: ItemDetailComponent }
 ])
-export class AppComponent { }
+export class AppComponent {
+	constructor(private auth: AuthService) {}
+	login(): void {
+		this.auth.login();
+	}
+}

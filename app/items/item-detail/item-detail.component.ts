@@ -14,7 +14,7 @@ export class ItemDetailComponent implements OnInit {
 	item: IItem;
 
 	constructor(private _routerParams: RouteParams,
-		        private _router: Router
+		        private _router: Router,
 		        private itemService: ItemService) {
 		this.parmValue = this._routerParams.get('id');
 	}

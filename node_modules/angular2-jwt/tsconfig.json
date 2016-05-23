@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "ES5",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "declaration": true,
+        "moduleResolution":"node"
+    },
+    "files": [
+        "angular2-jwt.ts",
+        "typings/browser.d.ts"
+    ]
+}
