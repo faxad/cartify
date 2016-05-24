@@ -12,24 +12,35 @@ var core_1 = require('@angular/core');
 var item_list_component_1 = require('../item-list/item-list.component');
 var item_create_component_1 = require('../item-create/item-create.component');
 var item_service_1 = require('../shared/item.service');
+var auth_service_1 = require('../shared/auth.service');
 var ItemComponent = (function () {
-    function ItemComponent(itemService) {
+    function ItemComponent(itemService, authService) {
+        var _this = this;
         this.itemService = itemService;
+        this.authService = authService;
         this.title = '[placeholdder]'; // will be displayed using interpolation
         this.isAdmin = false;
-        var profile = JSON.parse(localStorage.getItem('profile'));
-        if (profile) {
-            this.isAdmin = profile['role'] == 'admin' ? true : false;
-        }
+        // let profile = JSON.parse(localStorage.getItem('profile'));
+        // if (profile) {
+        // 	this.isAdmin = profile['role'] == 'admin' ? true : false;
+        // }
+        this.authService.adminLogInOutActivity.subscribe(function (d) {
+            _this.isAdmin = d;
+            console.log('logged event...' + d + ' ' + _this.isAdmin);
+        }, function (e) { return console.log('error occured'); });
     }
+    ItemComponent.prototype.ngOnInit = function () {
+        // this.subs = this.authService.getEmitter().subscribe(
+        // 	isAdmin => this.isAdmin = true);
+    };
     ItemComponent = __decorate([
         core_1.Component({
             //selector: 'item-main',
             templateUrl: 'app/items/item/item.component.html',
             directives: [item_list_component_1.ItemListComponent, item_create_component_1.ItemCreateComponent],
-            providers: [item_service_1.ItemService]
+            providers: [item_service_1.ItemService] //, AuthService]
         }), 
-        __metadata('design:paramtypes', [item_service_1.ItemService])
+        __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService])
     ], ItemComponent);
     return ItemComponent;
 }());

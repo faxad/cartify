@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 import { tokenNotExpired } from 'angular2-jwt';
 
@@ -8,7 +8,7 @@ declare var Auth0Lock: any;
 
 @Injectable()
 export class AuthService {
-
+ adminLogInOutActivity: EventEmitter<boolean> = new EventEmitter();
  lock = new Auth0Lock('IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com');
 
  login() {
@@ -20,6 +20,16 @@ export class AuthService {
      localStorage.setItem('profile', JSON.stringify(profile));
      // We also get the user's JWT
      localStorage.setItem('id_token', id_token);
+
+     let p = JSON.parse(localStorage.getItem('profile'));
+     let result: boolean = false;
+
+     if (p) {
+       result = p['role'] == 'admin' ? true : false;
+     }
+
+     this.adminLogInOutActivity.emit(result);
+     console.log('service: ' + result);
    });
  }
 
@@ -32,6 +42,10 @@ export class AuthService {
 
  loggedIn() {
    return tokenNotExpired();
+ }
+
+ getEmitter() {
+   return this.adminLogInOutActivity;
  }
 
 }

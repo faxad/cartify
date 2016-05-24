@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
+var angular2_jwt_1 = require('angular2-jwt');
 var item_service_1 = require('../shared/item.service');
 var ItemDetailComponent = (function () {
     function ItemDetailComponent(_routerParams, _router, itemService) {
@@ -28,7 +29,8 @@ var ItemDetailComponent = (function () {
         core_1.Component({
             templateUrl: 'app/items/item-detail/item-detail.component.html',
             providers: [item_service_1.ItemService]
-        }), 
+        }),
+        router_deprecated_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
         __metadata('design:paramtypes', [router_deprecated_1.RouteParams, router_deprecated_1.Router, item_service_1.ItemService])
     ], ItemDetailComponent);
     return ItemDetailComponent;

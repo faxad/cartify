@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouteParams} from '@angular/router-deprecated';
+import { Router, RouteParams, CanActivate} from '@angular/router-deprecated';
+import { tokenNotExpired } from 'angular2-jwt';
 
 import { IItem } from '../shared/item.interface';
 import { ItemService } from '../shared/item.service';
@@ -9,6 +10,7 @@ import { ItemService } from '../shared/item.service';
 	templateUrl: 'app/items/item-detail/item-detail.component.html',
 	providers: [ItemService]
 })
+@CanActivate(() => tokenNotExpired())
 export class ItemDetailComponent implements OnInit {
 	parmValue: string;
 	item: IItem;

@@ -12,9 +12,11 @@ var core_1 = require('@angular/core');
 var angular2_jwt_1 = require('angular2-jwt');
 var AuthService = (function () {
     function AuthService() {
+        this.adminLogInOutActivity = new core_1.EventEmitter();
         this.lock = new Auth0Lock('IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com');
     }
     AuthService.prototype.login = function () {
+        var _this = this;
         this.lock.show(function (error, profile, id_token) {
             if (error) {
                 console.log(error);
@@ -23,6 +25,13 @@ var AuthService = (function () {
             localStorage.setItem('profile', JSON.stringify(profile));
             // We also get the user's JWT
             localStorage.setItem('id_token', id_token);
+            var p = JSON.parse(localStorage.getItem('profile'));
+            var result = false;
+            if (p) {
+                result = p['role'] == 'admin' ? true : false;
+            }
+            _this.adminLogInOutActivity.emit(result);
+            console.log('service: ' + result);
         });
     };
     AuthService.prototype.logout = function () {
@@ -33,6 +42,9 @@ var AuthService = (function () {
     };
     AuthService.prototype.loggedIn = function () {
         return angular2_jwt_1.tokenNotExpired();
+    };
+    AuthService.prototype.getEmitter = function () {
+        return this.adminLogInOutActivity;
     };
     AuthService = __decorate([
         core_1.Injectable(), 
