@@ -1,8 +1,8 @@
-{{isAdmin}}
+{{auth.isUserAdmin()}}
 <div class="row" *ngIf='isAdmin'>
   <a data-toggle="modal" href="#itemCreateModal" class="btn btn-primary" role="button">Create</a>
 </div>
 <div>
   <create-item> </create-item>
-  <list-item></list-item>
+  <!-- <list-item></list-item> -->
 </div>

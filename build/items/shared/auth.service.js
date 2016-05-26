@@ -10,45 +10,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var angular2_jwt_1 = require('angular2-jwt');
+var Observable_1 = require('rxjs/Observable');
 var AuthService = (function () {
-    function AuthService() {
-        this.adminLogInOutActivity = new core_1.EventEmitter();
-        this.lock = new Auth0Lock('IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com');
+    function AuthService(changeDetector) {
+        this.changeDetector = changeDetector;
+        this.auth0Lock = new Auth0Lock('IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com');
     }
-    AuthService.prototype.login = function () {
+    AuthService.prototype.initiateAuth0LogIn = function () {
         var _this = this;
-        this.lock.show(function (error, profile, id_token) {
-            if (error) {
-                console.log(error);
-            }
-            // We get a profile object for the user from Auth0
-            localStorage.setItem('profile', JSON.stringify(profile));
-            // We also get the user's JWT
-            localStorage.setItem('id_token', id_token);
-            var p = JSON.parse(localStorage.getItem('profile'));
-            var result = false;
-            if (p) {
-                result = p['role'] == 'admin' ? true : false;
-            }
-            _this.adminLogInOutActivity.emit(result);
-            console.log('service: ' + result);
+        return Observable_1.Observable.create(function (observer) {
+            _this.auth0Lock.show(function (error, profile, id_token) {
+                if (error) {
+                    console.log(error);
+                }
+                localStorage.setItem('profile', JSON.stringify(profile));
+                localStorage.setItem('id_token', id_token);
+                observer.next(true);
+                observer.complete();
+            });
         });
     };
+    AuthService.prototype.login = function () {
+        var _this = this;
+        this.initiateAuth0LogIn().subscribe(function (d) {
+            if (d) {
+                _this.isAdmin = JSON.parse(localStorage.getItem('profile'))['role'] == 'admin' ? true : false;
+            }
+            console.log(_this.isAdmin);
+            _this.changeDetector.detectChanges();
+        }, function (e) { return console.log('error occured'); });
+    };
     AuthService.prototype.logout = function () {
-        // To log out, we just need to remove
-        // the user's profile and token
         localStorage.removeItem('profile');
         localStorage.removeItem('id_token');
     };
-    AuthService.prototype.loggedIn = function () {
+    AuthService.prototype.isLoggedIn = function () {
         return angular2_jwt_1.tokenNotExpired();
     };
-    AuthService.prototype.getEmitter = function () {
-        return this.adminLogInOutActivity;
+    AuthService.prototype.isUserAdmin = function () {
+        console.log('XXX...' + this.isAdmin);
+        return this.isAdmin;
     };
     AuthService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [core_1.ChangeDetectorRef])
     ], AuthService);
     return AuthService;
 }());

@@ -14,25 +14,23 @@ var item_create_component_1 = require('../item-create/item-create.component');
 var item_service_1 = require('../shared/item.service');
 var auth_service_1 = require('../shared/auth.service');
 var ItemComponent = (function () {
-    function ItemComponent(itemService, authService) {
-        var _this = this;
+    function ItemComponent(itemService, auth, cDR) {
         this.itemService = itemService;
-        this.authService = authService;
+        this.auth = auth;
+        this.cDR = cDR;
         this.title = '[placeholdder]'; // will be displayed using interpolation
-        this.isAdmin = false;
         // let profile = JSON.parse(localStorage.getItem('profile'));
         // if (profile) {
         // 	this.isAdmin = profile['role'] == 'admin' ? true : false;
         // }
-        this.authService.adminLogInOutActivity.subscribe(function (d) {
-            _this.isAdmin = d;
-            console.log('logged event...' + d + ' ' + _this.isAdmin);
-        }, function (e) { return console.log('error occured'); });
+        // authService.login().subscribe((d) => {
+        // 	this.isAdmin = d;
+        // 	console.log(this);
+        // 	console.log('logged event...'+d+' '+this.isAdmin);
+        // 	this.cDR.detectChanges();
+        // },
+        // e => console.log('error occured'))
     }
-    ItemComponent.prototype.ngOnInit = function () {
-        // this.subs = this.authService.getEmitter().subscribe(
-        // 	isAdmin => this.isAdmin = true);
-    };
     ItemComponent = __decorate([
         core_1.Component({
             //selector: 'item-main',
@@ -40,7 +38,7 @@ var ItemComponent = (function () {
             directives: [item_list_component_1.ItemListComponent, item_create_component_1.ItemCreateComponent],
             providers: [item_service_1.ItemService] //, AuthService]
         }), 
-        __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService])
+        __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService, core_1.ChangeDetectorRef])
     ], ItemComponent);
     return ItemComponent;
 }());

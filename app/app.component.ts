@@ -24,8 +24,8 @@ import { AuthService } from './items/shared/auth.service'
 	        </div>
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <form class="navbar-form navbar-right">
-	            <button (click)="auth.login()" *ngIf="!auth.loggedIn()" class="btn btn-success">Sign in</button>
-	            <button (click)="auth.logout()" *ngIf="auth.loggedIn()" class="btn btn-success">Sign out</button>
+	            <button (click)="auth.login()" *ngIf="!auth.isLoggedIn()" class="btn btn-success">Sign in</button>
+	            <button (click)="auth.logout()" *ngIf="auth.isLoggedIn()" class="btn btn-success">Sign out</button>
 	          </form>
 	        </div><!--/.navbar-collapse -->
 	      </div>
