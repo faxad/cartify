@@ -33,23 +33,25 @@ var AuthService = (function () {
     AuthService.prototype.login = function () {
         var _this = this;
         this.initiateAuth0LogIn().subscribe(function (d) {
-            if (d) {
-                _this.isAdmin = JSON.parse(localStorage.getItem('profile'))['role'] == 'admin' ? true : false;
-            }
-            console.log(_this.isAdmin);
+            if (d) { } // TODO: something here to be added
             _this.changeDetector.detectChanges();
         }, function (e) { return console.log('error occured'); });
     };
     AuthService.prototype.logout = function () {
         localStorage.removeItem('profile');
         localStorage.removeItem('id_token');
+        this.changeDetector.detectChanges();
     };
     AuthService.prototype.isLoggedIn = function () {
         return angular2_jwt_1.tokenNotExpired();
     };
     AuthService.prototype.isUserAdmin = function () {
-        console.log('XXX...' + this.isAdmin);
-        return this.isAdmin;
+        try {
+            return JSON.parse(localStorage.getItem('profile'))['role'] == 'admin' ? true : false;
+        }
+        catch (e) {
+            return false;
+        }
     };
     AuthService = __decorate([
         core_1.Injectable(), 

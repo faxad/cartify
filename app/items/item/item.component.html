@@ -1,8 +1,7 @@
-{{auth.isUserAdmin()}}
-<div class="row" *ngIf='isAdmin'>
-  <a data-toggle="modal" href="#itemCreateModal" class="btn btn-primary" role="button">Create</a>
+<div class="row" *ngIf='auth.isUserAdmin()'>
+  <a data-toggle="modal" href="#itemCreateModal" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"> </span> Add Item</a>
 </div>
 <div>
   <create-item> </create-item>
-  <!-- <list-item></list-item> -->
+  <list-item></list-item>
 </div>

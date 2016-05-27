@@ -11,7 +11,6 @@ declare var Auth0Lock: any;
 @Injectable()
 export class AuthService {
     auth0Lock: any;
-    isAdmin: boolean;
 
     constructor(private changeDetector: ChangeDetectorRef) { 
         this.auth0Lock = new Auth0Lock(
@@ -33,12 +32,8 @@ export class AuthService {
  
     login(): void {
         this.initiateAuth0LogIn().subscribe((d) => {
-            if (d) { 
-                this.isAdmin  = JSON.parse(
-                    localStorage.getItem('profile')
-                )['role'] == 'admin' ? true : false;
-            }
-            console.log(this.isAdmin);
+            if (d) {} // TODO: something here to be added
+
             this.changeDetector.detectChanges();
         },
         e => console.log('error occured'))
@@ -47,6 +42,7 @@ export class AuthService {
     logout(): void {
         localStorage.removeItem('profile');
         localStorage.removeItem('id_token');
+        this.changeDetector.detectChanges();
     }
 
     isLoggedIn(): boolean {
@@ -54,7 +50,12 @@ export class AuthService {
     }
 
     isUserAdmin(): boolean {
-        console.log('XXX...'+this.isAdmin);
-        return this.isAdmin;
+        try {
+          return JSON.parse(
+            localStorage.getItem('profile')
+          )['role'] == 'admin' ? true : false;
+        } catch(e) {
+              return false;
+        }
     }
 }

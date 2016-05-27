@@ -14,31 +14,19 @@ var item_create_component_1 = require('../item-create/item-create.component');
 var item_service_1 = require('../shared/item.service');
 var auth_service_1 = require('../shared/auth.service');
 var ItemComponent = (function () {
-    function ItemComponent(itemService, auth, cDR) {
+    function ItemComponent(itemService, auth) {
         this.itemService = itemService;
         this.auth = auth;
-        this.cDR = cDR;
         this.title = '[placeholdder]'; // will be displayed using interpolation
-        // let profile = JSON.parse(localStorage.getItem('profile'));
-        // if (profile) {
-        // 	this.isAdmin = profile['role'] == 'admin' ? true : false;
-        // }
-        // authService.login().subscribe((d) => {
-        // 	this.isAdmin = d;
-        // 	console.log(this);
-        // 	console.log('logged event...'+d+' '+this.isAdmin);
-        // 	this.cDR.detectChanges();
-        // },
-        // e => console.log('error occured'))
     }
     ItemComponent = __decorate([
         core_1.Component({
             //selector: 'item-main',
             templateUrl: 'app/items/item/item.component.html',
             directives: [item_list_component_1.ItemListComponent, item_create_component_1.ItemCreateComponent],
-            providers: [item_service_1.ItemService] //, AuthService]
+            providers: [item_service_1.ItemService]
         }), 
-        __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService, core_1.ChangeDetectorRef])
+        __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService])
     ], ItemComponent);
     return ItemComponent;
 }());
