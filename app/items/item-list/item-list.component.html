@@ -1,13 +1,11 @@
 <div class='panel-body'>
   <div class='row'>
-    <div class='col-md-4'>
-      <form class="form-inline">
-        <div class="form-group">
-          <label for="searchForm">Search/Filter by:</label>
-          <input type="text" class="form-control" [(ngModel)]='filterBy'>
-        </div>
-      </form>
+  <form class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search" [(ngModel)]='filterBy'>
     </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form> 
   </div>
   <div class='row'>
     <div class='col-md-6'>
