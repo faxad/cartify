@@ -9,24 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var router_deprecated_1 = require('@angular/router-deprecated');
 var item_list_component_1 = require('../item-list/item-list.component');
 var item_create_component_1 = require('../item-create/item-create.component');
 var item_service_1 = require('../shared/item.service');
 var auth_service_1 = require('../shared/auth.service');
+var cart_service_1 = require('../shared/cart.service');
 var ItemComponent = (function () {
-    function ItemComponent(itemService, auth) {
+    function ItemComponent(itemService, auth, cart) {
         this.itemService = itemService;
         this.auth = auth;
+        this.cart = cart;
         this.title = '[placeholdder]'; // will be displayed using interpolation
     }
     ItemComponent = __decorate([
         core_1.Component({
             //selector: 'item-main',
             templateUrl: 'app/items/item/item.component.html',
-            directives: [item_list_component_1.ItemListComponent, item_create_component_1.ItemCreateComponent],
-            providers: [item_service_1.ItemService]
+            directives: [item_list_component_1.ItemListComponent, item_create_component_1.ItemCreateComponent, router_deprecated_1.ROUTER_DIRECTIVES],
+            providers: [item_service_1.ItemService, cart_service_1.CartService]
         }), 
-        __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService])
+        __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService, cart_service_1.CartService])
     ], ItemComponent);
     return ItemComponent;
 }());

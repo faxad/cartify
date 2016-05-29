@@ -3,12 +3,13 @@ import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig } from '@angular/route
 
 import { ItemComponent } from './items/item/item.component';
 import { ItemDetailComponent } from './items/item-detail/item-detail.component';
+import { ItemCartComponent } from './items/item-cart/item-cart.component';
 import { AuthService } from './items/shared/auth.service'
 
 
 @Component({
 	selector: 'app-content',
-	directives: [ROUTER_DIRECTIVES, ItemComponent], // using component as directive
+	directives: [ROUTER_DIRECTIVES, ItemComponent, ItemCartComponent], // using component as directive
 	providers: [ROUTER_PROVIDERS, AuthService],
 	template: `
 		<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -40,7 +41,8 @@ import { AuthService } from './items/shared/auth.service'
 })
 @RouteConfig([
 		{ path: '/items', name: 'Items', component: ItemComponent, useAsDefault: true },
-		{ path: '/item/:id', name: 'Detail', component: ItemDetailComponent }
+		{ path: '/item/:id', name: 'Detail', component: ItemDetailComponent },
+		{ path: '/cart/:userid', name: 'Cart', component: ItemCartComponent }
 ])
 export class AppComponent {
 	constructor(private auth: AuthService) {}
