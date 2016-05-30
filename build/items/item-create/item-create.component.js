@@ -24,6 +24,7 @@ var ItemCreateComponent = (function () {
         core_1.Component({
             selector: 'create-item',
             templateUrl: 'app/items/item-create/item-create.component.html',
+            styleUrls: ['app/items/item-create/item-create.component.css'],
         }), 
         __metadata('design:paramtypes', [item_service_1.ItemService])
     ], ItemCreateComponent);

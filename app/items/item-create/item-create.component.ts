@@ -6,6 +6,7 @@ import { ItemService } from '../shared/item.service';
 @Component({
 	selector: 'create-item',
 	templateUrl: 'app/items/item-create/item-create.component.html',
+	styleUrls: ['app/items/item-create/item-create.component.css'],
 })
 export class ItemCreateComponent {
 	itemName: string;

@@ -46,16 +46,20 @@ export class AuthService {
     }
 
     isLoggedIn(): boolean {
-        return tokenNotExpired();
+        return true; //TODO: Remove!
+        
+        // return tokenNotExpired();
     }
 
     isUserAdmin(): boolean {
-        try {
-          return JSON.parse(
-            localStorage.getItem('profile')
-          )['role'] == 'admin' ? true : false;
-        } catch(e) {
-              return false;
-        }
+        return true; //TODO: Remove!
+
+        // try {
+        //   return JSON.parse(
+        //     localStorage.getItem('profile')
+        //   )['role'] == 'admin' ? true : false;
+        // } catch(e) {
+        //       return false;
+        // }
     }
 }
