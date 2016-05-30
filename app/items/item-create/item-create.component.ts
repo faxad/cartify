@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FORM_DIRECTIVES } from '@angular/common';
+import { FORM_DIRECTIVES, FormBuilder, ControlGroup } from '@angular/common';
 
 import { ItemService } from '../shared/item.service';
 
@@ -11,10 +11,16 @@ import { ItemService } from '../shared/item.service';
 	directives: [FORM_DIRECTIVES],
 })
 export class ItemCreateComponent {
+	createForm: ControlGroup;
 	itemName: string;
 	itemCode: string;
 
-	constructor(private itemService: ItemService) { }
+	constructor(private itemService: ItemService, fb: FormBuilder) {
+		this.createForm = fb.group({
+			'itemName': [''],
+			'itemCode': ['']
+		});
+	}
 
 	submitItem(form: any): void {
 		console.log(form);

@@ -12,8 +12,12 @@ var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var item_service_1 = require('../shared/item.service');
 var ItemCreateComponent = (function () {
-    function ItemCreateComponent(itemService) {
+    function ItemCreateComponent(itemService, fb) {
         this.itemService = itemService;
+        this.createForm = fb.group({
+            'itemName': [''],
+            'itemCode': ['']
+        });
     }
     ItemCreateComponent.prototype.submitItem = function (form) {
         console.log(form);
@@ -30,7 +34,7 @@ var ItemCreateComponent = (function () {
             styleUrls: ['app/items/item-create/item-create.component.css'],
             directives: [common_1.FORM_DIRECTIVES],
         }), 
-        __metadata('design:paramtypes', [item_service_1.ItemService])
+        __metadata('design:paramtypes', [item_service_1.ItemService, common_1.FormBuilder])
     ], ItemCreateComponent);
     return ItemCreateComponent;
 }());
