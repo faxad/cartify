@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FORM_DIRECTIVES } from '@angular/common';
 
 import { ItemService } from '../shared/item.service';
 
@@ -7,6 +8,7 @@ import { ItemService } from '../shared/item.service';
 	selector: 'create-item',
 	templateUrl: 'app/items/item-create/item-create.component.html',
 	styleUrls: ['app/items/item-create/item-create.component.css'],
+	directives: [FORM_DIRECTIVES],
 })
 export class ItemCreateComponent {
 	itemName: string;
@@ -14,8 +16,10 @@ export class ItemCreateComponent {
 
 	constructor(private itemService: ItemService) { }
 
-	submitItem(): void {
-		console.log(this.itemService.getItems());
+	submitItem(form: any): void {
+		console.log(form);
+		this.itemName = form['itemName'];
+		this.itemCode = form['itemCode'];
 		this.itemService.setItem(this.itemName, this.itemCode);
 		this.itemName = '';
 		this.itemCode = '';

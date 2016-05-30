@@ -9,13 +9,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var common_1 = require('@angular/common');
 var item_service_1 = require('../shared/item.service');
 var ItemCreateComponent = (function () {
     function ItemCreateComponent(itemService) {
         this.itemService = itemService;
     }
-    ItemCreateComponent.prototype.submitItem = function () {
-        console.log(this.itemService.getItems());
+    ItemCreateComponent.prototype.submitItem = function (form) {
+        console.log(form);
+        this.itemName = form['itemName'];
+        this.itemCode = form['itemCode'];
         this.itemService.setItem(this.itemName, this.itemCode);
         this.itemName = '';
         this.itemCode = '';
@@ -25,6 +28,7 @@ var ItemCreateComponent = (function () {
             selector: 'create-item',
             templateUrl: 'app/items/item-create/item-create.component.html',
             styleUrls: ['app/items/item-create/item-create.component.css'],
+            directives: [common_1.FORM_DIRECTIVES],
         }), 
         __metadata('design:paramtypes', [item_service_1.ItemService])
     ], ItemCreateComponent);
