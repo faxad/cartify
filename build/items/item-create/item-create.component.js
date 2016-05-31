@@ -15,11 +15,21 @@ var ItemCreateComponent = (function () {
     function ItemCreateComponent(itemService, fb) {
         this.itemService = itemService;
         this.createForm = fb.group({
-            'itemName': ['', common_1.Validators.required],
+            'itemName': ['', common_1.Validators.compose([
+                    common_1.Validators.required, this.nameValidator])],
             'itemCode': ['']
         });
-        this.itemNameControl = this.createForm.controls['itemName'];
+        //this.itemNameControl = this.createForm.controls['itemName'];
     }
+    ItemCreateComponent.prototype.nameValidator = function (control) {
+        if (!control.value.match(/^abc/)) {
+            return { invalidName: true };
+        }
+    };
+    ItemCreateComponent.prototype.check = function () {
+        var c = this.createForm.controls['itemName'];
+        return (!c.valid && c.touched && c.hasError('invalidName') && c.hasError('required'));
+    };
     ItemCreateComponent.prototype.submitItem = function (form) {
         console.log(form);
         this.itemName = form['itemName'];
