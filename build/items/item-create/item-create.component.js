@@ -15,9 +15,10 @@ var ItemCreateComponent = (function () {
     function ItemCreateComponent(itemService, fb) {
         this.itemService = itemService;
         this.createForm = fb.group({
-            'itemName': [''],
+            'itemName': ['', common_1.Validators.required],
             'itemCode': ['']
         });
+        this.itemNameControl = this.createForm.controls['itemName'];
     }
     ItemCreateComponent.prototype.submitItem = function (form) {
         console.log(form);

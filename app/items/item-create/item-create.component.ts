@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FORM_DIRECTIVES, FormBuilder, ControlGroup } from '@angular/common';
+import { FORM_DIRECTIVES, FormBuilder, Control, AbstractControl, ControlGroup, Validators } from '@angular/common';
 
 import { ItemService } from '../shared/item.service';
 
@@ -12,14 +12,17 @@ import { ItemService } from '../shared/item.service';
 })
 export class ItemCreateComponent {
 	createForm: ControlGroup;
+	itemNameControl: AbstractControl;
 	itemName: string;
 	itemCode: string;
 
 	constructor(private itemService: ItemService, fb: FormBuilder) {
 		this.createForm = fb.group({
-			'itemName': [''],
+			'itemName': ['', Validators.required],
 			'itemCode': ['']
 		});
+
+		this.itemNameControl = this.createForm.controls['itemName'];
 	}
 
 	submitItem(form: any): void {
