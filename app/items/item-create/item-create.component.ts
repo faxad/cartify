@@ -12,21 +12,71 @@ import { ExtendedValidators } from '../shared/validators';
 })
 export class ItemCreateComponent {
 	createForm: ControlGroup;
+	controls: AbstractControl[];
+
 	formErrors: any;
 	itemName: string;
 	itemCode: string;
 
-	check(): boolean {
-		let c = this.createForm.controls['itemName'];
-		return (c.touched && (!c.valid || c.hasError('invalidName') || c.hasError('required'));
+	stateCheck(control: AbstractControl, code: string): boolean {
+		let checks = {
+			//'itemName': control.touched,
+			//'itemCode': control.touched,
+		}
+
+		if (code in checks) {
+			return checks[code];
+		}
+		else {
+			return control.touched;
+		}
+		
+	}
+
+	validCheck(control: AbstractControl, code: string): { [s: string]: any } {
+		let messages = {
+			'itemName': 'Name must start with abc'
+		}
+
+		let checks = {
+			'itemName': control.hasError('invalidName')
+		}
+
+		return {
+			"result": checks[code],
+			"message": messages[code]
+		}
+	}
+
+	check(control: string): { [s: string]: any } {
+		let c = this.createForm.controls[control];
+		if (this.stateCheck(c, control)) {
+			if (c.hasError('required')) {
+				return { 
+					"result": true, 
+					"message": "Required Field!"
+				}
+			}
+			else {
+				return this.validCheck(c, control)
+			}
+		}
+		else {
+			return {
+				"result": false,
+				"message": ""
+			}
+		}
 	}
 
 	constructor(private itemService: ItemService, fb: FormBuilder) {
 		this.createForm = fb.group({
 			'itemName': ['', Validators.compose([
 				Validators.required, ExtendedValidators.nameValidator])],
-			'itemCode': ['']
+			'itemCode': ['', Validators.required]
 		});
+
+		//this.controls = this.createForm.controls;
 	}
 
 	submitItem(form: any): void {

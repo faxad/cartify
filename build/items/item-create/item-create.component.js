@@ -18,12 +18,50 @@ var ItemCreateComponent = (function () {
         this.createForm = fb.group({
             'itemName': ['', common_1.Validators.compose([
                     common_1.Validators.required, validators_1.ExtendedValidators.nameValidator])],
-            'itemCode': ['']
+            'itemCode': ['', common_1.Validators.required]
         });
+        //this.controls = this.createForm.controls;
     }
-    ItemCreateComponent.prototype.check = function () {
-        var c = this.createForm.controls['itemName'];
-        return (c.touched && (!c.valid || c.hasError('invalidName') || c.hasError('required')));
+    ItemCreateComponent.prototype.stateCheck = function (control, code) {
+        var checks = {};
+        if (code in checks) {
+            return checks[code];
+        }
+        else {
+            return control.touched;
+        }
+    };
+    ItemCreateComponent.prototype.validCheck = function (control, code) {
+        var messages = {
+            'itemName': 'Name must start with abc'
+        };
+        var checks = {
+            'itemName': control.hasError('invalidName')
+        };
+        return {
+            "result": checks[code],
+            "message": messages[code]
+        };
+    };
+    ItemCreateComponent.prototype.check = function (control) {
+        var c = this.createForm.controls[control];
+        if (this.stateCheck(c, control)) {
+            if (c.hasError('required')) {
+                return {
+                    "result": true,
+                    "message": "Required Field!"
+                };
+            }
+            else {
+                return this.validCheck(c, control);
+            }
+        }
+        else {
+            return {
+                "result": false,
+                "message": ""
+            };
+        }
     };
     ItemCreateComponent.prototype.submitItem = function (form) {
         console.log(form);
