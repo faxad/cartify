@@ -11,24 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var item_service_1 = require('../shared/item.service');
+var validators_1 = require('../shared/validators');
 var ItemCreateComponent = (function () {
     function ItemCreateComponent(itemService, fb) {
         this.itemService = itemService;
         this.createForm = fb.group({
             'itemName': ['', common_1.Validators.compose([
-                    common_1.Validators.required, this.nameValidator])],
+                    common_1.Validators.required, validators_1.ExtendedValidators.nameValidator])],
             'itemCode': ['']
         });
-        //this.itemNameControl = this.createForm.controls['itemName'];
     }
-    ItemCreateComponent.prototype.nameValidator = function (control) {
-        if (!control.value.match(/^abc/)) {
-            return { invalidName: true };
-        }
-    };
     ItemCreateComponent.prototype.check = function () {
         var c = this.createForm.controls['itemName'];
-        return (!c.valid && c.touched && c.hasError('invalidName') && c.hasError('required'));
+        return (c.touched && (!c.valid || c.hasError('invalidName') || c.hasError('required')));
     };
     ItemCreateComponent.prototype.submitItem = function (form) {
         console.log(form);
