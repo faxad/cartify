@@ -24,23 +24,18 @@ var ItemCreateComponent = (function () {
     }
     ItemCreateComponent.prototype.stateCheck = function (control, code) {
         var checks = {};
-        if (code in checks) {
-            return checks[code];
-        }
-        else {
-            return control.touched;
-        }
+        return (code in checks) ? checks[code] : control.touched;
     };
-    ItemCreateComponent.prototype.validCheck = function (control, code) {
-        var messages = {
-            'itemName': 'Name must start with abc'
-        };
+    ItemCreateComponent.prototype.validityCheck = function (control, code) {
         var checks = {
-            'itemName': control.hasError('invalidName')
-        };
+            'itemName': {
+                'condition': control.hasError('invalidName'),
+                'message': 'Name must start with abc'
+            }
+        }[code];
         return {
-            "result": checks[code],
-            "message": messages[code]
+            "result": checks['condition'],
+            "message": checks['message']
         };
     };
     ItemCreateComponent.prototype.check = function (control) {
@@ -53,7 +48,7 @@ var ItemCreateComponent = (function () {
                 };
             }
             else {
-                return this.validCheck(c, control);
+                return this.validityCheck(c, control);
             }
         }
         else {

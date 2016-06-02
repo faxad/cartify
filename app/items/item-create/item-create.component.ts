@@ -21,30 +21,22 @@ export class ItemCreateComponent {
 	stateCheck(control: AbstractControl, code: string): boolean {
 		let checks = {
 			//'itemName': control.touched,
-			//'itemCode': control.touched,
 		}
 
-		if (code in checks) {
-			return checks[code];
-		}
-		else {
-			return control.touched;
-		}
-		
+		return (code in checks) ? checks[code] : control.touched
 	}
 
-	validCheck(control: AbstractControl, code: string): { [s: string]: any } {
-		let messages = {
-			'itemName': 'Name must start with abc'
-		}
-
+	validityCheck(control: AbstractControl, code: string): { [s: string]: any } {
 		let checks = {
-			'itemName': control.hasError('invalidName')
-		}
+			'itemName': { 
+				'condition': control.hasError('invalidName'),
+				'message': 'Name must start with abc'
+			}
+		}[code]
 
 		return {
-			"result": checks[code],
-			"message": messages[code]
+			"result": checks['condition'],
+			"message": checks['message']
 		}
 	}
 
@@ -58,7 +50,7 @@ export class ItemCreateComponent {
 				}
 			}
 			else {
-				return this.validCheck(c, control)
+				return this.validityCheck(c, control)
 			}
 		}
 		else {
