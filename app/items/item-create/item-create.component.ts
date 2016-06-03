@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FORM_DIRECTIVES, FormBuilder, Control, AbstractControl, ControlGroup, Validators } from '@angular/common';
+import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from '@angular/common';
 
 import { ItemService } from '../shared/item.service';
 import { ValidService } from '../shared/valid.service';
@@ -26,13 +26,16 @@ export class ItemCreateComponent {
 			'itemCode': ['', Validators.required]
 		});
 
-		validService.configure(this.createForm);
-		validService.validityChecks = {
-			'itemName': {
-				'condition': 'invalidName',
-				'message': 'Name must start with abc'
-			}
-		}
+		validService.configure(
+			this.createForm,
+			{
+				'itemName': {
+					'condition': 'invalidName',
+					'message': 'Name must start with abc'
+				}
+			},
+			{}
+		);
 	}
 
 	submitItem(form: any): void {

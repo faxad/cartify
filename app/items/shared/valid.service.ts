@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FORM_DIRECTIVES, FormBuilder, Control, AbstractControl, ControlGroup, Validators } from '@angular/common';
+import { AbstractControl, ControlGroup } from '@angular/common';
 
 
 @Injectable()
@@ -9,27 +9,11 @@ export class ValidService {
 	validityChecks: { [s: string]: any } = {}
 
 	stateCheck(control: AbstractControl, code: string): boolean {
-		let checks = {
-			//'itemName': control.touched,
-		}
-
-		//return (code in checks) ? checks[code] : control.touched
-		return (code in this.stateChecks) ? this.stateChecks[code] : control.touched
-
+		return (code in this.stateChecks) ? control[
+			this.stateChecks[code]] : control.touched
 	}
 
 	validityCheck(control: AbstractControl, code: string): { [s: string]: any } {
-		// let checks = {
-		// 	'itemName': {
-		// 		'condition': control.hasError('invalidName'),
-		// 		'message': 'Name must start with abc'
-		// 	}
-		// }[code]
-
-		// return {
-		// 	"result": checks['condition'],
-		// 	"message": checks['message']
-		// }
 		return {
 			"result": control.hasError(
 				this.validityChecks[code]['condition']),
@@ -39,7 +23,6 @@ export class ValidService {
 
 	check(control: string): { [s: string]: any } {
 		let c = this.formToVlidate.controls[control];
-		console.log(c);
 		if (this.stateCheck(c, control)) {
 			return (c.hasError('required')) ? {
 				"result": true,
@@ -51,7 +34,9 @@ export class ValidService {
 		}
 	}
 
-	configure(form: ControlGroup) {
+	configure(form: ControlGroup, _customValidityChecks, _customStateChecks) {
 		this.formToVlidate = form;
+		this.validityChecks = _customValidityChecks;
+		this.stateChecks = _customStateChecks;
 	}
 }

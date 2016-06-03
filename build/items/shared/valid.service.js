@@ -15,21 +15,9 @@ var ValidService = (function () {
         this.validityChecks = {};
     }
     ValidService.prototype.stateCheck = function (control, code) {
-        var checks = {};
-        //return (code in checks) ? checks[code] : control.touched
-        return (code in this.stateChecks) ? this.stateChecks[code] : control.touched;
+        return (code in this.stateChecks) ? control[this.stateChecks[code]] : control.touched;
     };
     ValidService.prototype.validityCheck = function (control, code) {
-        // let checks = {
-        // 	'itemName': {
-        // 		'condition': control.hasError('invalidName'),
-        // 		'message': 'Name must start with abc'
-        // 	}
-        // }[code]
-        // return {
-        // 	"result": checks['condition'],
-        // 	"message": checks['message']
-        // }
         return {
             "result": control.hasError(this.validityChecks[code]['condition']),
             "message": this.validityChecks[code]['message']
@@ -37,7 +25,6 @@ var ValidService = (function () {
     };
     ValidService.prototype.check = function (control) {
         var c = this.formToVlidate.controls[control];
-        console.log(c);
         if (this.stateCheck(c, control)) {
             return (c.hasError('required')) ? {
                 "result": true,
@@ -48,8 +35,10 @@ var ValidService = (function () {
             return { "result": false, "message": "" };
         }
     };
-    ValidService.prototype.configure = function (form) {
+    ValidService.prototype.configure = function (form, _customValidityChecks, _customStateChecks) {
         this.formToVlidate = form;
+        this.validityChecks = _customValidityChecks;
+        this.stateChecks = _customStateChecks;
     };
     ValidService = __decorate([
         core_1.Injectable(), 

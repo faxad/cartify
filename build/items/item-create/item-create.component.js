@@ -22,13 +22,12 @@ var ItemCreateComponent = (function () {
                     common_1.Validators.required, validators_1.ExtendedValidators.nameValidator])],
             'itemCode': ['', common_1.Validators.required]
         });
-        validService.configure(this.createForm);
-        validService.validityChecks = {
+        validService.configure(this.createForm, {
             'itemName': {
                 'condition': 'invalidName',
                 'message': 'Name must start with abc'
             }
-        };
+        }, {});
     }
     ItemCreateComponent.prototype.submitItem = function (form) {
         console.log(form);
