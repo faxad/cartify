@@ -11,53 +11,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
 var item_service_1 = require('../shared/item.service');
+var valid_service_1 = require('../shared/valid.service');
 var validators_1 = require('../shared/validators');
 var ItemCreateComponent = (function () {
-    function ItemCreateComponent(itemService, fb) {
+    function ItemCreateComponent(itemService, validService, fb) {
         this.itemService = itemService;
+        this.validService = validService;
         this.createForm = fb.group({
             'itemName': ['', common_1.Validators.compose([
                     common_1.Validators.required, validators_1.ExtendedValidators.nameValidator])],
             'itemCode': ['', common_1.Validators.required]
         });
-        //this.controls = this.createForm.controls;
-    }
-    ItemCreateComponent.prototype.stateCheck = function (control, code) {
-        var checks = {};
-        return (code in checks) ? checks[code] : control.touched;
-    };
-    ItemCreateComponent.prototype.validityCheck = function (control, code) {
-        var checks = {
+        validService.configure(this.createForm);
+        validService.validityChecks = {
             'itemName': {
-                'condition': control.hasError('invalidName'),
+                'condition': 'invalidName',
                 'message': 'Name must start with abc'
             }
-        }[code];
-        return {
-            "result": checks['condition'],
-            "message": checks['message']
         };
-    };
-    ItemCreateComponent.prototype.check = function (control) {
-        var c = this.createForm.controls[control];
-        if (this.stateCheck(c, control)) {
-            if (c.hasError('required')) {
-                return {
-                    "result": true,
-                    "message": "Required Field!"
-                };
-            }
-            else {
-                return this.validityCheck(c, control);
-            }
-        }
-        else {
-            return {
-                "result": false,
-                "message": ""
-            };
-        }
-    };
+    }
     ItemCreateComponent.prototype.submitItem = function (form) {
         console.log(form);
         this.itemName = form['itemName'];
@@ -72,8 +44,9 @@ var ItemCreateComponent = (function () {
             templateUrl: 'app/items/item-create/item-create.component.html',
             styleUrls: ['app/items/item-create/item-create.component.css'],
             directives: [common_1.FORM_DIRECTIVES],
+            providers: [valid_service_1.ValidService]
         }), 
-        __metadata('design:paramtypes', [item_service_1.ItemService, common_1.FormBuilder])
+        __metadata('design:paramtypes', [item_service_1.ItemService, valid_service_1.ValidService, common_1.FormBuilder])
     ], ItemCreateComponent);
     return ItemCreateComponent;
 }());

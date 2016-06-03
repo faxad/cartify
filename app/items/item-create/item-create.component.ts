@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FORM_DIRECTIVES, FormBuilder, Control, AbstractControl, ControlGroup, Validators } from '@angular/common';
 
 import { ItemService } from '../shared/item.service';
+import { ValidService } from '../shared/valid.service';
 import { ExtendedValidators } from '../shared/validators';
 
 @Component({
@@ -9,66 +10,29 @@ import { ExtendedValidators } from '../shared/validators';
 	templateUrl: 'app/items/item-create/item-create.component.html',
 	styleUrls: ['app/items/item-create/item-create.component.css'],
 	directives: [FORM_DIRECTIVES],
+	providers: [ValidService]
 })
 export class ItemCreateComponent {
 	createForm: ControlGroup;
-	controls: AbstractControl[];
 
 	formErrors: any;
 	itemName: string;
 	itemCode: string;
 
-	stateCheck(control: AbstractControl, code: string): boolean {
-		let checks = {
-			//'itemName': control.touched,
-		}
-
-		return (code in checks) ? checks[code] : control.touched
-	}
-
-	validityCheck(control: AbstractControl, code: string): { [s: string]: any } {
-		let checks = {
-			'itemName': { 
-				'condition': control.hasError('invalidName'),
-				'message': 'Name must start with abc'
-			}
-		}[code]
-
-		return {
-			"result": checks['condition'],
-			"message": checks['message']
-		}
-	}
-
-	check(control: string): { [s: string]: any } {
-		let c = this.createForm.controls[control];
-		if (this.stateCheck(c, control)) {
-			if (c.hasError('required')) {
-				return { 
-					"result": true, 
-					"message": "Required Field!"
-				}
-			}
-			else {
-				return this.validityCheck(c, control)
-			}
-		}
-		else {
-			return {
-				"result": false,
-				"message": ""
-			}
-		}
-	}
-
-	constructor(private itemService: ItemService, fb: FormBuilder) {
+	constructor(private itemService: ItemService, private validService: ValidService, fb: FormBuilder) {
 		this.createForm = fb.group({
 			'itemName': ['', Validators.compose([
 				Validators.required, ExtendedValidators.nameValidator])],
 			'itemCode': ['', Validators.required]
 		});
 
-		//this.controls = this.createForm.controls;
+		validService.configure(this.createForm);
+		validService.validityChecks = {
+			'itemName': {
+				'condition': 'invalidName',
+				'message': 'Name must start with abc'
+			}
+		}
 	}
 
 	submitItem(form: any): void {
