@@ -18,10 +18,11 @@ var ValidService = (function () {
         return (code in this.stateChecks) ? control[this.stateChecks[code]] : control.touched;
     };
     ValidService.prototype.validityCheck = function (control, code) {
-        return {
-            "result": control.hasError(this.validityChecks[code]['condition']),
-            "message": this.validityChecks[code]['message']
-        };
+        var ck = this.validityChecks[code];
+        return ck ? {
+            "result": control.hasError(ck['condition']),
+            "message": ck['message']
+        } : { "result": false, "message": "" };
     };
     ValidService.prototype.check = function (control) {
         var c = this.formToVlidate.controls[control];

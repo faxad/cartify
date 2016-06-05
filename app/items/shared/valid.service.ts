@@ -14,11 +14,13 @@ export class ValidService {
 	}
 
 	validityCheck(control: AbstractControl, code: string): { [s: string]: any } {
-		return {
+		let ck = this.validityChecks[code];
+
+		return ck ? {
 			"result": control.hasError(
-				this.validityChecks[code]['condition']),
-			"message": this.validityChecks[code]['message']
-		}
+				ck['condition']),
+			"message": ck['message']
+		} : { "result": false, "message": "" }
 	}
 
 	check(control: string): { [s: string]: any } {
