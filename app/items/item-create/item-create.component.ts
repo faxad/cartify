@@ -21,8 +21,9 @@ export class ItemCreateComponent {
 
 	constructor(private itemService: ItemService, private validService: ValidService, fb: FormBuilder) {
 		this.createForm = fb.group({
-			'itemName': ['', Validators.compose([
-				Validators.required, ExtendedValidators.nameValidator])],
+			'itemName': ['', Validators.compose(
+								[Validators.required,
+								ExtendedValidators.nameValidator])],
 			'itemCode': ['', Validators.required]
 		});
 
@@ -39,11 +40,15 @@ export class ItemCreateComponent {
 	}
 
 	submitItem(form: any): void {
-		console.log(form);
-		this.itemName = form['itemName'];
-		this.itemCode = form['itemCode'];
-		this.itemService.setItem(this.itemName, this.itemCode);
-		this.itemName = '';
-		this.itemCode = '';
+		if (form.valid) {
+			this.itemName = form.value['itemName'];
+			this.itemCode = form.value['itemCode'];
+			this.itemService.setItem(this.itemName, this.itemCode);
+			this.itemName = '';
+			this.itemCode = '';
+		}
+		else {
+			alert('Form Validation Failed! Please Re-Submit.');
+		}
 	}
 }

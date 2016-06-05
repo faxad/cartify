@@ -18,7 +18,7 @@
             <div *ngIf="validService.check('itemCode').result" class="alert alert-danger">{{validService.check('itemCode').message}}</div>
           </div>
           <div class="modal-footer">
-            <button [disabled]="!createForm.valid" type="button" class="btn btn-default" data-dismiss="modal" (click)='submitItem(createForm.value)'>Save & Close</button>
+            <button [disabled]="!createForm.valid" type="button" class="btn btn-default" data-dismiss="modal" (click)='submitItem(createForm)'>Save & Close</button>
           </div>
         </form>
       </div>

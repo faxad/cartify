@@ -18,8 +18,8 @@ var ItemCreateComponent = (function () {
         this.itemService = itemService;
         this.validService = validService;
         this.createForm = fb.group({
-            'itemName': ['', common_1.Validators.compose([
-                    common_1.Validators.required, validators_1.ExtendedValidators.nameValidator])],
+            'itemName': ['', common_1.Validators.compose([common_1.Validators.required,
+                    validators_1.ExtendedValidators.nameValidator])],
             'itemCode': ['', common_1.Validators.required]
         });
         validService.configure(this.createForm, {
@@ -30,12 +30,16 @@ var ItemCreateComponent = (function () {
         }, {});
     }
     ItemCreateComponent.prototype.submitItem = function (form) {
-        console.log(form);
-        this.itemName = form['itemName'];
-        this.itemCode = form['itemCode'];
-        this.itemService.setItem(this.itemName, this.itemCode);
-        this.itemName = '';
-        this.itemCode = '';
+        if (form.valid) {
+            this.itemName = form.value['itemName'];
+            this.itemCode = form.value['itemCode'];
+            this.itemService.setItem(this.itemName, this.itemCode);
+            this.itemName = '';
+            this.itemCode = '';
+        }
+        else {
+            alert('Form Validation Failed! Please Re-Submit.');
+        }
     };
     ItemCreateComponent = __decorate([
         core_1.Component({
