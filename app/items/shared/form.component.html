@@ -6,19 +6,19 @@
         <h4 class="modal-title" id="itemCreateModalLabel">Modal title</h4>
       </div>
       <div class="modal-body">
-        <form [ngFormModel]="createForm">
+        <form [ngFormModel]="customForm">
           <div class="form-group">
             <label for="productName">Product Name</label>
-            <input class="form-control" id="productName" placeholder="Name" [ngFormControl]="createForm.controls['itemName']">
+            <input class="form-control" id="productName" placeholder="Name" [ngFormControl]="customForm.controls['itemName']">
             <div *ngIf="validService.check('itemName').result" class="alert alert-danger">{{validService.check('itemName').message}}</div>
           </div>
           <div class="form-group">
             <label for="productCode">Product Code</label>
-            <input class="form-control" id="productCode" placeholder="Code" [ngFormControl]="createForm.controls['itemCode']">
+            <input class="form-control" id="productCode" placeholder="Code" [ngFormControl]="customForm.controls['itemCode']">
             <div *ngIf="validService.check('itemCode').result" class="alert alert-danger">{{validService.check('itemCode').message}}</div>
           </div>
           <div class="modal-footer">
-            <button [disabled]="!createForm.valid" type="button" class="btn btn-default" data-dismiss="modal" (click)='submitItem(createForm)'>Save & Close</button>
+            <button [disabled]="!customForm.valid" type="button" class="btn btn-default" data-dismiss="modal" (click)='submitItem(customForm)'>Save & Close</button>
           </div>
         </form>
       </div>

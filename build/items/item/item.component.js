@@ -12,7 +12,6 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var item_list_component_1 = require('../item-list/item-list.component');
 var form_component_1 = require('../shared/form.component');
-var item_create_component_1 = require('../item-create/item-create.component');
 var item_service_1 = require('../shared/item.service');
 var auth_service_1 = require('../shared/auth.service');
 var cart_service_1 = require('../shared/cart.service');
@@ -28,7 +27,7 @@ var ItemComponent = (function () {
         core_1.Component({
             //selector: 'item-main',
             templateUrl: 'app/items/item/item.component.html',
-            directives: [item_list_component_1.ItemListComponent, form_component_1.FormComponent, item_create_component_1.ItemCreateComponent, router_deprecated_1.ROUTER_DIRECTIVES],
+            directives: [item_list_component_1.ItemListComponent, form_component_1.FormComponent, router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [item_service_1.ItemService, cart_service_1.CartService]
         }), 
         __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService, cart_service_1.CartService])

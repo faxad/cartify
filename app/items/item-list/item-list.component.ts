@@ -5,7 +5,6 @@ import { IItem } from '../shared/item.interface';
 import { ItemService } from '../shared/item.service';
 import { StarComponent } from '../shared/star.component';
 import { ItemFilterPipe } from './item-filter.pipe';
-import { ItemUpdateComponent } from '../item-update/item-update.component';
 import { FormComponent } from '../shared/form.component';
 
 
@@ -14,7 +13,7 @@ import { FormComponent } from '../shared/form.component';
 	templateUrl: 'app/items/item-list/item-list.component.html',
 	styleUrls: ['app/items/item-list/item-list.component.css'],
 	pipes: [ItemFilterPipe],
-	directives: [StarComponent, ItemUpdateComponent, FormComponent, ROUTER_DIRECTIVES],
+	directives: [StarComponent, FormComponent, ROUTER_DIRECTIVES],
 })
 export class ItemListComponent implements OnInit {
 	pageTitle: string = 'Item List';

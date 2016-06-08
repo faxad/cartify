@@ -9,14 +9,14 @@ import { IItem } from '../shared/item.interface';
 @Component({
 	selector: 'custom-form',
 	templateUrl: 'app/items/shared/form.component.html',
-	styleUrls: ['app/items/item-create/item-create.component.css'],
+	styleUrls: ['app/items/shared/form.component.css'],
 	directives: [FORM_DIRECTIVES],
 	providers: [ValidService]
 })
 export class FormComponent implements OnInit {
 	@Input() modalId: string;
 	@Input() item: IItem;
-	createForm: ControlGroup;
+	customForm: ControlGroup;
 
 	formErrors: any;
 	itemName: string;
@@ -38,7 +38,7 @@ export class FormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.createForm = this.fb.group({
+		this.customForm = this.fb.group({
 			'itemName': ['', Validators.compose(
 				[Validators.required,
 					ExtendedValidators.nameValidator])],
@@ -46,15 +46,15 @@ export class FormComponent implements OnInit {
 		});
 
 		if (this.item) {
-			for (let key in this.createForm.controls) {
+			for (let key in this.customForm.controls) {
 				console.log(key)
-				this.createForm.controls[key]._value = this.item[key]
+				this.customForm.controls[key]._value = this.item[key]
 			}
 		}
 
-		console.log(this.createForm.controls['itemName'].value)
+		console.log(this.customForm.controls['itemName'].value)
 		this.validService.configure(
-			this.createForm,
+			this.customForm,
 			{
 				'itemName': {
 					'condition': 'invalidName',

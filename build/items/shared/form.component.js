@@ -32,19 +32,19 @@ var FormComponent = (function () {
         }
     };
     FormComponent.prototype.ngOnInit = function () {
-        this.createForm = this.fb.group({
+        this.customForm = this.fb.group({
             'itemName': ['', common_1.Validators.compose([common_1.Validators.required,
                     validators_1.ExtendedValidators.nameValidator])],
             'itemCode': ['', common_1.Validators.required]
         });
         if (this.item) {
-            for (var key in this.createForm.controls) {
+            for (var key in this.customForm.controls) {
                 console.log(key);
-                this.createForm.controls[key]._value = this.item[key];
+                this.customForm.controls[key]._value = this.item[key];
             }
         }
-        console.log(this.createForm.controls['itemName'].value);
-        this.validService.configure(this.createForm, {
+        console.log(this.customForm.controls['itemName'].value);
+        this.validService.configure(this.customForm, {
             'itemName': {
                 'condition': 'invalidName',
                 'message': 'Name must start with abc'
@@ -63,7 +63,7 @@ var FormComponent = (function () {
         core_1.Component({
             selector: 'custom-form',
             templateUrl: 'app/items/shared/form.component.html',
-            styleUrls: ['app/items/item-create/item-create.component.css'],
+            styleUrls: ['app/items/shared/form.component.css'],
             directives: [common_1.FORM_DIRECTIVES],
             providers: [valid_service_1.ValidService]
         }), 
