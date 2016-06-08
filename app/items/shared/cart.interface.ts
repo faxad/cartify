@@ -5,6 +5,6 @@ export interface ICart {
 	userId: string;
 	item: IItem;
 	quantity: number;
-	netPrice: number;
+	unitPrice: number;
 	paid: boolean;
 }

@@ -1,5 +1,18 @@
 <h4>Reached!</h4>
 
-<ul *ngFor='let c of cart'>
-	<li>{{c}}</li>
-</ul>
+<table class="table table-striped">
+	<tr>
+		<th>Item</th>
+		<th>Unit Price</th>
+		<th>Quantity</th>
+		<th>Net Price</th>
+		<th>Action</th>
+    </tr>
+	<tr *ngFor='let c of cart'>
+		<td>{{c.item.itemName}}</td>
+		<td>{{c.item.price}}</td>
+		<td>{{c.quantity}}</td>
+		<td></td>
+		<td></td>
+    </tr>
+</table>

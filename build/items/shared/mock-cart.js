@@ -14,7 +14,7 @@ exports.CART = [
             "imageUrl": "http://placehold.it/320x150"
         },
         quantity: 1,
-        netPrice: 19.95,
+        unitPrice: 19.95,
         paid: false,
     }
 ];
