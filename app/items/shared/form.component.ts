@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from '@angular/common';
 
 import { ItemService } from '../shared/item.service';
 import { ValidService } from '../shared/valid.service';
 import { ExtendedValidators } from '../shared/validators';
+import { IItem } from '../shared/item.interface';
 
 @Component({
-	selector: 'create-item',
-	templateUrl: 'app/items/item-create/item-create.component.html',
+	selector: 'custom-form',
+	templateUrl: 'app/items/shared/form.component.html',
 	styleUrls: ['app/items/item-create/item-create.component.css'],
 	directives: [FORM_DIRECTIVES],
 	providers: [ValidService]
 })
-export class ItemCreateComponent implements OnInit {
+export class FormComponent implements OnInit {
+	@Input() modalId: string;
+	@Input() item: IItem;
 	createForm: ControlGroup;
 
 	formErrors: any;
@@ -42,6 +45,14 @@ export class ItemCreateComponent implements OnInit {
 			'itemCode': ['', Validators.required]
 		});
 
+		if (this.item) {
+			for (let key in this.createForm.controls) {
+				console.log(key)
+				this.createForm.controls[key]._value = this.item[key]
+			}
+		}
+
+		console.log(this.createForm.controls['itemName'].value)
 		this.validService.configure(
 			this.createForm,
 			{

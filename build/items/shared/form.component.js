@@ -13,13 +13,13 @@ var common_1 = require('@angular/common');
 var item_service_1 = require('../shared/item.service');
 var valid_service_1 = require('../shared/valid.service');
 var validators_1 = require('../shared/validators');
-var ItemCreateComponent = (function () {
-    function ItemCreateComponent(itemService, validService, fb) {
+var FormComponent = (function () {
+    function FormComponent(itemService, validService, fb) {
         this.itemService = itemService;
         this.validService = validService;
         this.fb = fb;
     }
-    ItemCreateComponent.prototype.submitItem = function (form) {
+    FormComponent.prototype.submitItem = function (form) {
         if (form.valid) {
             this.itemName = form.value['itemName'];
             this.itemCode = form.value['itemCode'];
@@ -31,12 +31,19 @@ var ItemCreateComponent = (function () {
             alert('Form Validation Failed! Please Re-Submit.');
         }
     };
-    ItemCreateComponent.prototype.ngOnInit = function () {
+    FormComponent.prototype.ngOnInit = function () {
         this.createForm = this.fb.group({
             'itemName': ['', common_1.Validators.compose([common_1.Validators.required,
                     validators_1.ExtendedValidators.nameValidator])],
             'itemCode': ['', common_1.Validators.required]
         });
+        if (this.item) {
+            for (var key in this.createForm.controls) {
+                console.log(key);
+                this.createForm.controls[key]._value = this.item[key];
+            }
+        }
+        console.log(this.createForm.controls['itemName'].value);
         this.validService.configure(this.createForm, {
             'itemName': {
                 'condition': 'invalidName',
@@ -44,17 +51,25 @@ var ItemCreateComponent = (function () {
             }
         }, {});
     };
-    ItemCreateComponent = __decorate([
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', String)
+    ], FormComponent.prototype, "modalId", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], FormComponent.prototype, "item", void 0);
+    FormComponent = __decorate([
         core_1.Component({
-            selector: 'create-item',
-            templateUrl: 'app/items/item-create/item-create.component.html',
+            selector: 'custom-form',
+            templateUrl: 'app/items/shared/form.component.html',
             styleUrls: ['app/items/item-create/item-create.component.css'],
             directives: [common_1.FORM_DIRECTIVES],
             providers: [valid_service_1.ValidService]
         }), 
         __metadata('design:paramtypes', [item_service_1.ItemService, valid_service_1.ValidService, common_1.FormBuilder])
-    ], ItemCreateComponent);
-    return ItemCreateComponent;
+    ], FormComponent);
+    return FormComponent;
 }());
-exports.ItemCreateComponent = ItemCreateComponent;
-//# sourceMappingURL=item-create.component.js.map
+exports.FormComponent = FormComponent;
+//# sourceMappingURL=form.component.js.map

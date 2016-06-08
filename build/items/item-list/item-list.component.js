@@ -14,6 +14,7 @@ var item_service_1 = require('../shared/item.service');
 var star_component_1 = require('../shared/star.component');
 var item_filter_pipe_1 = require('./item-filter.pipe');
 var item_update_component_1 = require('../item-update/item-update.component');
+var form_component_1 = require('../shared/form.component');
 var ItemListComponent = (function () {
     function ItemListComponent(itemService) {
         this.itemService = itemService;
@@ -38,7 +39,7 @@ var ItemListComponent = (function () {
             templateUrl: 'app/items/item-list/item-list.component.html',
             styleUrls: ['app/items/item-list/item-list.component.css'],
             pipes: [item_filter_pipe_1.ItemFilterPipe],
-            directives: [star_component_1.StarComponent, item_update_component_1.ItemUpdateComponent, router_deprecated_1.ROUTER_DIRECTIVES],
+            directives: [star_component_1.StarComponent, item_update_component_1.ItemUpdateComponent, form_component_1.FormComponent, router_deprecated_1.ROUTER_DIRECTIVES],
         }), 
         __metadata('design:paramtypes', [item_service_1.ItemService])
     ], ItemListComponent);

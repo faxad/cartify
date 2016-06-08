@@ -21,7 +21,7 @@
           <div class="caption">
               <h4 class="pull-right">${{ item.price }}</h4>
               <h4><a href="#">{{ item.itemName }}</a>
-              <a data-toggle="modal" href="#{{item.productId}}Modal">
+              <a data-toggle="modal" href="#{{item.itemId}}">
               <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
             </a>
               </h4>
@@ -48,7 +48,8 @@
                       (click)='toggleImg()'>
                   {{ showImg ? 'Hide' : 'Show' }} Image
               </button> -->
-              <update-item [item]='item'></update-item>
+              <!-- <update-item [item]='item'></update-item> -->
+              <custom-form [item]='item' [modalId]='item.itemId'></custom-form>
             </div>
 <!--             <div class="col-md-0">
               <textarea></textarea>
