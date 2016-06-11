@@ -6,6 +6,7 @@ import { ItemService } from '../shared/item.service';
 import { StarComponent } from '../shared/star.component';
 import { ItemFilterPipe } from './item-filter.pipe';
 import { FormComponent } from '../shared/form.component';
+import { CartService } from '../shared/cart.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class ItemListComponent implements OnInit {
 	filterBy: string;
 	items: IItem[];
 
-	constructor (private itemService: ItemService) { }
+	constructor(private itemService: ItemService, private cart: CartService) { }
 
 	toggleImg(): void {
 		this.showImg = !this.showImg;

@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var angular2_jwt_1 = require('angular2-jwt');
 var Observable_1 = require('rxjs/Observable');
 var AuthService = (function () {
     function AuthService(changeDetector) {
@@ -42,8 +43,8 @@ var AuthService = (function () {
         this.changeDetector.detectChanges();
     };
     AuthService.prototype.isLoggedIn = function () {
-        return true; //TODO: Remove!
-        // return tokenNotExpired();
+        //return true; //TODO: Remove!
+        return angular2_jwt_1.tokenNotExpired();
     };
     AuthService.prototype.isUserAdmin = function () {
         return true; //TODO: Remove!
@@ -54,6 +55,16 @@ var AuthService = (function () {
         // } catch(e) {
         //       return false;
         // }
+    };
+    AuthService.getUser = function () {
+        try {
+            // return JSON.parse(localStorage.getItem(
+            //     'profile'))['identities'][0]['user_id']
+            return JSON.parse(localStorage.getItem('profile'))['email'];
+        }
+        catch (e) {
+            alert('please log in!FT');
+        }
     };
     AuthService = __decorate([
         core_1.Injectable(), 

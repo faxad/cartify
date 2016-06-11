@@ -10,14 +10,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var mock_cart_1 = require('./mock-cart');
+var auth_service_1 = require('./auth.service');
 var CartService = (function () {
     function CartService() {
     }
     CartService.prototype.getCart = function () {
-        console.log(mock_cart_1.CART);
         return mock_cart_1.CART;
     };
-    CartService.prototype.addItem = function (item) { };
+    CartService.prototype.addItem = function (item) {
+        var found = false;
+        for (var _i = 0, CART_1 = mock_cart_1.CART; _i < CART_1.length; _i++) {
+            var cartItem = CART_1[_i];
+            if (cartItem['userId'] == auth_service_1.AuthService.getUser() && cartItem['item']['itemId'] == item['itemId']) {
+                cartItem['quantity'] = cartItem['quantity'] + 1;
+                found = true;
+            }
+        }
+        if (!found) {
+            this.getCart().push({
+                userId: 'fawad@outlook.com',
+                item: item,
+                quantity: 1,
+                unitPrice: 40.00,
+                paid: false,
+            });
+        }
+    };
     CartService.prototype.removeItem = function (item) { };
     CartService.prototype.checkOut = function () { };
     CartService.prototype.clear = function () { };

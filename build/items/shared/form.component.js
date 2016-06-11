@@ -39,11 +39,9 @@ var FormComponent = (function () {
         });
         if (this.item) {
             for (var key in this.customForm.controls) {
-                console.log(key);
                 this.customForm.controls[key]._value = this.item[key];
             }
         }
-        console.log(this.customForm.controls['itemName'].value);
         this.validService.configure(this.customForm, {
             'itemName': {
                 'condition': 'invalidName',

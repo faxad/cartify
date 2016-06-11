@@ -14,9 +14,11 @@ var item_service_1 = require('../shared/item.service');
 var star_component_1 = require('../shared/star.component');
 var item_filter_pipe_1 = require('./item-filter.pipe');
 var form_component_1 = require('../shared/form.component');
+var cart_service_1 = require('../shared/cart.service');
 var ItemListComponent = (function () {
-    function ItemListComponent(itemService) {
+    function ItemListComponent(itemService, cart) {
         this.itemService = itemService;
+        this.cart = cart;
         this.pageTitle = 'Item List';
         this.imgWidth = 100;
         this.imgMargin = 10;
@@ -40,7 +42,7 @@ var ItemListComponent = (function () {
             pipes: [item_filter_pipe_1.ItemFilterPipe],
             directives: [star_component_1.StarComponent, form_component_1.FormComponent, router_deprecated_1.ROUTER_DIRECTIVES],
         }), 
-        __metadata('design:paramtypes', [item_service_1.ItemService])
+        __metadata('design:paramtypes', [item_service_1.ItemService, cart_service_1.CartService])
     ], ItemListComponent);
     return ItemListComponent;
 }());

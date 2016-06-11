@@ -46,9 +46,9 @@ export class AuthService {
     }
 
     isLoggedIn(): boolean {
-        return true; //TODO: Remove!
+        //return true; //TODO: Remove!
         
-        // return tokenNotExpired();
+         return tokenNotExpired();
     }
 
     isUserAdmin(): boolean {
@@ -61,5 +61,16 @@ export class AuthService {
         // } catch(e) {
         //       return false;
         // }
+    }
+
+    static getUser(): string {
+        try{
+            // return JSON.parse(localStorage.getItem(
+            //     'profile'))['identities'][0]['user_id']
+            return JSON.parse(localStorage.getItem(
+                'profile'))['email']
+        } catch(e) {
+            alert('please log in!FT')
+        }
     }
 }
