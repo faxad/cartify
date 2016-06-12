@@ -36,7 +36,15 @@ var CartService = (function () {
             });
         }
     };
-    CartService.prototype.removeItem = function (item) { };
+    CartService.prototype.removeItem = function (item) {
+        this.getCart().pop(); // will be replaced with an actual remove
+    };
+    CartService.prototype.increaseQunatity = function (item) {
+        item.quantity = item.quantity + 1;
+    };
+    CartService.prototype.decreaseQunatity = function (item) {
+        item.quantity = item.quantity - 1;
+    };
     CartService.prototype.checkOut = function () { };
     CartService.prototype.clear = function () { };
     CartService = __decorate([

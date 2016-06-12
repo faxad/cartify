@@ -1,18 +1,28 @@
 <h4>Reached!</h4>
 
 <table class="table table-striped">
-	<tr>
-		<th>Item</th>
-		<th>Unit Price</th>
-		<th>Quantity</th>
-		<th>Net Price</th>
-		<th>Action</th>
+    <tr>
+        <th>Item</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Net Price</th>
+        <th></th>
     </tr>
-	<tr *ngFor='let c of cart'>
-		<td>{{c.item.itemName}}</td>
-		<td>{{c.item.price}}</td>
-		<td>{{c.quantity}}</td>
-		<td></td>
-		<td></td>
+    <tr *ngFor='let c of cart'>
+        <td>{{c.item.itemName}}</td>
+        <td>{{c.item.price}}</td>
+        <td>{{c.quantity}}</td>
+        <td></td>
+        <td>
+            <p>
+                <button type="button" class="btn btn-default btn-xs" (click)='cartService.increaseQunatity(c)'>
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-default btn-xs" (click)='cartService.decreaseQunatity(c)'>
+                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-danger btn-xs" (click)='cartService.removeItem(c)'>Delete</button>
+            </p>
+        </td>
     </tr>
 </table>

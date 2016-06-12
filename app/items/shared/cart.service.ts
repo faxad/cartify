@@ -35,7 +35,17 @@ export class CartService {
 		}
 	}
 
-	removeItem(item: IItem): void {}
+	removeItem(item: IItem): void {
+		this.getCart().pop() // will be replaced with an actual remove
+	}
+
+	increaseQunatity(item: IItem): void {
+		item.quantity = item.quantity + 1;
+	}
+
+	decreaseQunatity(item: IItem): void {
+		item.quantity = item.quantity - 1;
+	}
 
 	checkOut(): void {}
 
