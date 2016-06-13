@@ -5,13 +5,13 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 
 
+// Server Config
+
 const PORT=8080; 
 
 function handleRequest(request, response){
     try {
-        //log the request on console
         console.log(request.url);
-        //Disptach
         dispatcher.dispatch(request, response);
     } catch(err) {
         console.log(err);
@@ -24,9 +24,66 @@ server.listen(PORT, function(){
     console.log("Server listening on: http://localhost:%s", PORT);
 });
 
+var url = 'mongodb://fawad:fawad@ds013574.mlab.com:13574/foxtaildb';
 
-// Dispatcher
+// Static Config
+
 dispatcher.setStatic('resources');
+
+// Dispatcher: Get all items
+
+var getAllItems = function(db, callback) {
+   var cursor =db.collection('items').find();
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+         console.dir(doc);
+      } else {
+         callback();
+      }
+   });
+};
+
+dispatcher.onGet("/items", function(req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+
+    MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+      getAllItems(db, function() {
+          db.close();
+      });
+    });
+    res.end('Done!');
+}); 
+
+// Dispatcher: Get item by identifier
+
+var getItemById = function(db, id, callback) {
+   var cursor =db.collection('items').find({ "itemId": id });
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+         console.dir(doc);
+      } else {
+         callback();
+      }
+   });
+};
+
+dispatcher.onGet("/item/:id", function(req, res, id) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    console.log(id)
+    MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+      
+      getItemById(db, id, function() {
+          db.close();
+      });
+    });
+    res.end('Done!');
+});
+
+
 
 //A sample GET request    
 dispatcher.onGet("/page1", function(req, res) {
