@@ -1,11 +1,11 @@
 export interface IItem {
-	itemId: number;
-	itemName: string;
-	itemCode: string;
+	id: number;
+	name: string;
+	code: string;
 	releaseDate: string;
 	description: string;
-	price: number;
+	unitPrice: number;
 	quantity: number;
-	starRating: number;
+	rating: number;
 	imageUrl: string;
 }

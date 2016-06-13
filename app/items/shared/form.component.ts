@@ -26,8 +26,8 @@ export class FormComponent implements OnInit {
 
 	submitItem(form: any): void {
 		if (form.valid) {
-			this.itemName = form.value['itemName'];
-			this.itemCode = form.value['itemCode'];
+			this.itemName = form.value['name'];
+			this.itemCode = form.value['code'];
 			this.itemService.setItem(this.itemName, this.itemCode);
 			this.itemName = '';
 			this.itemCode = '';
@@ -39,10 +39,10 @@ export class FormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.customForm = this.fb.group({
-			'itemName': ['', Validators.compose(
+			'name': ['', Validators.compose(
 				[Validators.required,
 					ExtendedValidators.nameValidator])],
-			'itemCode': ['', Validators.required]
+			'code': ['', Validators.required]
 		});
 
 		if (this.item) {
@@ -54,7 +54,7 @@ export class FormComponent implements OnInit {
 		this.validService.configure(
 			this.customForm,
 			{
-				'itemName': {
+				'name': {
 					'condition': 'invalidName',
 					'message': 'Name must start with abc'
 				}

@@ -21,8 +21,8 @@ var FormComponent = (function () {
     }
     FormComponent.prototype.submitItem = function (form) {
         if (form.valid) {
-            this.itemName = form.value['itemName'];
-            this.itemCode = form.value['itemCode'];
+            this.itemName = form.value['name'];
+            this.itemCode = form.value['code'];
             this.itemService.setItem(this.itemName, this.itemCode);
             this.itemName = '';
             this.itemCode = '';
@@ -33,9 +33,9 @@ var FormComponent = (function () {
     };
     FormComponent.prototype.ngOnInit = function () {
         this.customForm = this.fb.group({
-            'itemName': ['', common_1.Validators.compose([common_1.Validators.required,
+            'name': ['', common_1.Validators.compose([common_1.Validators.required,
                     validators_1.ExtendedValidators.nameValidator])],
-            'itemCode': ['', common_1.Validators.required]
+            'code': ['', common_1.Validators.required]
         });
         if (this.item) {
             for (var key in this.customForm.controls) {
@@ -43,7 +43,7 @@ var FormComponent = (function () {
             }
         }
         this.validService.configure(this.customForm, {
-            'itemName': {
+            'name': {
                 'condition': 'invalidName',
                 'message': 'Name must start with abc'
             }

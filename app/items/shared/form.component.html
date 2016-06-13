@@ -9,13 +9,13 @@
         <form [ngFormModel]="customForm">
           <div class="form-group">
             <label for="productName">Product Name</label>
-            <input class="form-control" id="productName" placeholder="Name" [ngFormControl]="customForm.controls['itemName']">
-            <div *ngIf="validService.check('itemName').result" class="alert alert-danger">{{validService.check('itemName').message}}</div>
+            <input class="form-control" id="name" placeholder="Name" [ngFormControl]="customForm.controls['name']">
+            <div *ngIf="validService.check('name').result" class="alert alert-danger">{{validService.check('name').message}}</div>
           </div>
           <div class="form-group">
             <label for="productCode">Product Code</label>
-            <input class="form-control" id="productCode" placeholder="Code" [ngFormControl]="customForm.controls['itemCode']">
-            <div *ngIf="validService.check('itemCode').result" class="alert alert-danger">{{validService.check('itemCode').message}}</div>
+            <input class="form-control" id="code" placeholder="Code" [ngFormControl]="customForm.controls['code']">
+            <div *ngIf="validService.check('code').result" class="alert alert-danger">{{validService.check('code').message}}</div>
           </div>
           <div class="modal-footer">
             <button [disabled]="!customForm.valid" type="button" class="btn btn-default" data-dismiss="modal" (click)='submitItem(customForm)'>Save & Close</button>

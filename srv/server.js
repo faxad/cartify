@@ -3,11 +3,15 @@ var dispatcher = require('httpdispatcher');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
+var url = require('url');
+var query = require('querystring');
 
 
 // Server Config
 
-const PORT=8080; 
+const PORT=8080;
+var mongoDBUrl = 'mongodb://fawad:fawad@ds013574.mlab.com:13574/foxtaildb';
+
 
 function handleRequest(request, response){
     try {
@@ -23,8 +27,6 @@ var server = http.createServer(handleRequest);
 server.listen(PORT, function(){
     console.log("Server listening on: http://localhost:%s", PORT);
 });
-
-var url = 'mongodb://fawad:fawad@ds013574.mlab.com:13574/foxtaildb';
 
 // Static Config
 
@@ -46,8 +48,7 @@ var getAllItems = function(db, callback) {
 
 dispatcher.onGet("/items", function(req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
-
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(mongoDBUrl, function(err, db) {
       assert.equal(null, err);
       getAllItems(db, function() {
           db.close();
@@ -59,7 +60,7 @@ dispatcher.onGet("/items", function(req, res) {
 // Dispatcher: Get item by identifier
 
 var getItemById = function(db, id, callback) {
-   var cursor =db.collection('items').find({ "itemId": id });
+   var cursor =db.collection('items').find({ "itemId": parseInt(id) });
    cursor.each(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
@@ -70,27 +71,44 @@ var getItemById = function(db, id, callback) {
    });
 };
 
-dispatcher.onGet("/item/:id", function(req, res, id) {
+dispatcher.onGet("/item", function(req, res) {
+    var url_parts = url.parse(req.url,true);
+    console.log(url_parts.query);
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    console.log(id)
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(mongoDBUrl, function(err, db) {
       assert.equal(null, err);
       
-      getItemById(db, id, function() {
+      getItemById(db, url_parts.query.id, function() {
           db.close();
       });
     });
     res.end('Done!');
 });
 
+// Dispatcher: Set item
 
+            // var body='';
 
+            // req.on('data', function (data) {
+
+            //     body +=data;
+
+            // });
+
+            // req.on('end',function(){
+
+            //     var POST =  qs.parse(body);
+
+            //     console.log(POST);
+
+            // });
+            
 //A sample GET request    
 dispatcher.onGet("/page1", function(req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
 
     var url = 'mongodb://fawad:fawad@ds013574.mlab.com:13574/foxtaildb';
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(mongoDBUrl, function(err, db) {
       assert.equal(null, err);
       console.log("Connected correctly to server.");
       db.close();
@@ -134,7 +152,7 @@ dispatcher.onGet("/insert", function(req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
 
     var url = 'mongodb://fawad:fawad@ds013574.mlab.com:13574/foxtaildb';
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(mongoDBUrl, function(err, db) {
       assert.equal(null, err);
       // insertDocument(db, function() {
       //     db.close();

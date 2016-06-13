@@ -15,7 +15,7 @@ var ItemFilterPipe = (function () {
     ItemFilterPipe.prototype.transform = function (value, args) {
         var filter = args ? args.toLocaleLowerCase() : null;
         return filter ? value.filter(function (item) {
-            return item.itemName.toLocaleLowerCase().indexOf(filter) != -1;
+            return item.name.toLocaleLowerCase().indexOf(filter) != -1;
         }) : value;
     };
     ItemFilterPipe = __decorate([

@@ -16,7 +16,7 @@ export class CartService {
 		let found: boolean = false;
 
 		for (let cartItem of CART) {
-			if (cartItem['userId'] == AuthService.getUser() && cartItem['item']['itemId'] == item['itemId']) {
+			if (cartItem['userId'] == AuthService.getUser() && cartItem['item']['id'] == item['id']) {
 				cartItem['quantity'] = cartItem['quantity'] + 1;
 				found = true;
 			}

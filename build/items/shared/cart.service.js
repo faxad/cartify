@@ -21,7 +21,7 @@ var CartService = (function () {
         var found = false;
         for (var _i = 0, CART_1 = mock_cart_1.CART; _i < CART_1.length; _i++) {
             var cartItem = CART_1[_i];
-            if (cartItem['userId'] == auth_service_1.AuthService.getUser() && cartItem['item']['itemId'] == item['itemId']) {
+            if (cartItem['userId'] == auth_service_1.AuthService.getUser() && cartItem['item']['id'] == item['id']) {
                 cartItem['quantity'] = cartItem['quantity'] + 1;
                 found = true;
             }
