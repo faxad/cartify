@@ -32,7 +32,10 @@ export class ItemListComponent implements OnInit {
 
 	ngOnInit(): void {
 		console.log('inside OnInit hook')
-		this.items = this.itemService.getItems();
+		//this.items = this.itemService.getItems();
+		this.itemService.getItems().subscribe(
+			items => this.items = items,
+			error => console.log(error));
 	}
 
 	onRatingClicked(message: string): void {

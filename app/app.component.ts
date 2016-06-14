@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig } from '@angular/router-deprecated';
+import { HTTP_PROVIDERS } from '@angular/http';
+import 'rxjs/Rx';
 
 import { ItemComponent } from './items/item/item.component';
 import { ItemDetailComponent } from './items/item-detail/item-detail.component';
@@ -10,7 +12,7 @@ import { AuthService } from './items/shared/auth.service'
 @Component({
 	selector: 'app-content',
 	directives: [ROUTER_DIRECTIVES, ItemComponent, ItemCartComponent], // using component as directive
-	providers: [ROUTER_PROVIDERS, AuthService],
+	providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, AuthService],
 	template: `
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="container">

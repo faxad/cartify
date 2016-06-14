@@ -1,12 +1,26 @@
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+
 
 import { ITEMS } from './mock-items';
 import { IItem } from './item.interface';
 
 @Injectable()
 export class ItemService {
-	getItems(): IItem[] {
-		return ITEMS;
+	private _url = "http://localhost:8080/items"
+	constructor(private _http: Http) {}
+
+	handleError(error, Response) {
+		console.error(error);
+		return Observable.throw(error.json().error || "Service Error");
+	}
+
+	getItems(): Observable<IItem[]> {
+		return this._http.get(this._url)
+				.map((response: Response) => <IItem[]>response.json())
+				.catch(this.handleError)
+				.do(data => console.log(JSON.stringify(data)));
 	}
 
 	getItem(): IItem {
@@ -24,16 +38,16 @@ export class ItemService {
 	}
 
 	setItem(name: string, code: string) {
-		this.getItems().push({
-			"id": 9,
-			"name": name,
-			"code": code,
-			"releaseDate": "March 19, 2016",
-			"description": "Dummy description",
-			"unitPrice": 11.11,
-			"quantity": 50,
-			"rating": 0.1,
-			"imageUrl": "http://placehold.it/320x150"
-		});
+		// this.getItems().push({
+		// 	"id": 9,
+		// 	"name": name,
+		// 	"code": code,
+		// 	"releaseDate": "March 19, 2016",
+		// 	"description": "Dummy description",
+		// 	"unitPrice": 11.11,
+		// 	"quantity": 50,
+		// 	"rating": 0.1,
+		// 	"imageUrl": "http://placehold.it/320x150"
+		// });
 	}
 }

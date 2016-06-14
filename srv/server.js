@@ -36,25 +36,24 @@ dispatcher.setStatic('resources');
 
 var getAllItems = function(db, callback) {
    var cursor =db.collection('items').find();
-   cursor.each(function(err, doc) {
+   cursor.toArray(function(err, doc) {
       assert.equal(err, null);
       if (doc != null) {
-         console.dir(doc);
-      } else {
-         callback();
+        callback(doc)
       }
    });
 };
 
 dispatcher.onGet("/items", function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', "*");
     res.writeHead(200, {'Content-Type': 'text/plain'});
     MongoClient.connect(mongoDBUrl, function(err, db) {
       assert.equal(null, err);
-      getAllItems(db, function() {
+      getAllItems(db, function(result) {
+          res.end(JSON.stringify(result));
           db.close();
       });
     });
-    res.end('Done!');
 }); 
 
 // Dispatcher: Get item by identifier

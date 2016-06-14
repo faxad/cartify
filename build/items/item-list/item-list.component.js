@@ -28,8 +28,10 @@ var ItemListComponent = (function () {
         this.showImg = !this.showImg;
     };
     ItemListComponent.prototype.ngOnInit = function () {
+        var _this = this;
         console.log('inside OnInit hook');
-        this.items = this.itemService.getItems();
+        //this.items = this.itemService.getItems();
+        this.itemService.getItems().subscribe(function (items) { return _this.items = items; }, function (error) { return console.log(error); });
     };
     ItemListComponent.prototype.onRatingClicked = function (message) {
         this.pageTitle = 'Item List: ' + message;
