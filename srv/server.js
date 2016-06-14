@@ -101,8 +101,9 @@ dispatcher.onPost("/insert", function(req, res) {
       assert.equal(null, err);
       //console.log(req.body);
       addItem(db, req.body, function() {
+          res.end(JSON.stringify({ msg: '' }))
           db.close();
       });
     });
-    res.end();
+    //res.end('ABC!');
 }); 
