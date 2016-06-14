@@ -29,10 +29,10 @@ export class FormComponent implements OnInit {
 			//console.log(form.value)
 			this.itemName = form.value['name'];
 			this.itemCode = form.value['code'];
-			this.itemService.setItem(form.value);
-			// this.itemService.setItem(form.value).subscribe(
-			// 	items => console.log('DONE'),
-			// 	error => console.log(error));
+			//this.itemService.setItem(form.value);
+			this.itemService.setItem(form.value).subscribe(
+				item => console.log(item),
+				error => console.log(error));
 
 			this.itemName = '';
 			this.itemCode = '';

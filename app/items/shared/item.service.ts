@@ -36,11 +36,11 @@ export class ItemService {
 		}
 	}
 
-	setItem(body: any) {
+	setItem(body: any): Observable<IItem> {
 		console.log(body);
 		console.log(JSON.stringify(body));
 		return this._http.post("http://localhost:8080/insert", JSON.stringify(body))
-			//.map((res: Response) => res.json());
+			.map((res: Response) => res.json());
 	}
 
 	// setItem(name: string, code: string) {

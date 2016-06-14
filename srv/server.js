@@ -94,8 +94,6 @@ var addItem = function(db, body, callback) {
 };
 
 dispatcher.onPost("/insert", function(req, res) {
-    console.log("ENTERED");
-
     res.setHeader('Access-Control-Allow-Origin', "*");
     res.writeHead(200, {'Content-Type': 'application/json'});
 
@@ -106,5 +104,5 @@ dispatcher.onPost("/insert", function(req, res) {
           db.close();
       });
     });
-    res.end('Done!');
+    res.end();
 }); 
