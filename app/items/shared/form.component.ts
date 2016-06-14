@@ -26,9 +26,14 @@ export class FormComponent implements OnInit {
 
 	submitItem(form: any): void {
 		if (form.valid) {
+			//console.log(form.value)
 			this.itemName = form.value['name'];
 			this.itemCode = form.value['code'];
-			this.itemService.setItem(this.itemName, this.itemCode);
+			this.itemService.setItem(form.value);
+			// this.itemService.setItem(form.value).subscribe(
+			// 	items => console.log('DONE'),
+			// 	error => console.log(error));
+
 			this.itemName = '';
 			this.itemCode = '';
 		}

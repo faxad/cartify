@@ -14,14 +14,13 @@ var Observable_1 = require('rxjs/Observable');
 var ItemService = (function () {
     function ItemService(_http) {
         this._http = _http;
-        this._url = "http://localhost:8080/items";
     }
     ItemService.prototype.handleError = function (error, Response) {
         console.error(error);
         return Observable_1.Observable.throw(error.json().error || "Service Error");
     };
     ItemService.prototype.getItems = function () {
-        return this._http.get(this._url)
+        return this._http.get("http://localhost:8080/items")
             .map(function (response) { return response.json(); })
             .catch(this.handleError)
             .do(function (data) { return console.log(JSON.stringify(data)); });
@@ -39,18 +38,11 @@ var ItemService = (function () {
             "imageUrl": "http://placehold.it/320x150"
         };
     };
-    ItemService.prototype.setItem = function (name, code) {
-        // this.getItems().push({
-        // 	"id": 9,
-        // 	"name": name,
-        // 	"code": code,
-        // 	"releaseDate": "March 19, 2016",
-        // 	"description": "Dummy description",
-        // 	"unitPrice": 11.11,
-        // 	"quantity": 50,
-        // 	"rating": 0.1,
-        // 	"imageUrl": "http://placehold.it/320x150"
-        // });
+    ItemService.prototype.setItem = function (body) {
+        console.log(body);
+        console.log(JSON.stringify(body));
+        return this._http.post("http://localhost:8080/insert", JSON.stringify(body));
+        //.map((res: Response) => res.json());
     };
     ItemService = __decorate([
         core_1.Injectable(), 

@@ -8,7 +8,6 @@ import { IItem } from './item.interface';
 
 @Injectable()
 export class ItemService {
-	private _url = "http://localhost:8080/items"
 	constructor(private _http: Http) {}
 
 	handleError(error, Response) {
@@ -17,7 +16,7 @@ export class ItemService {
 	}
 
 	getItems(): Observable<IItem[]> {
-		return this._http.get(this._url)
+		return this._http.get("http://localhost:8080/items")
 				.map((response: Response) => <IItem[]>response.json())
 				.catch(this.handleError)
 				.do(data => console.log(JSON.stringify(data)));
@@ -37,17 +36,24 @@ export class ItemService {
 		}
 	}
 
-	setItem(name: string, code: string) {
-		// this.getItems().push({
-		// 	"id": 9,
-		// 	"name": name,
-		// 	"code": code,
-		// 	"releaseDate": "March 19, 2016",
-		// 	"description": "Dummy description",
-		// 	"unitPrice": 11.11,
-		// 	"quantity": 50,
-		// 	"rating": 0.1,
-		// 	"imageUrl": "http://placehold.it/320x150"
-		// });
+	setItem(body: any) {
+		console.log(body);
+		console.log(JSON.stringify(body));
+		return this._http.post("http://localhost:8080/insert", JSON.stringify(body))
+			//.map((res: Response) => res.json());
 	}
+
+	// setItem(name: string, code: string) {
+	// 	// this.getItems().push({
+	// 	// 	"id": 9,
+	// 	// 	"name": name,
+	// 	// 	"code": code,
+	// 	// 	"releaseDate": "March 19, 2016",
+	// 	// 	"description": "Dummy description",
+	// 	// 	"unitPrice": 11.11,
+	// 	// 	"quantity": 50,
+	// 	// 	"rating": 0.1,
+	// 	// 	"imageUrl": "http://placehold.it/320x150"
+	// 	// });
+	// }
 }

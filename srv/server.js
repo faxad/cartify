@@ -71,7 +71,7 @@ var getItemById = function(db, id, callback) {
 };
 
 dispatcher.onGet("/item", function(req, res) {
-    var url_parts = url.parse(req.url,true);
+    var url_parts = url.parse(req.url, true);
     console.log(url_parts.query);
     res.writeHead(200, {'Content-Type': 'text/plain'});
     MongoClient.connect(mongoDBUrl, function(err, db) {
@@ -94,10 +94,15 @@ var addItem = function(db, body, callback) {
 };
 
 dispatcher.onPost("/insert", function(req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
+    console.log("ENTERED");
+
+    res.setHeader('Access-Control-Allow-Origin', "*");
+    res.writeHead(200, {'Content-Type': 'application/json'});
+
     MongoClient.connect(mongoDBUrl, function(err, db) {
       assert.equal(null, err);
-      insertDocument(db, req.body, function() {
+      //console.log(req.body);
+      addItem(db, req.body, function() {
           db.close();
       });
     });
