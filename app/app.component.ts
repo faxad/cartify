@@ -3,15 +3,15 @@ import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig } from '@angular/route
 import { HTTP_PROVIDERS } from '@angular/http';
 import 'rxjs/Rx';
 
-import { ItemComponent } from './items/item/item.component';
-import { ItemDetailComponent } from './items/item-detail/item-detail.component';
-import { ItemCartComponent } from './items/item-cart/item-cart.component';
-import { AuthService } from './items/shared/auth.service'
+import { ItemListComponent } from './item-list/item-list.component';
+import { ItemDetailComponent } from './item-detail/item-detail.component';
+import { ItemCartComponent } from './item-cart/item-cart.component';
+import { AuthService } from './shared/auth.service'
 
 
 @Component({
 	selector: 'app-content',
-	directives: [ROUTER_DIRECTIVES, ItemComponent, ItemCartComponent], // using component as directive
+	directives: [ROUTER_DIRECTIVES, ItemListComponent, ItemCartComponent], // using component as directive
 	providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, AuthService],
 	template: `
 		<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -42,7 +42,7 @@ import { AuthService } from './items/shared/auth.service'
 	`,
 })
 @RouteConfig([
-		{ path: '/items', name: 'Items', component: ItemComponent, useAsDefault: true },
+		{ path: '/items', name: 'Items', component: ItemListComponent, useAsDefault: true },
 		{ path: '/item/:id', name: 'Detail', component: ItemDetailComponent },
 		{ path: '/cart/:userid', name: 'Cart', component: ItemCartComponent }
 ])
