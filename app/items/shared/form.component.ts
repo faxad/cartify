@@ -27,6 +27,7 @@ export class FormComponent implements OnInit {
 	submitItem(form: any): void {
 		if (form.valid) {
 			//console.log(form.value)
+			this.itemName = form.value['id'];
 			this.itemName = form.value['name'];
 			this.itemCode = form.value['code'];
 			//this.itemService.setItem(form.value);
@@ -44,6 +45,7 @@ export class FormComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.customForm = this.fb.group({
+			'id': ['', Validators.required],
 			'name': ['', Validators.compose(
 				[Validators.required,
 					ExtendedValidators.nameValidator])],

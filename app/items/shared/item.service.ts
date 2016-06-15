@@ -39,7 +39,7 @@ export class ItemService {
 	setItem(body: any): Observable<IItem> {
 		console.log(body);
 		console.log(JSON.stringify(body));
-		return this._http.post("http://localhost:8080/insert", JSON.stringify(body))
+		return this._http.post("http://localhost:8080/update", JSON.stringify(body))
 			.map((res: Response) => res.json());
 	}
 

@@ -41,7 +41,7 @@ var ItemService = (function () {
     ItemService.prototype.setItem = function (body) {
         console.log(body);
         console.log(JSON.stringify(body));
-        return this._http.post("http://localhost:8080/insert", JSON.stringify(body))
+        return this._http.post("http://localhost:8080/update", JSON.stringify(body))
             .map(function (res) { return res.json(); });
     };
     ItemService = __decorate([
