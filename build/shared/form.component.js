@@ -18,15 +18,14 @@ var FormComponent = (function () {
         this.itemService = itemService;
         this.validService = validService;
         this.fb = fb;
+        this.isCreateForm = true;
     }
     FormComponent.prototype.submitItem = function (form) {
         if (form.valid) {
-            //console.log(form.value)
-            this.itemName = form.value['id'];
             this.itemName = form.value['name'];
             this.itemCode = form.value['code'];
-            //this.itemService.setItem(form.value);
-            this.itemService.setItem(form.value).subscribe(function (item) { return console.log(item); }, function (error) { return console.log(error); });
+            var action = this.isCreateForm ? 'addItem' : 'updateItem';
+            this.itemService[action](form.value).subscribe(function (item) { return console.log(item); }, function (error) { return console.log(error); });
             this.itemName = '';
             this.itemCode = '';
         }
@@ -42,6 +41,7 @@ var FormComponent = (function () {
             'code': ['', common_1.Validators.required]
         });
         if (this.item) {
+            this.isCreateForm = false;
             for (var key in this.customForm.controls) {
                 this.customForm.controls[key]._value = this.item[key];
             }

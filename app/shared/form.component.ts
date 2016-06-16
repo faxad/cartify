@@ -14,6 +14,7 @@ import { IItem } from '../shared/item.interface';
 	providers: [ValidService]
 })
 export class FormComponent implements OnInit {
+	isCreateForm: boolean = true;
 	@Input() modalId: string;
 	@Input() item: IItem;
 	customForm: ControlGroup;
@@ -26,14 +27,14 @@ export class FormComponent implements OnInit {
 
 	submitItem(form: any): void {
 		if (form.valid) {
-			//console.log(form.value)
-			this.itemName = form.value['id'];
 			this.itemName = form.value['name'];
 			this.itemCode = form.value['code'];
-			//this.itemService.setItem(form.value);
-			this.itemService.setItem(form.value).subscribe(
+
+			let action: string = this.isCreateForm ? 'addItem' : 'updateItem';
+
+			this.itemService[action](form.value).subscribe(
 				item => console.log(item),
-				error => console.log(error));
+				error => console.log(error));	
 
 			this.itemName = '';
 			this.itemCode = '';
@@ -53,6 +54,7 @@ export class FormComponent implements OnInit {
 		});
 
 		if (this.item) {
+			this.isCreateForm = false;
 			for (let key in this.customForm.controls) {
 				this.customForm.controls[key]._value = this.item[key]
 			}

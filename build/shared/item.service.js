@@ -38,10 +38,16 @@ var ItemService = (function () {
             "imageUrl": "http://placehold.it/320x150"
         };
     };
-    ItemService.prototype.setItem = function (body) {
+    ItemService.prototype.addItem = function (body) {
         console.log(body);
         console.log(JSON.stringify(body));
         return this._http.post("http://localhost:8080/insert", JSON.stringify(body))
+            .map(function (res) { return res.json(); });
+    };
+    ItemService.prototype.updateItem = function (body) {
+        console.log(body);
+        console.log(JSON.stringify(body));
+        return this._http.post("http://localhost:8080/update", JSON.stringify(body))
             .map(function (res) { return res.json(); });
     };
     ItemService = __decorate([
