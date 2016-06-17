@@ -20,6 +20,11 @@ export class ItemCartComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.cart = this.cartService.getCart();
+		//this.cart = this.cartService.getCart();
+		this.cartService.getCart().subscribe(
+			cart => this.cart = cart,
+			error => console.log(error));
+
+		console.log(this.cart)
 	}
 }

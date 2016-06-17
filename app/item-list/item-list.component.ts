@@ -35,8 +35,6 @@ export class ItemListComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		console.log('inside OnInit hook')
-		//this.items = this.itemService.getItems();
 		this.itemService.getItems().subscribe(
 			items => this.items = items,
 			error => console.log(error));
@@ -44,5 +42,13 @@ export class ItemListComponent implements OnInit {
 
 	onRatingClicked(message: string): void {
 		this.pageTitle = 'Item List: ' + message;
+	}
+
+	addItemToCart(item: any): void {
+		this.cart.itemExists(item, function(service, item) {
+			service.addItem(item).subscribe(
+				items => console.log("Added to Cart"),
+				error => console.log(error));
+		})
 	}
 }

@@ -3,7 +3,7 @@ import { IItem } from './item.interface';
 
 export interface ICart {
 	userId: string;
-	item: IItem;
+	itemId: number;
 	quantity: number;
 	unitPrice: number;
 	paid: boolean;

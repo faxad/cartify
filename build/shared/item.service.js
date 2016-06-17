@@ -22,8 +22,8 @@ var ItemService = (function () {
     ItemService.prototype.getItems = function () {
         return this._http.get("http://localhost:8080/items")
             .map(function (response) { return response.json(); })
-            .catch(this.handleError)
-            .do(function (data) { return console.log(JSON.stringify(data)); });
+            .catch(this.handleError);
+        //.do(data => console.log(JSON.stringify(data)));
     };
     ItemService.prototype.getItem = function () {
         return {
@@ -39,14 +39,14 @@ var ItemService = (function () {
         };
     };
     ItemService.prototype.addItem = function (body) {
-        console.log(body);
-        console.log(JSON.stringify(body));
+        //console.log(body);
+        //console.log(JSON.stringify(body));
         return this._http.post("http://localhost:8080/insert", JSON.stringify(body))
             .map(function (res) { return res.json(); });
     };
     ItemService.prototype.updateItem = function (body) {
-        console.log(body);
-        console.log(JSON.stringify(body));
+        //console.log(body);
+        //console.log(JSON.stringify(body));
         return this._http.post("http://localhost:8080/update", JSON.stringify(body))
             .map(function (res) { return res.json(); });
     };

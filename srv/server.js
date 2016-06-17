@@ -131,3 +131,54 @@ dispatcher.onPost("/update", function(req, res) {
       });
     });
 }); 
+
+/////////////// CART////////////////////////////
+
+// Dispatcher: Get cart items by user identifier
+
+var getUserCart = function(db, userId, callback) {
+   var cursor =db.collection('cart').find({ "userId": userId });
+   cursor.toArray(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        callback(doc)
+      }
+   });
+};
+
+
+dispatcher.onGet("/cart", function(req, res) {
+    var url_parts = url.parse(req.url, true);
+    res.setHeader('Access-Control-Allow-Origin', "*");
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    MongoClient.connect(mongoDBUrl, function(err, db) {
+      assert.equal(null, err);
+      getUserCart(db, url_parts.query.userId, function(result) {
+          res.end(JSON.stringify(result));
+          db.close();
+      });
+    });
+});
+
+// Dispatcher: Set cart
+
+var addCartItem = function(db, body, callback) {
+    db.collection('cart').insertOne(JSON.parse(body), function(err, result) {
+    assert.equal(err, null);
+    console.log("Inserted a document into the cart collection.");
+    callback();
+  });
+};
+
+dispatcher.onPost("/add", function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', "*");
+    res.writeHead(200, {'Content-Type': 'application/json'});
+
+    MongoClient.connect(mongoDBUrl, function(err, db) {
+      assert.equal(null, err);
+      addCartItem(db, req.body, function() {
+          res.end(JSON.stringify({ msg: '' }))
+          db.close();
+      });
+    });
+}); 

@@ -4,39 +4,48 @@ import { IItem } from './item.interface';
 import { ICart } from './cart.interface';
 import { CART } from './mock-cart';
 import { AuthService } from './auth.service';
-
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class CartService {
-	getCart(): ICart[] {
-		return CART;
+	constructor(private _http: Http) { }
+
+	handleError(error, Response) {
+		console.error(error);
+		return Observable.throw(error.json().error || "Service Error");
 	}
 
-	addItem(item: IItem): void {
-		let found: boolean = false;
+	getCart(): Observable<ICart[]> {
+		return this._http.get("http://localhost:8080/cart?userId=" + AuthService.getUser())
+			.map((response: Response) => <ICart[]>response.json())
+			.catch(this.handleError)
+			//.do(data => console.log(JSON.stringify(data)));
+	}
 
-		for (let cartItem of CART) {
-			if (cartItem['userId'] == AuthService.getUser() && cartItem['item']['id'] == item['id']) {
-				cartItem['quantity'] = cartItem['quantity'] + 1;
-				found = true;
-			}
+	addItem(item: IItem): Observable<ICart> {
+		let body: any = {
+			"userId": AuthService.getUser(),
+			"itemId": item.id
 		}
 
-		if (!found) {
-			this.getCart().push(
-				{
-					userId: 'fawad@outlook.com',
-					item: item,
-					quantity: 1,
-					unitPrice: 40.00,
-					paid: false,
+		return this._http.post("http://localhost:8080/add", JSON.stringify(body))
+			.map((res: Response) => res.json());
+	}
+
+	itemExists(item: IItem, callback): void {
+		this.getCart().subscribe(
+			cart => {
+				for (let cartItem of cart) {
+					if (cartItem['itemId'] == item['id']) { return }
 				}
-			)
-		}
+				callback(this, item);
+			},
+			error => console.log(error));
 	}
 
 	removeItem(item: IItem): void {
-		this.getCart().pop() // will be replaced with an actual remove
+		//this.getCart().pop() // will be replaced with an actual remove
 	}
 
 	increaseQunatity(item: IItem): void {

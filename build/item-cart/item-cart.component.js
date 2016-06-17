@@ -19,7 +19,10 @@ var ItemCartComponent = (function () {
         this.parmValue = this._routerParams.get('userid');
     }
     ItemCartComponent.prototype.ngOnInit = function () {
-        this.cart = this.cartService.getCart();
+        var _this = this;
+        //this.cart = this.cartService.getCart();
+        this.cartService.getCart().subscribe(function (cart) { return _this.cart = cart; }, function (error) { return console.log(error); });
+        console.log(this.cart);
     };
     ItemCartComponent = __decorate([
         core_1.Component({

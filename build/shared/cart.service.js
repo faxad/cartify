@@ -9,35 +9,45 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var mock_cart_1 = require('./mock-cart');
 var auth_service_1 = require('./auth.service');
+var http_1 = require('@angular/http');
+var Observable_1 = require('rxjs/Observable');
 var CartService = (function () {
-    function CartService() {
+    function CartService(_http) {
+        this._http = _http;
     }
+    CartService.prototype.handleError = function (error, Response) {
+        console.error(error);
+        return Observable_1.Observable.throw(error.json().error || "Service Error");
+    };
     CartService.prototype.getCart = function () {
-        return mock_cart_1.CART;
+        return this._http.get("http://localhost:8080/cart?userId=" + auth_service_1.AuthService.getUser())
+            .map(function (response) { return response.json(); })
+            .catch(this.handleError);
+        //.do(data => console.log(JSON.stringify(data)));
     };
     CartService.prototype.addItem = function (item) {
-        var found = false;
-        for (var _i = 0, CART_1 = mock_cart_1.CART; _i < CART_1.length; _i++) {
-            var cartItem = CART_1[_i];
-            if (cartItem['userId'] == auth_service_1.AuthService.getUser() && cartItem['item']['id'] == item['id']) {
-                cartItem['quantity'] = cartItem['quantity'] + 1;
-                found = true;
+        var body = {
+            "userId": auth_service_1.AuthService.getUser(),
+            "itemId": item.id
+        };
+        return this._http.post("http://localhost:8080/add", JSON.stringify(body))
+            .map(function (res) { return res.json(); });
+    };
+    CartService.prototype.itemExists = function (item, callback) {
+        var _this = this;
+        this.getCart().subscribe(function (cart) {
+            for (var _i = 0, cart_1 = cart; _i < cart_1.length; _i++) {
+                var cartItem = cart_1[_i];
+                if (cartItem['itemId'] == item['id']) {
+                    return;
+                }
             }
-        }
-        if (!found) {
-            this.getCart().push({
-                userId: 'fawad@outlook.com',
-                item: item,
-                quantity: 1,
-                unitPrice: 40.00,
-                paid: false,
-            });
-        }
+            callback(_this, item);
+        }, function (error) { return console.log(error); });
     };
     CartService.prototype.removeItem = function (item) {
-        this.getCart().pop(); // will be replaced with an actual remove
+        //this.getCart().pop() // will be replaced with an actual remove
     };
     CartService.prototype.increaseQunatity = function (item) {
         item.quantity = item.quantity + 1;
@@ -49,7 +59,7 @@ var CartService = (function () {
     CartService.prototype.clear = function () { };
     CartService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], CartService);
     return CartService;
 }());

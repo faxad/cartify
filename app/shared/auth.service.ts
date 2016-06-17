@@ -68,7 +68,7 @@ export class AuthService {
             // return JSON.parse(localStorage.getItem(
             //     'profile'))['identities'][0]['user_id']
             return JSON.parse(localStorage.getItem(
-                'profile'))['email']
+                'profile'))['identities'][0]['user_id']
         } catch(e) {
             alert('please log in!FT')
         }

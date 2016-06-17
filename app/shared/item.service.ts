@@ -19,7 +19,7 @@ export class ItemService {
 		return this._http.get("http://localhost:8080/items")
 				.map((response: Response) => <IItem[]>response.json())
 				.catch(this.handleError)
-				.do(data => console.log(JSON.stringify(data)));
+				//.do(data => console.log(JSON.stringify(data)));
 	}
 
 	getItem(): IItem {
@@ -37,15 +37,15 @@ export class ItemService {
 	}
 
 	addItem(body: any): Observable<IItem> {
-		console.log(body);
-		console.log(JSON.stringify(body));
+		//console.log(body);
+		//console.log(JSON.stringify(body));
 		return this._http.post("http://localhost:8080/insert", JSON.stringify(body))
 			.map((res: Response) => res.json());
 	}
 
 	updateItem(body: any): Observable<IItem> {
-		console.log(body);
-		console.log(JSON.stringify(body));
+		//console.log(body);
+		//console.log(JSON.stringify(body));
 		return this._http.post("http://localhost:8080/update", JSON.stringify(body))
 			.map((res: Response) => res.json());
 	}
