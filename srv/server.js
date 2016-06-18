@@ -181,4 +181,48 @@ dispatcher.onPost("/add", function(req, res) {
           db.close();
       });
     });
+});
+
+// Dispatcher: Get cart item by identifier
+
+var getCartItemById = function(db, id, callback) {
+  console.log(id)
+   //oid = new ObjectId(id);
+   var cursor =db.collection('cart').find({"itemId": id });
+   cursor.each(function(err, doc) {
+      assert.equal(err, null);
+      if (doc != null) {
+        console.log(doc)
+        callback(doc)
+      }
+   });
+};
+
+// Dispatcher: Update cart item
+
+var updateCartItem = function(db, body, callback) {
+    body = JSON.parse(body)
+    body._id = new ObjectId(body._id)
+    getCartItemById(db, body.itemId, function(r) {
+        db.collection('cart').updateOne(
+          r, {$set: body}, function(err, result) {
+        assert.equal(err, null);
+        console.log("Updated a document in the cart collection.");
+        callback();
+      });
+    });
+
+};
+
+dispatcher.onPost("/revise", function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', "*");
+    res.writeHead(200, {'Content-Type': 'application/json'});
+
+    MongoClient.connect(mongoDBUrl, function(err, db) {
+      assert.equal(null, err);
+      updateCartItem(db, req.body, function() {
+          res.end(JSON.stringify({ msg: '' }))
+          db.close();
+      });
+    });
 }); 

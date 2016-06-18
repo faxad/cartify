@@ -26,7 +26,8 @@ export class CartService {
 	addItem(item: IItem): Observable<ICart> {
 		let body: any = {
 			"userId": AuthService.getUser(),
-			"itemId": item.id
+			"itemId": item.id,
+			"quantity": 1
 		}
 
 		return this._http.post("http://localhost:8080/add", JSON.stringify(body))
@@ -48,12 +49,18 @@ export class CartService {
 		//this.getCart().pop() // will be replaced with an actual remove
 	}
 
-	increaseQunatity(item: IItem): void {
+	increaseQunatity(item: ICart): Observable<ICart> {
 		item.quantity = item.quantity + 1;
+		console.log(item)
+		return this._http.post("http://localhost:8080/revise", JSON.stringify(item))
+			.map((res: Response) => res.json());
 	}
 
-	decreaseQunatity(item: IItem): void {
+	decreaseQunatity(item: ICart): Observable<ICart> {
 		item.quantity = item.quantity - 1;
+		console.log(item)
+		return this._http.post("http://localhost:8080/revise", JSON.stringify(item))
+			.map((res: Response) => res.json());
 	}
 
 	checkOut(): void {}

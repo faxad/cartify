@@ -27,4 +27,16 @@ export class ItemCartComponent implements OnInit {
 
 		console.log(this.cart)
 	}
+
+	increaseQuantity(item: ICart): void {
+		this.cartService.increaseQunatity(item).subscribe(
+			items => console.log("Incremented"),
+			error => console.log(error));
+	}
+
+	decreaseQunatity(item: ICart): void {
+		this.cartService.decreaseQunatity(item).subscribe(
+			items => console.log("Incremented"),
+			error => console.log(error));
+	}
 }

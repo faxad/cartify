@@ -24,6 +24,12 @@ var ItemCartComponent = (function () {
         this.cartService.getCart().subscribe(function (cart) { return _this.cart = cart; }, function (error) { return console.log(error); });
         console.log(this.cart);
     };
+    ItemCartComponent.prototype.increaseQuantity = function (item) {
+        this.cartService.increaseQunatity(item).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });
+    };
+    ItemCartComponent.prototype.decreaseQunatity = function (item) {
+        this.cartService.decreaseQunatity(item).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });
+    };
     ItemCartComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/item-cart/item-cart.component.html',

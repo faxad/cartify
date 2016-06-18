@@ -29,7 +29,8 @@ var CartService = (function () {
     CartService.prototype.addItem = function (item) {
         var body = {
             "userId": auth_service_1.AuthService.getUser(),
-            "itemId": item.id
+            "itemId": item.id,
+            "quantity": 1
         };
         return this._http.post("http://localhost:8080/add", JSON.stringify(body))
             .map(function (res) { return res.json(); });
@@ -51,9 +52,15 @@ var CartService = (function () {
     };
     CartService.prototype.increaseQunatity = function (item) {
         item.quantity = item.quantity + 1;
+        console.log(item);
+        return this._http.post("http://localhost:8080/revise", JSON.stringify(item))
+            .map(function (res) { return res.json(); });
     };
     CartService.prototype.decreaseQunatity = function (item) {
         item.quantity = item.quantity - 1;
+        console.log(item);
+        return this._http.post("http://localhost:8080/revise", JSON.stringify(item))
+            .map(function (res) { return res.json(); });
     };
     CartService.prototype.checkOut = function () { };
     CartService.prototype.clear = function () { };
