@@ -226,3 +226,30 @@ dispatcher.onPost("/revise", function(req, res) {
       });
     });
 }); 
+
+// Dispatcher: Remove cart item
+
+var removeCartItem = function(db, body, callback) {
+    body = JSON.parse(body)
+    body._id = new ObjectId(body._id)
+
+    db.collection('cart').deleteOne(body, function(err, result) {
+      assert.equal(err, null);
+      console.log("Deleted a document in the cart collection.");
+      callback();
+    });
+
+};
+
+dispatcher.onPost("/remove", function(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', "*");
+    res.writeHead(200, {'Content-Type': 'application/json'});
+
+    MongoClient.connect(mongoDBUrl, function(err, db) {
+      assert.equal(null, err);
+      removeCartItem(db, req.body, function() {
+          res.end(JSON.stringify({ msg: '' }))
+          db.close();
+      });
+    });
+}); 

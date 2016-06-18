@@ -28,7 +28,10 @@ var ItemCartComponent = (function () {
         this.cartService.increaseQunatity(item).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });
     };
     ItemCartComponent.prototype.decreaseQunatity = function (item) {
-        this.cartService.decreaseQunatity(item).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });
+        this.cartService.decreaseQunatity(item).subscribe(function (items) { return console.log("Decremented"); }, function (error) { return console.log(error); });
+    };
+    ItemCartComponent.prototype.removeItem = function (item) {
+        this.cartService.removeItem(item).subscribe(function (items) { return console.log("Removed"); }, function (error) { return console.log(error); });
     };
     ItemCartComponent = __decorate([
         core_1.Component({

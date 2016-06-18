@@ -36,7 +36,13 @@ export class ItemCartComponent implements OnInit {
 
 	decreaseQunatity(item: ICart): void {
 		this.cartService.decreaseQunatity(item).subscribe(
-			items => console.log("Incremented"),
+			items => console.log("Decremented"),
+			error => console.log(error));
+	}
+
+	removeItem(item: ICart): void {
+		this.cartService.removeItem(item).subscribe(
+			items => console.log("Removed"),
 			error => console.log(error));
 	}
 }

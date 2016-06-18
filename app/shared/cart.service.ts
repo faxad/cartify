@@ -45,8 +45,9 @@ export class CartService {
 			error => console.log(error));
 	}
 
-	removeItem(item: IItem): void {
-		//this.getCart().pop() // will be replaced with an actual remove
+	removeItem(item: ICart): Observable<ICart> {
+		return this._http.post("http://localhost:8080/remove", JSON.stringify(item))
+			.map((res: Response) => res.json());
 	}
 
 	increaseQunatity(item: ICart): Observable<ICart> {

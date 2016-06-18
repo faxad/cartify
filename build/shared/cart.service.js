@@ -48,7 +48,8 @@ var CartService = (function () {
         }, function (error) { return console.log(error); });
     };
     CartService.prototype.removeItem = function (item) {
-        //this.getCart().pop() // will be replaced with an actual remove
+        return this._http.post("http://localhost:8080/remove", JSON.stringify(item))
+            .map(function (res) { return res.json(); });
     };
     CartService.prototype.increaseQunatity = function (item) {
         item.quantity = item.quantity + 1;
