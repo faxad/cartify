@@ -1,22 +1,22 @@
-<div class="row" *ngIf='auth.isUserAdmin()'>
-  <a data-toggle="modal" href="#itemCreateModal" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-edit" aria-hidden="true"> </span> Add Item</a>
-</div>
-<a [routerLink]="['Cart', {userid: '12345'}]" class="btn btn-success" role="button">Cart</a>
 <div>
   <custom-form [modalId]='modalIdentifier'> </custom-form>
 <div class='panel-body'>
   <div class='row'>
-  <form class="navbar-form navbar-left" role="search">
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Search" [(ngModel)]='filterBy'>
+    <div class="input-group">
+      <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+      <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search for..." [(ngModel)]='filterBy'>
+      <div class="input-group-addon" *ngIf='auth.isUserAdmin()'>
+      <a data-toggle="modal" href="#itemCreateModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+      </div>
+      <div class="input-group-addon">
+      <a [routerLink]="['Cart', {userid: '12345'}]"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+      </div>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form> 
   </div>
+  <br/>
   <div class='row'>
     <div class='col-md-6'>
       {{ pageTitle }}
-      <h3>Filtered by: {{ filterBy }}</h3>
     </div>
   </div>
   <div class='has-error'></div>
@@ -41,7 +41,7 @@
           </div>
           <div class="row">
             <div class="col-md-10">
-              <button type="button" class="btn btn-primary" (click)='addItemToCart(item)'>Buy</button>
+              <button type="button" class="btn btn-primary" (click)='addItemToCart(item)'><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy</button>
               <a href="#" class="btn btn-default btn disabled" role="button">
                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">4</span>
               </a>

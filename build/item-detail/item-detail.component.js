@@ -20,7 +20,8 @@ var ItemDetailComponent = (function () {
         this.parmValue = this._routerParams.get('id');
     }
     ItemDetailComponent.prototype.ngOnInit = function () {
-        this.item = this.itemService.getItem();
+        var _this = this;
+        this.itemService.getItem(Number(this.parmValue)).subscribe(function (item) { return _this.item = item; }, function (error) { return console.log(error); });
     };
     ItemDetailComponent.prototype.goBack = function () {
         this._router.navigate(['Items']);

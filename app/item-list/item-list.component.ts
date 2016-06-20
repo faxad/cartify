@@ -20,7 +20,7 @@ import { Observable } from 'rxjs/Observable';
 	providers: [ItemService, CartService]
 })
 export class ItemListComponent implements OnInit {
-	pageTitle: string = 'Item List';
+	pageTitle: string = '';
 	modalIdentifier: string = 'itemCreateModal';
 	imgWidth: number = 100;
 	imgMargin: number = 10;

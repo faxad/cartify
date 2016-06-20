@@ -22,7 +22,9 @@ export class ItemDetailComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.item = this.itemService.getItem();
+		this.itemService.getItem(Number(this.parmValue)).subscribe(
+			item => this.item = item,
+			error => console.log(error));
 	}
 
 	goBack(): void {

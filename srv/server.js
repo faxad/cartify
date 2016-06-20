@@ -58,11 +58,12 @@ dispatcher.onGet("/items", function(req, res) {
 // Dispatcher: Get item by identifier
 
 dispatcher.onGet("/item", function(req, res) {
-    var url_parts = url.parse(req.url, true);
     initialize(res, function(db) {
-      db.collection('items').find({ "id": url.parse(req.url, true).id }).each(function(err, result) {
+      db.collection('items').find({ "id": url.parse(req.url, true).query.id }).each(function(err, result) {
         assert.equal(err, null);
         if (result != null) {
+            //res.end(JSON.stringify(result));
+            console.log(JSON.stringify(result))
             res.end(JSON.stringify(result));
             db.close();
         }

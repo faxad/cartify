@@ -25,28 +25,17 @@ var ItemService = (function () {
             .catch(this.handleError);
         //.do(data => console.log(JSON.stringify(data)));
     };
-    ItemService.prototype.getItem = function () {
-        return {
-            "id": 5,
-            "name": "Hammer",
-            "code": "TBX-0048",
-            "releaseDate": "May 21, 2016",
-            "description": "Sed lobortis ultrices dui a venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam id risus luctus, facilisis ante in, dapibus nunc. Sed vitae porttitor lacus, et imperdiet mi. Phasellus iaculis ipsum et aliquam mattis. Nulla convallis, mi ac rutrum fringilla, est metus condimentum erat, et tempor libero purus a lacus. Nunc blandit, nisi in consectetur tristique, ex massa dapibus metus, id maximus nunc quam non sapien. In fermentum massa at ante semper, vel vehicula quam tempus. Sed eget neque lectus.",
-            "unitPrice": 8.9,
-            "quantity": 10,
-            "rating": 4.8,
-            "imageUrl": "http://placehold.it/320x150"
-        };
+    ItemService.prototype.getItem = function (id) {
+        return this._http.get("http://localhost:8080/item?id=" + id)
+            .map(function (response) { return response.json(); })
+            .catch(this.handleError);
+        //.do(data => console.log(<IItem>data));
     };
     ItemService.prototype.addItem = function (body) {
-        //console.log(body);
-        //console.log(JSON.stringify(body));
         return this._http.post("http://localhost:8080/insert", JSON.stringify(body))
             .map(function (res) { return res.json(); });
     };
     ItemService.prototype.updateItem = function (body) {
-        //console.log(body);
-        //console.log(JSON.stringify(body));
         return this._http.post("http://localhost:8080/update", JSON.stringify(body))
             .map(function (res) { return res.json(); });
     };
