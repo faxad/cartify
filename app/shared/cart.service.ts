@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { IItem } from './item.interface';
 import { ICart } from './cart.interface';
-import { CART } from './mock-cart';
 import { AuthService } from './auth.service';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';

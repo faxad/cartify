@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { ITEMS } from './mock-items';
 import { IItem } from './item.interface';
 
 @Injectable()
