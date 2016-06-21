@@ -51,9 +51,10 @@ var ItemListComponent = (function () {
             directives: [star_component_1.StarComponent, form_component_1.FormComponent, router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [item_service_1.ItemService, cart_service_1.CartService]
         }), 
-        __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService, cart_service_1.CartService])
+        __metadata('design:paramtypes', [item_service_1.ItemService, auth_service_1.AuthService, (typeof (_a = typeof cart_service_1.CartService !== 'undefined' && cart_service_1.CartService) === 'function' && _a) || Object])
     ], ItemListComponent);
     return ItemListComponent;
+    var _a;
 }());
 exports.ItemListComponent = ItemListComponent;
 //# sourceMappingURL=item-list.component.js.map

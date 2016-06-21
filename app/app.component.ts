@@ -3,9 +3,9 @@ import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig } from '@angular/route
 import { HTTP_PROVIDERS } from '@angular/http';
 import 'rxjs/Rx';
 
-import { ItemListComponent } from './item-list/item-list.component';
-import { ItemDetailComponent } from './item-detail/item-detail.component';
-import { ItemCartComponent } from './item-cart/item-cart.component';
+import { ItemListComponent } from './shop/shop-item-list/shop-item-list.component';
+import { ItemDetailComponent } from './shop/shop-item-detail/shop-item-detail.component';
+import { ItemCartComponent } from './cart/cart-item-list.component';
 import { AuthService } from './shared/auth.service'
 
 
