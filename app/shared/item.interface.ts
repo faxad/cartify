@@ -5,7 +5,7 @@ export interface IItem {
 	releaseDate: string;
 	description: string;
 	unitPrice: number;
-	quantity: number;
+	quantityInStock: number;
 	rating: number;
 	imageUrl: string;
 }

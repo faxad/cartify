@@ -13,14 +13,34 @@
           <div *ngIf="validService.check('id').result" class="alert alert-danger">{{validService.check('id').message}}</div>
         </div>
           <div class="form-group">
-            <label for="productName">Product Name</label>
+            <label for="name">Product Name</label>
             <input class="form-control" id="name" placeholder="Name" [ngFormControl]="customForm.controls['name']">
             <div *ngIf="validService.check('name').result" class="alert alert-danger">{{validService.check('name').message}}</div>
           </div>
           <div class="form-group">
-            <label for="productCode">Product Code</label>
+            <label for="code">Product Code</label>
             <input class="form-control" id="code" placeholder="Code" [ngFormControl]="customForm.controls['code']">
             <div *ngIf="validService.check('code').result" class="alert alert-danger">{{validService.check('code').message}}</div>
+          </div>
+          <div class="form-group">
+            <label for="unitPrice">Unit Price</label>
+            <input class="form-control" id="unitPrice" placeholder="Unit Price" [ngFormControl]="customForm.controls['unitPrice']">
+            <div *ngIf="validService.check('unitPrice').result" class="alert alert-danger">{{validService.check('unitPrice').message}}</div>
+          </div>
+          <div class="form-group">
+            <label for="quantityInStock">Quantity In Stock</label>
+            <input class="form-control" id="quantityInStock" placeholder="Quantity In Stock" [ngFormControl]="customForm.controls['quantityInStock']">
+            <div *ngIf="validService.check('quantityInStock').result" class="alert alert-danger">{{validService.check('quantityInStock').message}}</div>
+          </div>
+          <div class="form-group">
+            <label for="releaseDate">Release Date</label>
+            <input class="form-control" id="releaseDate" placeholder="releaseDate" [ngFormControl]="customForm.controls['releaseDate']">
+            <div *ngIf="validService.check('releaseDate').result" class="alert alert-danger">{{validService.check('releaseDate').message}}</div>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" placeholder="description" [ngFormControl]="customForm.controls['description']"></textarea>
+            <div *ngIf="validService.check('description').result" class="alert alert-danger">{{validService.check('description').message}}</div>
           </div>
           <div class="modal-footer">
             <button [disabled]="!customForm.valid" type="button" class="btn btn-default" data-dismiss="modal" (click)='submitItem(customForm)'>Save & Close</button>

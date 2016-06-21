@@ -50,7 +50,11 @@ export class FormComponent implements OnInit {
 			'name': ['', Validators.compose(
 				[Validators.required,
 					ExtendedValidators.nameValidator])],
-			'code': ['', Validators.required]
+			'code': ['', Validators.required],
+			'unitPrice': ['', Validators.required],
+			'quantityInStock': ['', Validators.required],
+			'releaseDate': [''],
+			'description': ['']
 		});
 
 		if (this.item) {

@@ -38,7 +38,11 @@ var FormComponent = (function () {
             'id': ['', common_1.Validators.required],
             'name': ['', common_1.Validators.compose([common_1.Validators.required,
                     validators_1.ExtendedValidators.nameValidator])],
-            'code': ['', common_1.Validators.required]
+            'code': ['', common_1.Validators.required],
+            'unitPrice': ['', common_1.Validators.required],
+            'quantityInStock': ['', common_1.Validators.required],
+            'releaseDate': [''],
+            'description': ['']
         });
         if (this.item) {
             this.isCreateForm = false;

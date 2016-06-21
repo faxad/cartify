@@ -1,15 +1,32 @@
 <div class='panel-body'>
-<h4>Hitting Detail - {{ parmValue }}</h4>
 <div class="col-md-11">
-<div class="well">
-	<a class="btn btn-default" role="button" (click)='goBack()'>Back</a>	
-</div>
+<ol class="breadcrumb">
+  <li><a class="btn btn-default btn-link" role="button" (click)='goBack()'>Home</a></li>
+  <li class="active">Detail</li>
+</ol>
 <div class="thumbnail" *ngIf='item'>
-    <img class="img-responsive" src="http://placehold.it/800x300" alt="">
+    <div class="row">
+      <div class="col-md-10"><img class="img-responsive" src="http://placehold.it/800x300" alt=""></div>
+      <div class="col-md-2">
+      <h1><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></h1>
+        <dl>
+          <br/>
+          <dt>Code</dt>
+          <dd>{{ item.code }}</dd>
+          <br/>
+          <dt>Quantity In Stock</dt>
+          <dd>{{ item.quantityInStock }}</dd>
+          <br/>
+          <dt>Release Date</dt>
+          <dd>{{ item.releaseDate }}</dd>
+        </dl>
+        <a class="btn btn-default btn-sm" role="button" (click)='goBack()'>Back</a>
+      </div>
+    </div>
+    
     <div class="caption-full">
         <h4 class="pull-right">${{ item.unitPrice }}</h4>
-        <h4><a href="#">{{ item.name }}</a>
-        </h4>
+        <h4>{{ item.name }}</h4>
         <p>{{ item.description }}</p>
     </div>
     <div class="ratings">
@@ -26,13 +43,13 @@
 </div>
 
 <div class="well">
-
-    <div class="text-right">
+    <p class="pull-right">
         <a class="btn btn-success">Leave a Review</a>
-    </div>
-
+    </p>
+    <h4>
+        Customers' Reviews
+    </h4>
     <hr>
-
     <div class="row">
         <div class="col-md-12">
             <span class="glyphicon glyphicon-star"></span>
