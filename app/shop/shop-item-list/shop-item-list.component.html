@@ -1,0 +1,67 @@
+<div>
+  <custom-form [modalId]='modalIdentifier'> </custom-form>
+<div class='panel-body'>
+  <div class='row'>
+    <div class="input-group">
+      <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+      <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search for..." [(ngModel)]='filterBy'>
+      <div class="input-group-addon" *ngIf='auth.isUserAdmin()'>
+      <a data-toggle="modal" href="#itemCreateModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+      </div>
+      <div class="input-group-addon">
+      <a [routerLink]="['Cart', {userid: '12345'}]"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class='row'>
+    <div class='col-md-6'>
+      {{ pageTitle }}
+    </div>
+  </div>
+  <div class='has-error'></div>
+  <div class="row" *ngIf='items && items.length'>
+    <div class="col-sm-4 col-lg-4 col-md-4" *ngFor='let item of items | itemFilter:filterBy'>
+      <div class="thumbnail">
+          <img src="http://placehold.it/320x150" alt="">
+          <div class="caption">
+              <h4 class="pull-right">${{ item.unitPrice }}</h4>
+              <h4>{{ item.name }}
+              <a data-toggle="modal" href="#{{item.id}}">
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            </a>
+              </h4>
+              <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+          </div>
+          <div class="ratings">
+              <p class="pull-right">15 reviews</p>
+              <p>
+                <stars [rating]='item.starRating' (ratingClicked)='onRatingClicked($event)'></stars>
+              </p>
+          </div>
+          <div class="row">
+            <div class="col-md-10">
+              <button type="button" class="btn btn-primary" (click)='addItemToCart(item)'><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy</button>
+              <a href="#" class="btn btn-default btn disabled" role="button">
+                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">4</span>
+              </a>
+              <a [routerLink]="['Detail', {id: item.id}]" class="btn btn-success" role="button">
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+              </a>
+              <!-- <button type="button" class="btn btn-default btn-xs">Comment</button> -->
+              
+              <!-- <button class='btn btn-primary'
+                      (click)='toggleImg()'>
+                  {{ showImg ? 'Hide' : 'Show' }} Image
+              </button> -->
+              <custom-form [item]='item' [modalId]='item.id'></custom-form>
+            </div>
+<!--             <div class="col-md-0">
+              <textarea></textarea>
+            </div> -->
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
