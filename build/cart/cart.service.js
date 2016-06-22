@@ -41,6 +41,7 @@ var CartService = (function () {
             for (var _i = 0, cart_1 = cart; _i < cart_1.length; _i++) {
                 var cartItem = cart_1[_i];
                 if (cartItem['itemId'] == item['id']) {
+                    _this.increaseQunatity(cartItem).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });
                     return;
                 }
             }

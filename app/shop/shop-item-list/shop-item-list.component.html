@@ -34,16 +34,17 @@
               <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
           </div>
           <div class="ratings">
+
               <p class="pull-right">15 reviews</p>
               <p>
-                <stars [rating]='item.starRating' (ratingClicked)='onRatingClicked($event)'></stars>
+                <stars [rating]='item.rating' (ratingClicked)='onRatingClicked($event)'></stars>
               </p>
           </div>
           <div class="row">
             <div class="col-md-10">
               <button type="button" class="btn btn-primary" (click)='addItemToCart(item)'><span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy</button>
               <a href="#" class="btn btn-default btn disabled" role="button">
-                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">4</span>
+                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{cartItems[item.id]}}</span>
               </a>
               <a [routerLink]="['Detail', {id: item.id}]" class="btn btn-success" role="button">
                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>

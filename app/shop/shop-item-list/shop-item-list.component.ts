@@ -27,6 +27,7 @@ export class ItemListComponent implements OnInit {
 	showImg: boolean = true;
 	filterBy: string;
 	items: IShopItem[];
+	cartItems: any;
 
 	constructor(private itemService: ShopService, private auth: AuthService, private cart: CartService) { }
 
@@ -35,8 +36,20 @@ export class ItemListComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.itemService.getItems().subscribe(
-			items => this.items = items,
+		this.cart.getCart().subscribe(
+			cart => {
+				let dict = {}
+				for (let c of cart) {
+					dict[c.itemId] = c.quantity
+				}
+				this.cartItems = dict;
+				console.log(this.cartItems)
+				this.itemService.getItems().subscribe(
+					items => {
+						this.items = items
+					},
+					error => console.log(error))
+			},
 			error => console.log(error));
 	}
 

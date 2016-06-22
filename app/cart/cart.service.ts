@@ -37,7 +37,12 @@ export class CartService {
 		this.getCart().subscribe(
 			cart => {
 				for (let cartItem of cart) {
-					if (cartItem['itemId'] == item['id']) { return }
+					if (cartItem['itemId'] == item['id']) {
+						this.increaseQunatity(cartItem).subscribe(
+							items => console.log("Incremented"),
+							error => console.log(error));
+						return
+					}
 				}
 				callback(this, item);
 			},

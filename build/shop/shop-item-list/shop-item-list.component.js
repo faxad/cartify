@@ -32,7 +32,18 @@ var ItemListComponent = (function () {
     };
     ItemListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.itemService.getItems().subscribe(function (items) { return _this.items = items; }, function (error) { return console.log(error); });
+        this.cart.getCart().subscribe(function (cart) {
+            var dict = {};
+            for (var _i = 0, cart_1 = cart; _i < cart_1.length; _i++) {
+                var c = cart_1[_i];
+                dict[c.itemId] = c.quantity;
+            }
+            _this.cartItems = dict;
+            console.log(_this.cartItems);
+            _this.itemService.getItems().subscribe(function (items) {
+                _this.items = items;
+            }, function (error) { return console.log(error); });
+        }, function (error) { return console.log(error); });
     };
     ItemListComponent.prototype.onRatingClicked = function (message) {
         this.pageTitle = 'Item List: ' + message;
