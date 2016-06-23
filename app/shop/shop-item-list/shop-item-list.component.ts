@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import { Component, OnInit, Input } from '@angular/core';
+import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
 import { IShopItem } from '../shop-item.interface';
 import { ShopService } from '../shop.service';
@@ -35,6 +35,12 @@ export class ItemListComponent implements OnInit {
 		this.showImg = !this.showImg;
 	}
 
+	getShopItems(): void {
+		this.itemService.getItems().subscribe(
+			items => this.items = items,
+			error => console.log(error))
+	}
+
 	ngOnInit(): void {
 		this.cart.getCart().subscribe(
 			cart => {
@@ -43,18 +49,9 @@ export class ItemListComponent implements OnInit {
 					dict[c.itemId] = c.quantity
 				}
 				this.cartItems = dict;
-				console.log(this.cartItems)
-				this.itemService.getItems().subscribe(
-					items => {
-						this.items = items
-					},
-					error => console.log(error))
+				this.getShopItems();
 			},
 			error => console.log(error));
-	}
-
-	onRatingClicked(message: string): void {
-		this.pageTitle = 'Item List: ' + message;
 	}
 
 	addItemToCart(item: any): void {
@@ -63,5 +60,9 @@ export class ItemListComponent implements OnInit {
 				items => console.log("Added to Cart"),
 				error => console.log(error));
 		})
+	}
+
+	example(event: boolean) {
+		this.getShopItems();
 	}
 }

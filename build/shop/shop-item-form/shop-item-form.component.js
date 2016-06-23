@@ -19,13 +19,18 @@ var FormComponent = (function () {
         this.validService = validService;
         this.fb = fb;
         this.isCreateForm = true;
+        this.shopItemsUpdated = new core_1.EventEmitter();
     }
     FormComponent.prototype.submitItem = function (form) {
+        var _this = this;
         if (form.valid) {
             this.itemName = form.value['name'];
             this.itemCode = form.value['code'];
             var action = this.isCreateForm ? 'addItem' : 'updateItem';
-            this.itemService[action](form.value).subscribe(function (item) { return console.log(item); }, function (error) { return console.log(error); });
+            this.itemService[action](form.value).subscribe(function (item) {
+                console.log(item);
+                _this.shopItemsUpdated.emit(true);
+            }, function (error) { return console.log(error); });
             this.itemName = '';
             this.itemCode = '';
         }
@@ -65,6 +70,10 @@ var FormComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', Object)
     ], FormComponent.prototype, "item", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', core_1.EventEmitter)
+    ], FormComponent.prototype, "shopItemsUpdated", void 0);
     FormComponent = __decorate([
         core_1.Component({
             selector: 'custom-form',

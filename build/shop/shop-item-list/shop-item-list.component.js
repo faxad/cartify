@@ -30,6 +30,10 @@ var ItemListComponent = (function () {
     ItemListComponent.prototype.toggleImg = function () {
         this.showImg = !this.showImg;
     };
+    ItemListComponent.prototype.getShopItems = function () {
+        var _this = this;
+        this.itemService.getItems().subscribe(function (items) { return _this.items = items; }, function (error) { return console.log(error); });
+    };
     ItemListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.cart.getCart().subscribe(function (cart) {
@@ -39,19 +43,16 @@ var ItemListComponent = (function () {
                 dict[c.itemId] = c.quantity;
             }
             _this.cartItems = dict;
-            console.log(_this.cartItems);
-            _this.itemService.getItems().subscribe(function (items) {
-                _this.items = items;
-            }, function (error) { return console.log(error); });
+            _this.getShopItems();
         }, function (error) { return console.log(error); });
-    };
-    ItemListComponent.prototype.onRatingClicked = function (message) {
-        this.pageTitle = 'Item List: ' + message;
     };
     ItemListComponent.prototype.addItemToCart = function (item) {
         this.cart.itemExists(item, function (service, item) {
             service.addItem(item).subscribe(function (items) { return console.log("Added to Cart"); }, function (error) { return console.log(error); });
         });
+    };
+    ItemListComponent.prototype.example = function (event) {
+        this.getShopItems();
     };
     ItemListComponent = __decorate([
         core_1.Component({

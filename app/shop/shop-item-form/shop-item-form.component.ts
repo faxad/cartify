@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from '@angular/common';
 
 import { ShopService } from '../shop.service';
@@ -17,6 +17,7 @@ export class FormComponent implements OnInit {
 	isCreateForm: boolean = true;
 	@Input() modalId: string;
 	@Input() item: IShopItem;
+	@Output() shopItemsUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
 	customForm: ControlGroup;
 
 	formErrors: any;
@@ -33,7 +34,10 @@ export class FormComponent implements OnInit {
 			let action: string = this.isCreateForm ? 'addItem' : 'updateItem';
 
 			this.itemService[action](form.value).subscribe(
-				item => console.log(item),
+				item => {
+					console.log(item);
+					this.shopItemsUpdated.emit(true);
+				},
 				error => console.log(error));	
 
 			this.itemName = '';

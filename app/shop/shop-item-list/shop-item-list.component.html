@@ -1,5 +1,5 @@
 <div>
-  <custom-form [modalId]='modalIdentifier'> </custom-form>
+  <custom-form [modalId]='modalIdentifier' (shopItemsUpdated)="example($event);"> </custom-form>
 <div class='panel-body'>
   <div class='row'>
     <div class="input-group">
@@ -55,7 +55,7 @@
                       (click)='toggleImg()'>
                   {{ showImg ? 'Hide' : 'Show' }} Image
               </button> -->
-              <custom-form [item]='item' [modalId]='item.id'></custom-form>
+              <custom-form [item]='item' [modalId]='item.id' (shopItemsUpdated)="example($event);"></custom-form>
             </div>
 <!--             <div class="col-md-0">
               <textarea></textarea>
