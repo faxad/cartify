@@ -3,7 +3,6 @@ import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 
 import { IShopItem } from '../shop-item.interface';
 import { ShopService } from '../shop.service';
-import { StarComponent } from '../../shared/star.component';
 import { ItemFilterPipe } from './shop-item-filter.pipe';
 import { FormComponent } from '../shop-item-form/shop-item-form.component';
 import { CartService } from '../../cart/cart.service';
@@ -16,7 +15,7 @@ import { Observable } from 'rxjs/Observable';
 	templateUrl: 'app/shop/shop-item-list/shop-item-list.component.html',
 	styleUrls: ['app/shop/shop-item-list/shop-item-list.component.css'],
 	pipes: [ItemFilterPipe],
-	directives: [StarComponent, FormComponent, ROUTER_DIRECTIVES],
+	directives: [FormComponent, ROUTER_DIRECTIVES],
 	providers: [ShopService, CartService]
 })
 export class ItemListComponent implements OnInit {
@@ -35,7 +34,7 @@ export class ItemListComponent implements OnInit {
 		this.showImg = !this.showImg;
 	}
 
-	getShopItems(): void {
+	getShopItems(event: boolean): void {
 		this.itemService.getItems().subscribe(
 			items => this.items = items,
 			error => console.log(error))
@@ -49,7 +48,7 @@ export class ItemListComponent implements OnInit {
 					dict[c.itemId] = c.quantity
 				}
 				this.cartItems = dict;
-				this.getShopItems();
+				this.getShopItems(true);
 			},
 			error => console.log(error));
 	}
@@ -60,9 +59,5 @@ export class ItemListComponent implements OnInit {
 				items => console.log("Added to Cart"),
 				error => console.log(error));
 		})
-	}
-
-	example(event: boolean) {
-		this.getShopItems();
 	}
 }

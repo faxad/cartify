@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var shop_service_1 = require('../shop.service');
-var star_component_1 = require('../../shared/star.component');
 var shop_item_filter_pipe_1 = require('./shop-item-filter.pipe');
 var shop_item_form_component_1 = require('../shop-item-form/shop-item-form.component');
 var cart_service_1 = require('../../cart/cart.service');
@@ -30,7 +29,7 @@ var ItemListComponent = (function () {
     ItemListComponent.prototype.toggleImg = function () {
         this.showImg = !this.showImg;
     };
-    ItemListComponent.prototype.getShopItems = function () {
+    ItemListComponent.prototype.getShopItems = function (event) {
         var _this = this;
         this.itemService.getItems().subscribe(function (items) { return _this.items = items; }, function (error) { return console.log(error); });
     };
@@ -43,7 +42,7 @@ var ItemListComponent = (function () {
                 dict[c.itemId] = c.quantity;
             }
             _this.cartItems = dict;
-            _this.getShopItems();
+            _this.getShopItems(true);
         }, function (error) { return console.log(error); });
     };
     ItemListComponent.prototype.addItemToCart = function (item) {
@@ -51,16 +50,13 @@ var ItemListComponent = (function () {
             service.addItem(item).subscribe(function (items) { return console.log("Added to Cart"); }, function (error) { return console.log(error); });
         });
     };
-    ItemListComponent.prototype.example = function (event) {
-        this.getShopItems();
-    };
     ItemListComponent = __decorate([
         core_1.Component({
             selector: 'list-item',
             templateUrl: 'app/shop/shop-item-list/shop-item-list.component.html',
             styleUrls: ['app/shop/shop-item-list/shop-item-list.component.css'],
             pipes: [shop_item_filter_pipe_1.ItemFilterPipe],
-            directives: [star_component_1.StarComponent, shop_item_form_component_1.FormComponent, router_deprecated_1.ROUTER_DIRECTIVES],
+            directives: [shop_item_form_component_1.FormComponent, router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [shop_service_1.ShopService, cart_service_1.CartService]
         }), 
         __metadata('design:paramtypes', [shop_service_1.ShopService, auth_service_1.AuthService, cart_service_1.CartService])

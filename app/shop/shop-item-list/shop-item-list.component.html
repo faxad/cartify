@@ -37,8 +37,16 @@
 
               <p class="pull-right">15 reviews</p>
               <p>
-                <stars [rating]='item.rating' (ratingClicked)='onRatingClicked($event)'></stars>
               </p>
+                <div class="crop">
+                   <div style="width: 86px">
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                    <span class="glyphicon glyphicon-star"></span>
+                   </div>
+                </div> 
           </div>
           <div class="row">
             <div class="col-md-10">
@@ -55,7 +63,7 @@
                       (click)='toggleImg()'>
                   {{ showImg ? 'Hide' : 'Show' }} Image
               </button> -->
-              <custom-form [item]='item' [modalId]='item.id' (shopItemsUpdated)="example($event);"></custom-form>
+              <custom-form [item]='item' [modalId]='item.id' (shopItemsUpdated)="getShopItems($event);"></custom-form>
             </div>
 <!--             <div class="col-md-0">
               <textarea></textarea>
