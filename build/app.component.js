@@ -26,12 +26,12 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app-content',
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES, shop_item_list_component_1.ItemListComponent, cart_item_list_component_1.ItemCartComponent],
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES, shop_item_list_component_1.ShopItemListComponent, cart_item_list_component_1.ItemCartComponent],
             providers: [router_deprecated_1.ROUTER_PROVIDERS, http_1.HTTP_PROVIDERS, auth_service_1.AuthService],
             template: "\n\t\t<nav class=\"navbar navbar-inverse navbar-fixed-top\">\n\t      <div class=\"container\">\n\t        <div class=\"navbar-header\">\n\t          <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n\t            <span class=\"sr-only\">Toggle navigation</span>\n\t            <span class=\"icon-bar\"></span>\n\t            <span class=\"icon-bar\"></span>\n\t            <span class=\"icon-bar\"></span>\n\t          </button>\n\t          <a class=\"navbar-brand\" href=\"#\">Smart Cart</a>\n\t        </div>\n\t        <div id=\"navbar\" class=\"navbar-collapse collapse\">\n\t          <form class=\"navbar-form navbar-right\">\n\t            <button (click)=\"auth.login()\" *ngIf=\"!auth.isLoggedIn()\" class=\"btn btn-success btn-sm\">\n\t            <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Sign In\n\t            </button>\n\t            <button (click)=\"auth.logout()\" *ngIf=\"auth.isLoggedIn()\" class=\"btn btn-success btn-sm\">\n\t            <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Sign Out\n\t            </button>\n\t          </form>\n\t        </div><!--/.navbar-collapse -->\n\t      </div>\n\t    </nav>\n\t    <div class=\"container\">\n\t    \t<div class=\"starter-template\">\n\t    \t\t<br/><br/><br/>\n\t    \t\t<router-outlet></router-outlet>\n\t    \t</div>\n\t    </div>\n\t",
         }),
         router_deprecated_1.RouteConfig([
-            { path: '/items', name: 'Items', component: shop_item_list_component_1.ItemListComponent, useAsDefault: true },
+            { path: '/items', name: 'Items', component: shop_item_list_component_1.ShopItemListComponent, useAsDefault: true },
             { path: '/item/:id', name: 'Detail', component: shop_item_detail_component_1.ItemDetailComponent },
             { path: '/cart/:userid', name: 'Cart', component: cart_item_list_component_1.ItemCartComponent }
         ]), 

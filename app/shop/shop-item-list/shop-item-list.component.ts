@@ -18,42 +18,32 @@ import { Observable } from 'rxjs/Observable';
 	directives: [FormComponent, ROUTER_DIRECTIVES],
 	providers: [ShopService, CartService]
 })
-export class ItemListComponent implements OnInit {
-	pageTitle: string = '';
-	modalIdentifier: string = 'itemCreateModal';
-	imgWidth: number = 100;
-	imgMargin: number = 10;
-	showImg: boolean = true;
+export class ShopItemListComponent implements OnInit {
+	modalIdentifier: string = 'shopItemModal';
 	filterBy: string;
-	items: IShopItem[];
-	cartItems: any;
+	shopItems: IShopItem[];
+	userCartItems: any = {};
 
 	constructor(private itemService: ShopService, private auth: AuthService, private cart: CartService) { }
 
-	toggleImg(): void {
-		this.showImg = !this.showImg;
-	}
-
 	getShopItems(event: boolean): void {
 		this.itemService.getItems().subscribe(
-			items => this.items = items,
+			shopItems => this.shopItems = shopItems,
 			error => console.log(error))
 	}
 
 	ngOnInit(): void {
 		this.cart.getCart().subscribe(
 			cart => {
-				let dict = {}
 				for (let c of cart) {
-					dict[c.itemId] = c.quantity
+					this.userCartItems[c.itemId] = c.quantity
 				}
-				this.cartItems = dict;
 				this.getShopItems(true);
 			},
 			error => console.log(error));
 	}
 
-	addItemToCart(item: any): void {
+	addToCart(item: any): void {
 		this.cart.itemExists(item, function(service, item) {
 			service.addItem(item).subscribe(
 				items => console.log("Added to Cart"),
