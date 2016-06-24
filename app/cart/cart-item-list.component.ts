@@ -2,16 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouteParams, CanActivate} from '@angular/router-deprecated';
 
 import { ICartItem } from './cart-item.interface';
+import { ICustomerCartItem } from './customer-cart-item.interface';
 import { CartService } from './cart.service';
+import { ShopService } from '../shop/shop.service';
 
 
 @Component({
 	templateUrl: 'app/cart/cart-item-list.component.html',
-	providers: [CartService]
+	providers: [CartService, ShopService]
 })
 export class ItemCartComponent implements OnInit {
 	parmValue: string;
 	cart: ICartItem[];
+	userCartItems: any = {};
 
 	constructor(private _routerParams: RouteParams,
 		        private _router: Router,

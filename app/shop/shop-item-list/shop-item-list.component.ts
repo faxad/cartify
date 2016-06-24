@@ -24,19 +24,19 @@ export class ShopItemListComponent implements OnInit {
 	shopItems: IShopItem[];
 	userCartItems: any = {};
 
-	constructor(private itemService: ShopService, private auth: AuthService, private cart: CartService) { }
+	constructor(private shop: ShopService, private auth: AuthService, private cart: CartService) { }
 
 	getShopItems(event: boolean): void {
-		this.itemService.getItems().subscribe(
+		this.shop.getItems().subscribe(
 			shopItems => this.shopItems = shopItems,
 			error => console.log(error))
 	}
 
 	ngOnInit(): void {
 		this.cart.getCart().subscribe(
-			cart => {
-				for (let c of cart) {
-					this.userCartItems[c.itemId] = c.quantity
+			cartItems => {
+				for (let cartItem of cartItems) {
+					this.userCartItems[cartItem.itemId] = cartItem.quantity
 				}
 				this.getShopItems(true);
 			},

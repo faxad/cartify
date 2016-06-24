@@ -23,7 +23,9 @@ import { AuthService } from './shared/auth.service'
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	          </button>
-	          <a class="navbar-brand" href="#">Smart Cart</a>
+	          <a class="navbar-brand" href="#">
+	          	<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true">Cartify</span>
+	          </a>
 	        </div>
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <form class="navbar-form navbar-right">

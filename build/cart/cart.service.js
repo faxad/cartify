@@ -12,9 +12,11 @@ var core_1 = require('@angular/core');
 var auth_service_1 = require('../shared/auth.service');
 var http_1 = require('@angular/http');
 var Observable_1 = require('rxjs/Observable');
+var shop_service_1 = require('../shop/shop.service');
 var CartService = (function () {
-    function CartService(_http) {
+    function CartService(_http, shop) {
         this._http = _http;
+        this.shop = shop;
     }
     CartService.prototype.handleError = function (error, Response) {
         console.error(error);
@@ -25,6 +27,33 @@ var CartService = (function () {
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
         //.do(data => console.log(JSON.stringify(data)));
+    };
+    CartService.prototype.getCustomerCart = function () {
+        var _this = this;
+        var customerCartItems = [];
+        return Observable_1.Observable.create(function (observer) {
+            _this.getCart().subscribe(function (cartItems) {
+                var _loop_1 = function(cartItem) {
+                    _this.shop.getItem(cartItem.itemId).subscribe(function (shopItem) {
+                        customerCartItems.push({
+                            'userId': cartItem.userId,
+                            'itemId': cartItem.itemId,
+                            'name': shopItem.name,
+                            'code': shopItem.code,
+                            'quantity': cartItem.quantity,
+                            'unitPrice': cartItem.unitPrice,
+                            'paid': cartItem.paid,
+                        });
+                    });
+                };
+                for (var _i = 0, cartItems_1 = cartItems; _i < cartItems_1.length; _i++) {
+                    var cartItem = cartItems_1[_i];
+                    _loop_1(cartItem);
+                }
+                observer.next(customerCartItems);
+                observer.complete();
+            }, function (error) { return console.log(error); });
+        });
     };
     CartService.prototype.addItem = function (item) {
         var body = {
@@ -68,7 +97,7 @@ var CartService = (function () {
     CartService.prototype.clear = function () { };
     CartService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, shop_service_1.ShopService])
     ], CartService);
     return CartService;
 }());

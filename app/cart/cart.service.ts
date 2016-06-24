@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 
 import { IShopItem } from '../shop/shop-item.interface';
 import { ICartItem } from './cart-item.interface';
+import { ICustomerCartItem } from './customer-cart-item.interface';
 import { AuthService } from '../shared/auth.service';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
+import { ShopService } from '../shop/shop.service';
+
 @Injectable()
 export class CartService {
-	constructor(private _http: Http) { }
+	constructor(private _http: Http, private shop: ShopService) { }
 
 	handleError(error, Response) {
 		console.error(error);
@@ -20,6 +23,33 @@ export class CartService {
 			.map((response: Response) => <ICartItem[]>response.json())
 			.catch(this.handleError)
 			//.do(data => console.log(JSON.stringify(data)));
+	}
+
+	getCustomerCart(): Observable<ICustomerCartItem[]> {
+		let customerCartItems: ICustomerCartItem[] = []
+
+		return Observable.create(observer => {
+			this.getCart().subscribe(
+				cartItems => {
+					for (let cartItem of cartItems) {
+						this.shop.getItem(cartItem.itemId).subscribe(
+							shopItem => {
+								customerCartItems.push(<ICustomerCartItem>{
+									'userId': cartItem.userId,
+									'itemId': cartItem.itemId,
+									'name': shopItem.name,
+									'code': shopItem.code,
+									'quantity': cartItem.quantity,
+									'unitPrice': cartItem.unitPrice,
+									'paid': cartItem.paid,
+								})
+							})
+					}
+					observer.next(customerCartItems);
+					observer.complete();
+				},
+				error => console.log(error));
+		})
 	}
 
 	addItem(item: IShopItem): Observable<ICartItem> {

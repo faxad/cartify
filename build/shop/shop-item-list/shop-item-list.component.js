@@ -16,8 +16,8 @@ var shop_item_form_component_1 = require('../shop-item-form/shop-item-form.compo
 var cart_service_1 = require('../../cart/cart.service');
 var auth_service_1 = require('../../shared/auth.service');
 var ShopItemListComponent = (function () {
-    function ShopItemListComponent(itemService, auth, cart) {
-        this.itemService = itemService;
+    function ShopItemListComponent(shop, auth, cart) {
+        this.shop = shop;
         this.auth = auth;
         this.cart = cart;
         this.modalIdentifier = 'shopItemModal';
@@ -25,14 +25,14 @@ var ShopItemListComponent = (function () {
     }
     ShopItemListComponent.prototype.getShopItems = function (event) {
         var _this = this;
-        this.itemService.getItems().subscribe(function (shopItems) { return _this.shopItems = shopItems; }, function (error) { return console.log(error); });
+        this.shop.getItems().subscribe(function (shopItems) { return _this.shopItems = shopItems; }, function (error) { return console.log(error); });
     };
     ShopItemListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.cart.getCart().subscribe(function (cart) {
-            for (var _i = 0, cart_1 = cart; _i < cart_1.length; _i++) {
-                var c = cart_1[_i];
-                _this.userCartItems[c.itemId] = c.quantity;
+        this.cart.getCart().subscribe(function (cartItems) {
+            for (var _i = 0, cartItems_1 = cartItems; _i < cartItems_1.length; _i++) {
+                var cartItem = cartItems_1[_i];
+                _this.userCartItems[cartItem.itemId] = cartItem.quantity;
             }
             _this.getShopItems(true);
         }, function (error) { return console.log(error); });

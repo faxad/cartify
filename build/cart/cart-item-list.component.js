@@ -11,11 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var cart_service_1 = require('./cart.service');
+var shop_service_1 = require('../shop/shop.service');
 var ItemCartComponent = (function () {
     function ItemCartComponent(_routerParams, _router, cartService) {
         this._routerParams = _routerParams;
         this._router = _router;
         this.cartService = cartService;
+        this.userCartItems = {};
         this.parmValue = this._routerParams.get('userid');
     }
     ItemCartComponent.prototype.ngOnInit = function () {
@@ -36,7 +38,7 @@ var ItemCartComponent = (function () {
     ItemCartComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/cart/cart-item-list.component.html',
-            providers: [cart_service_1.CartService]
+            providers: [cart_service_1.CartService, shop_service_1.ShopService]
         }), 
         __metadata('design:paramtypes', [router_deprecated_1.RouteParams, router_deprecated_1.Router, cart_service_1.CartService])
     ], ItemCartComponent);

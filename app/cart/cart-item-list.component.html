@@ -1,8 +1,12 @@
-<h4>Reached!</h4>
-
+<ol class="breadcrumb">
+    <li><a class="btn btn-default btn-link" role="button" (click)='goBack()'>Home</a></li>
+    <li class="active">Cart</li>
+</ol>
 <table class="table table-striped">
     <tr>
         <th>Item</th>
+        <th>Name</th>
+        <th>Code</th>
         <th>Unit Price</th>
         <th>Quantity</th>
         <th>Net Price</th>
@@ -10,6 +14,8 @@
     </tr>
     <tr *ngFor='let c of cart'>
         <td>{{c.itemId}}</td>
+        <td>{{c.name}}</td>
+        <td>{{c.code}}</td>
         <td></td>
         <td>{{c.quantity}}</td>
         <td></td>
