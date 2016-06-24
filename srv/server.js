@@ -134,14 +134,22 @@ dispatcher.onPost("/add", function(req, res) {
     })
 });
 
+function removeUnwantedKeys(body) {
+    delete body['paid'];
+    delete body['name'];
+    delete body['code'];
+    delete body['unitPrice'];
+    return body;
+  }
+
 // Dispatcher: Get cart item by identifier
 
 dispatcher.onPost("/revise", function(req, res) {
     body = JSON.parse(req.body)
+    body = removeUnwantedKeys(body)
     body._id = new ObjectId(body._id)
 
     initialize(res, function(db) {
-
       db.collection('cart').find({ "itemId": body.itemId }).each(function(err, result) {
         assert.equal(err, null);
         if (result != null) {
@@ -161,6 +169,7 @@ dispatcher.onPost("/revise", function(req, res) {
 
 dispatcher.onPost("/remove", function(req, res) {
     body = JSON.parse(req.body)
+    body = removeUnwantedKeys(body)
     body._id = new ObjectId(body._id)
     initialize(res, function(db) {
       db.collection('cart').deleteOne(body, function(err, result) {
@@ -172,3 +181,4 @@ dispatcher.onPost("/remove", function(req, res) {
       });
     })
 });
+

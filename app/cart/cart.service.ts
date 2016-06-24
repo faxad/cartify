@@ -35,6 +35,7 @@ export class CartService {
 						this.shop.getItem(cartItem.itemId).subscribe(
 							shopItem => {
 								customerCartItems.push(<ICustomerCartItem>{
+									'_id': cartItem['_id'],
 									'userId': cartItem.userId,
 									'itemId': cartItem.itemId,
 									'name': shopItem.name,

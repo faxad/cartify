@@ -22,9 +22,7 @@ var ItemCartComponent = (function () {
     }
     ItemCartComponent.prototype.ngOnInit = function () {
         var _this = this;
-        //this.cart = this.cartService.getCart();
-        this.cartService.getCart().subscribe(function (cart) { return _this.cart = cart; }, function (error) { return console.log(error); });
-        console.log(this.cart);
+        this.cartService.getCustomerCart().subscribe(function (cart) { return _this.cart = cart; }, function (error) { return console.log(error); });
     };
     ItemCartComponent.prototype.increaseQuantity = function (item) {
         this.cartService.increaseQunatity(item).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });

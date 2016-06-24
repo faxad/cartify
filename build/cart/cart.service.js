@@ -36,6 +36,7 @@ var CartService = (function () {
                 var _loop_1 = function(cartItem) {
                     _this.shop.getItem(cartItem.itemId).subscribe(function (shopItem) {
                         customerCartItems.push({
+                            '_id': cartItem['_id'],
                             'userId': cartItem.userId,
                             'itemId': cartItem.itemId,
                             'name': shopItem.name,
