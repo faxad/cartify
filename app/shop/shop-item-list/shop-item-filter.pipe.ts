@@ -3,12 +3,12 @@ import { PipeTransform, Pipe } from '@angular/core'
 import { IShopItem } from '../shop-item.interface'
 
 @Pipe({
-	name: 'itemFilter'
+	name: 'shopItemFilter'
 })
-export class ItemFilterPipe implements PipeTransform {
+export class ShopItemFilterPipe implements PipeTransform {
 	transform(value: IShopItem[], args: string): IShopItem[] {
 		let filter: string = args ? args.toLocaleLowerCase() : null;
-		return filter ? value.filter((item: IShopItem) =>
-			item.name.toLocaleLowerCase().indexOf(filter) != -1) : value;
+		return filter ? value.filter((shopItem: IShopItem) =>
+			shopItem.name.toLocaleLowerCase().indexOf(filter) != -1) : value;
 	}
 }

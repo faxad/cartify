@@ -9,22 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var ItemFilterPipe = (function () {
-    function ItemFilterPipe() {
+var ShopItemFilterPipe = (function () {
+    function ShopItemFilterPipe() {
     }
-    ItemFilterPipe.prototype.transform = function (value, args) {
+    ShopItemFilterPipe.prototype.transform = function (value, args) {
         var filter = args ? args.toLocaleLowerCase() : null;
-        return filter ? value.filter(function (item) {
-            return item.name.toLocaleLowerCase().indexOf(filter) != -1;
+        return filter ? value.filter(function (shopItem) {
+            return shopItem.name.toLocaleLowerCase().indexOf(filter) != -1;
         }) : value;
     };
-    ItemFilterPipe = __decorate([
+    ShopItemFilterPipe = __decorate([
         core_1.Pipe({
-            name: 'itemFilter'
+            name: 'shopItemFilter'
         }), 
         __metadata('design:paramtypes', [])
-    ], ItemFilterPipe);
-    return ItemFilterPipe;
+    ], ShopItemFilterPipe);
+    return ShopItemFilterPipe;
 }());
-exports.ItemFilterPipe = ItemFilterPipe;
+exports.ShopItemFilterPipe = ShopItemFilterPipe;
 //# sourceMappingURL=shop-item-filter.pipe.js.map

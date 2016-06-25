@@ -9,40 +9,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var auth_service_1 = require('../shared/auth.service');
 var http_1 = require('@angular/http');
 var Observable_1 = require('rxjs/Observable');
+var auth_service_1 = require('../shared/auth.service');
 var shop_service_1 = require('../shop/shop.service');
 var CartService = (function () {
-    function CartService(_http, shop) {
-        this._http = _http;
+    function CartService(http, shop) {
+        this.http = http;
         this.shop = shop;
     }
-    CartService.prototype.handleError = function (error, Response) {
-        console.error(error);
-        return Observable_1.Observable.throw(error.json().error || "Service Error");
+    CartService.prototype.getCartItems = function () {
+        return this.http.get("http://localhost:8080/cart?userId=" + auth_service_1.AuthService.getUser())
+            .map(function (response) { return response.json(); });
     };
-    CartService.prototype.getCart = function () {
-        return this._http.get("http://localhost:8080/cart?userId=" + auth_service_1.AuthService.getUser())
-            .map(function (response) { return response.json(); })
-            .catch(this.handleError);
-        //.do(data => console.log(JSON.stringify(data)));
-    };
-    CartService.prototype.getCustomerCart = function () {
+    CartService.prototype.getCartItemsWithDetails = function () {
         var _this = this;
-        var customerCartItems = [];
+        var detailedCartItems = [];
         return Observable_1.Observable.create(function (observer) {
-            _this.getCart().subscribe(function (cartItems) {
+            _this.getCartItems().subscribe(function (cartItems) {
                 var _loop_1 = function(cartItem) {
-                    _this.shop.getItem(cartItem.itemId).subscribe(function (shopItem) {
-                        customerCartItems.push({
+                    _this.shop.getShopItem(cartItem.itemId).subscribe(function (shopItem) {
+                        detailedCartItems.push({
                             '_id': cartItem['_id'],
                             'userId': cartItem.userId,
                             'itemId': cartItem.itemId,
                             'name': shopItem.name,
                             'code': shopItem.code,
+                            'unitPrice': shopItem.unitPrice,
                             'quantity': cartItem.quantity,
-                            'unitPrice': cartItem.unitPrice,
                             'paid': cartItem.paid,
                         });
                     });
@@ -51,51 +45,48 @@ var CartService = (function () {
                     var cartItem = cartItems_1[_i];
                     _loop_1(cartItem);
                 }
-                observer.next(customerCartItems);
+                observer.next(detailedCartItems);
                 observer.complete();
             }, function (error) { return console.log(error); });
         });
     };
-    CartService.prototype.addItem = function (item) {
+    CartService.prototype.addCartItem = function (cartItem) {
         var body = {
             "userId": auth_service_1.AuthService.getUser(),
-            "itemId": item.id,
-            "quantity": 1
+            "itemId": cartItem.id,
+            "quantity": 1,
         };
-        return this._http.post("http://localhost:8080/add", JSON.stringify(body))
-            .map(function (res) { return res.json(); });
+        return this.http.post("http://localhost:8080/add", JSON.stringify(body))
+            .map(function (response) { return response.json(); });
     };
-    CartService.prototype.itemExists = function (item, callback) {
+    CartService.prototype.addOrUpdateCartItem = function (item, callback) {
         var _this = this;
-        this.getCart().subscribe(function (cart) {
+        this.getCartItems().subscribe(function (cart) {
             for (var _i = 0, cart_1 = cart; _i < cart_1.length; _i++) {
                 var cartItem = cart_1[_i];
                 if (cartItem['itemId'] == item['id']) {
-                    _this.increaseQunatity(cartItem).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });
+                    _this.increaseCartItemQunatity(cartItem).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });
                     return;
                 }
             }
             callback(_this, item);
         }, function (error) { return console.log(error); });
     };
-    CartService.prototype.removeItem = function (item) {
-        return this._http.post("http://localhost:8080/remove", JSON.stringify(item))
-            .map(function (res) { return res.json(); });
+    CartService.prototype.removeCartItem = function (cartItem) {
+        return this.http.post("http://localhost:8080/remove", JSON.stringify(cartItem))
+            .map(function (response) { return response.json(); });
     };
-    CartService.prototype.increaseQunatity = function (item) {
-        item.quantity = item.quantity + 1;
-        console.log(item);
-        return this._http.post("http://localhost:8080/revise", JSON.stringify(item))
-            .map(function (res) { return res.json(); });
+    CartService.prototype.increaseCartItemQunatity = function (cartItem) {
+        cartItem.quantity = cartItem.quantity + 1;
+        return this.http.post("http://localhost:8080/revise", JSON.stringify(cartItem))
+            .map(function (response) { return response.json(); });
     };
-    CartService.prototype.decreaseQunatity = function (item) {
-        item.quantity = item.quantity - 1;
-        console.log(item);
-        return this._http.post("http://localhost:8080/revise", JSON.stringify(item))
-            .map(function (res) { return res.json(); });
+    CartService.prototype.decreaseCartItemQunatity = function (cartItem) {
+        cartItem.quantity = cartItem.quantity - 1;
+        return this.http.post("http://localhost:8080/revise", JSON.stringify(cartItem))
+            .map(function (response) { return response.json(); });
     };
-    CartService.prototype.checkOut = function () { };
-    CartService.prototype.clear = function () { };
+    CartService.prototype.checkOut = function () { }; // TODO: for later implementation
     CartService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http, shop_service_1.ShopService])

@@ -9,43 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var ValidService = (function () {
-    function ValidService() {
+var ValidationService = (function () {
+    function ValidationService() {
         this.stateChecks = {};
         this.validityChecks = {};
     }
-    ValidService.prototype.stateCheck = function (control, code) {
+    ValidationService.prototype.stateCheck = function (control, code) {
         return (code in this.stateChecks) ? control[this.stateChecks[code]] : control.touched;
     };
-    ValidService.prototype.validityCheck = function (control, code) {
-        var ck = this.validityChecks[code];
-        return ck ? {
-            "result": control.hasError(ck['condition']),
-            "message": ck['message']
+    ValidationService.prototype.validityCheck = function (control, code) {
+        var check = this.validityChecks[code];
+        return check ? {
+            "result": control.hasError(check['condition']),
+            "message": check['message']
         } : { "result": false, "message": "" };
     };
-    ValidService.prototype.check = function (control) {
-        var c = this.formToVlidate.controls[control];
-        if (this.stateCheck(c, control)) {
-            return (c.hasError('required')) ? {
+    ValidationService.prototype.check = function (controlName) {
+        var control = this.formToVlidate.controls[controlName];
+        if (this.stateCheck(control, controlName)) {
+            return (control.hasError('required')) ? {
                 "result": true,
                 "message": "Required Field!"
-            } : this.validityCheck(c, control);
+            } : this.validityCheck(control, controlName);
         }
         else {
             return { "result": false, "message": "" };
         }
     };
-    ValidService.prototype.configure = function (form, _customValidityChecks, _customStateChecks) {
+    ValidationService.prototype.configure = function (form, validityChecks, stateChecks) {
         this.formToVlidate = form;
-        this.validityChecks = _customValidityChecks;
-        this.stateChecks = _customStateChecks;
+        this.validityChecks = validityChecks;
+        this.stateChecks = stateChecks;
     };
-    ValidService = __decorate([
+    ValidationService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], ValidService);
-    return ValidService;
+    ], ValidationService);
+    return ValidationService;
 }());
-exports.ValidService = ValidService;
+exports.ValidationService = ValidationService;
 //# sourceMappingURL=validation.service.js.map

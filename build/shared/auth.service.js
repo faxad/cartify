@@ -63,7 +63,7 @@ var AuthService = (function () {
             return JSON.parse(localStorage.getItem('profile'))['identities'][0]['user_id'];
         }
         catch (e) {
-            alert('please log in!FT');
+            alert('please log in!');
         }
     };
     AuthService = __decorate([

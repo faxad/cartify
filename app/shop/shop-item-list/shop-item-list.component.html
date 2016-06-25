@@ -1,5 +1,5 @@
 <div>
-    <custom-form [modalId]='modalIdentifier' (shopItemsUpdated)="example($event);"></custom-form>
+    <shop-item-form [modalId]='modalIdentifier' (shopItemsUpdated)="getShopItems($event);"></shop-item-form>
     <div class='panel-body'>
         <div class='row'>
             <div class="input-group">
@@ -13,7 +13,7 @@
                     </a>
                 </div>
                 <div class="input-group-addon">
-                    <a [routerLink]="['Cart', {userid: '12345'}]">
+                    <a [routerLink]="['Cart', {customerId: customerId}]">
                         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -21,12 +21,12 @@
         </div>
         <br/>
         <div class="row" *ngIf='shopItems && shopItems.length'>
-            <div class="col-sm-4 col-lg-4 col-md-4" *ngFor='let shopItem of shopItems | itemFilter:filterBy'>
+            <div class="col-sm-4 col-lg-4 col-md-4" *ngFor='let shopItem of shopItems | shopItemFilter:filterBy'>
                 <div class="thumbnail">
                     <img src="http://placehold.it/320x150" alt="">
                     <div class="caption">
-                        <h4 class="pull-right">${{ shopItem.unitPrice }}</h4>
-                        <h4>{{ shopItem.name }}
+                        <h4 class="pull-right">${{shopItem.unitPrice}}</h4>
+                        <h4>{{shopItem.name}}
                           <a data-toggle="modal" href="#{{shopItem.id}}">
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                           </a>
@@ -51,12 +51,12 @@
                                 <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy
                             </button>
                             <a href="#" class="btn btn-default btn disabled" role="button">
-                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{userCartItems[shopItem.id]}}</span>
+                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{customerCartItems[shopItem.id]}}</span>
                             </a>
                             <a [routerLink]="['Detail', {id: shopItem.id}]" class="btn btn-success" role="button">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                             </a>
-                            <custom-form [item]='shopItem' [modalId]='shopItem.id' (shopItemsUpdated)="getShopItems($event);"></custom-form>
+                            <shop-item-form [shopItem]='shopItem' [modalId]='shopItem.id' (shopItemsUpdated)="getShopItems($event);"></shop-item-form>
                         </div>
                     </div>
                 </div>

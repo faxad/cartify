@@ -12,29 +12,28 @@ var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
 var angular2_jwt_1 = require('angular2-jwt');
 var shop_service_1 = require('../shop.service');
-var ItemDetailComponent = (function () {
-    function ItemDetailComponent(_routerParams, _router, itemService) {
-        this._routerParams = _routerParams;
-        this._router = _router;
-        this.itemService = itemService;
-        this.parmValue = this._routerParams.get('id');
+var ShopItemDetailComponent = (function () {
+    function ShopItemDetailComponent(routerParams, router, shop) {
+        this.routerParams = routerParams;
+        this.router = router;
+        this.shop = shop;
     }
-    ItemDetailComponent.prototype.ngOnInit = function () {
+    ShopItemDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.itemService.getItem(Number(this.parmValue)).subscribe(function (item) { return _this.item = item; }, function (error) { return console.log(error); });
+        this.shop.getShopItem(Number(this.routerParams.get('id'))).subscribe(function (shopItem) { return _this.shopItem = shopItem; }, function (error) { return console.log(error); });
     };
-    ItemDetailComponent.prototype.goBack = function () {
-        this._router.navigate(['Items']);
+    ShopItemDetailComponent.prototype.goBack = function () {
+        this.router.navigate(['Items']);
     };
-    ItemDetailComponent = __decorate([
+    ShopItemDetailComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/shop/shop-item-detail/shop-item-detail.component.html',
             providers: [shop_service_1.ShopService]
         }),
         router_deprecated_1.CanActivate(function () { return angular2_jwt_1.tokenNotExpired(); }), 
         __metadata('design:paramtypes', [router_deprecated_1.RouteParams, router_deprecated_1.Router, shop_service_1.ShopService])
-    ], ItemDetailComponent);
-    return ItemDetailComponent;
+    ], ShopItemDetailComponent);
+    return ShopItemDetailComponent;
 }());
-exports.ItemDetailComponent = ItemDetailComponent;
+exports.ShopItemDetailComponent = ShopItemDetailComponent;
 //# sourceMappingURL=shop-item-detail.component.js.map

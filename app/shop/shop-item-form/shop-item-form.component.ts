@@ -2,54 +2,42 @@ import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from '@angular/common';
 
 import { ShopService } from '../shop.service';
-import { ValidService } from '../../shared/validation.service';
+import { ValidationService } from '../../shared/validation.service';
 import { ExtendedValidators } from './validators';
 import { IShopItem } from '../shop-item.interface';
 
 @Component({
-	selector: 'custom-form',
+	selector: 'shop-item-form',
 	templateUrl: 'app/shop/shop-item-form/shop-item-form.component.html',
 	styleUrls: ['app/shop/shop-item-form/shop-item-form.component.css'],
 	directives: [FORM_DIRECTIVES],
-	providers: [ValidService]
+	providers: [ValidationService]
 })
 export class FormComponent implements OnInit {
+	shopItemForm: ControlGroup;
 	isCreateForm: boolean = true;
-	@Input() modalId: string;
-	@Input() item: IShopItem;
+	@Input() modalId: string; // modal identifier
+	@Input() shopItem: IShopItem;
 	@Output() shopItemsUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
-	customForm: ControlGroup;
 
-	formErrors: any;
-	itemName: string;
-	itemCode: string;
-
-	constructor(private itemService: ShopService, private validService: ValidService, private fb: FormBuilder) { }
+	constructor(
+		private shop: ShopService,
+		private validation: ValidationService,
+		private formBuilder: FormBuilder) {}
 
 	submitItem(form: any): void {
 		if (form.valid) {
-			this.itemName = form.value['name'];
-			this.itemCode = form.value['code'];
+			let action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
 
-			let action: string = this.isCreateForm ? 'addItem' : 'updateItem';
-
-			this.itemService[action](form.value).subscribe(
-				item => {
-					console.log(item);
-					this.shopItemsUpdated.emit(true);
-				},
-				error => console.log(error));	
-
-			this.itemName = '';
-			this.itemCode = '';
+			this.shop[action](form.value).subscribe(
+				shopItem => { this.shopItemsUpdated.emit(true); },
+				error => console.log(error));
 		}
-		else {
-			alert('Form Validation Failed! Please Re-Submit.');
-		}
+		else { alert('Form Validation Failed! Please Re-Submit.'); }
 	}
 
 	ngOnInit(): void {
-		this.customForm = this.fb.group({
+		this.shopItemForm = this.formBuilder.group({
 			'id': ['', Validators.required],
 			'name': ['', Validators.compose(
 				[Validators.required,
@@ -61,15 +49,15 @@ export class FormComponent implements OnInit {
 			'description': ['']
 		});
 
-		if (this.item) {
+		if (this.shopItem) {
 			this.isCreateForm = false;
-			for (let key in this.customForm.controls) {
-				this.customForm.controls[key]._value = this.item[key]
+			for (let key in this.shopItemForm.controls) {
+				this.shopItemForm.controls[key]._value = this.shopItem[key]
 			}
 		}
 
-		this.validService.configure(
-			this.customForm,
+		this.validation.configure(
+			this.shopItemForm,
 			{
 				'name': {
 					'condition': 'invalidName',

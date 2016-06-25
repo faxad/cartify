@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouteParams, CanActivate} from '@angular/router-deprecated';
 
 import { ICartItem } from './cart-item.interface';
-import { ICustomerCartItem } from './customer-cart-item.interface';
+import { ICartItemDetailed } from './cart-item-detailed.interface';
 import { CartService } from './cart.service';
 import { ShopService } from '../shop/shop.service';
 
@@ -12,37 +12,35 @@ import { ShopService } from '../shop/shop.service';
 	providers: [CartService, ShopService]
 })
 export class ItemCartComponent implements OnInit {
-	parmValue: string;
-	cart: ICartItem[];
-	userCartItems: any = {};
+	userCartItems: ICartItem[];
 
-	constructor(private _routerParams: RouteParams,
-		        private _router: Router,
-		        private cartService: CartService) {
-		this.parmValue = this._routerParams.get('userid');
-	}
+	constructor(private router: Router, private cart: CartService) {}
 
 	ngOnInit(): void {
-		this.cartService.getCustomerCart().subscribe(
-			cart => this.cart = cart,
+		this.cart.getCartItemsWithDetails().subscribe(
+			cart => this.userCartItems = cart,
 			error => console.log(error));
 	}
 
 	increaseQuantity(item: ICartItem): void {
-		this.cartService.increaseQunatity(item).subscribe(
+		this.cart.increaseCartItemQunatity(item).subscribe(
 			items => console.log("Incremented"),
 			error => console.log(error));
 	}
 
 	decreaseQunatity(item: ICartItem): void {
-		this.cartService.decreaseQunatity(item).subscribe(
+		this.cart.decreaseCartItemQunatity(item).subscribe(
 			items => console.log("Decremented"),
 			error => console.log(error));
 	}
 
-	removeItem(item: ICartItem): void {
-		this.cartService.removeItem(item).subscribe(
+	removeCartItem(item: ICartItem): void {
+		this.cart.removeCartItem(item).subscribe(
 			items => console.log("Removed"),
 			error => console.log(error));
+	}
+
+	goBack(): void {
+		this.router.navigate(['Items']);
 	}
 }

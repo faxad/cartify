@@ -32,8 +32,8 @@ var AppComponent = (function () {
         }),
         router_deprecated_1.RouteConfig([
             { path: '/items', name: 'Items', component: shop_item_list_component_1.ShopItemListComponent, useAsDefault: true },
-            { path: '/item/:id', name: 'Detail', component: shop_item_detail_component_1.ItemDetailComponent },
-            { path: '/cart/:userid', name: 'Cart', component: cart_item_list_component_1.ItemCartComponent }
+            { path: '/item/:id', name: 'Detail', component: shop_item_detail_component_1.ShopItemDetailComponent },
+            { path: '/cart/:customerId', name: 'Cart', component: cart_item_list_component_1.ItemCartComponent }
         ]), 
         __metadata('design:paramtypes', [auth_service_1.AuthService])
     ], AppComponent);

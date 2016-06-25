@@ -21,25 +21,26 @@ var ShopItemListComponent = (function () {
         this.auth = auth;
         this.cart = cart;
         this.modalIdentifier = 'shopItemModal';
-        this.userCartItems = {};
+        this.customerCartItems = {};
     }
     ShopItemListComponent.prototype.getShopItems = function (event) {
         var _this = this;
-        this.shop.getItems().subscribe(function (shopItems) { return _this.shopItems = shopItems; }, function (error) { return console.log(error); });
+        this.shop.getShopItems().subscribe(function (shopItems) { return _this.shopItems = shopItems; }, function (error) { return console.log(error); });
     };
     ShopItemListComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.cart.getCart().subscribe(function (cartItems) {
+        this.customerId = auth_service_1.AuthService.getUser();
+        this.cart.getCartItems().subscribe(function (cartItems) {
             for (var _i = 0, cartItems_1 = cartItems; _i < cartItems_1.length; _i++) {
                 var cartItem = cartItems_1[_i];
-                _this.userCartItems[cartItem.itemId] = cartItem.quantity;
+                _this.customerCartItems[cartItem.itemId] = cartItem.quantity;
             }
             _this.getShopItems(true);
         }, function (error) { return console.log(error); });
     };
     ShopItemListComponent.prototype.addToCart = function (item) {
-        this.cart.itemExists(item, function (service, item) {
-            service.addItem(item).subscribe(function (items) { return console.log("Added to Cart"); }, function (error) { return console.log(error); });
+        this.cart.addOrUpdateCartItem(item, function (service, item) {
+            service.addCartItem(item).subscribe(function (items) { return console.log("Added to Cart"); }, function (error) { return console.log(error); });
         });
     };
     ShopItemListComponent = __decorate([
@@ -47,7 +48,7 @@ var ShopItemListComponent = (function () {
             selector: 'list-item',
             templateUrl: 'app/shop/shop-item-list/shop-item-list.component.html',
             styleUrls: ['app/shop/shop-item-list/shop-item-list.component.css'],
-            pipes: [shop_item_filter_pipe_1.ItemFilterPipe],
+            pipes: [shop_item_filter_pipe_1.ShopItemFilterPipe],
             directives: [shop_item_form_component_1.FormComponent, router_deprecated_1.ROUTER_DIRECTIVES],
             providers: [shop_service_1.ShopService, cart_service_1.CartService]
         }), 

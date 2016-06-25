@@ -4,7 +4,7 @@ import { HTTP_PROVIDERS } from '@angular/http';
 import 'rxjs/Rx';
 
 import { ShopItemListComponent } from './shop/shop-item-list/shop-item-list.component';
-import { ItemDetailComponent } from './shop/shop-item-detail/shop-item-detail.component';
+import { ShopItemDetailComponent } from './shop/shop-item-detail/shop-item-detail.component';
 import { ItemCartComponent } from './cart/cart-item-list.component';
 import { AuthService } from './shared/auth.service'
 
@@ -49,8 +49,8 @@ import { AuthService } from './shared/auth.service'
 })
 @RouteConfig([
 		{ path: '/items', name: 'Items', component: ShopItemListComponent, useAsDefault: true },
-		{ path: '/item/:id', name: 'Detail', component: ItemDetailComponent },
-		{ path: '/cart/:userid', name: 'Cart', component: ItemCartComponent }
+		{ path: '/item/:id', name: 'Detail', component: ShopItemDetailComponent },
+		{ path: '/cart/:customerId', name: 'Cart', component: ItemCartComponent }
 ])
 export class AppComponent {
 	constructor(private auth: AuthService) {}

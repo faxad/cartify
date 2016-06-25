@@ -13,32 +13,32 @@ var router_deprecated_1 = require('@angular/router-deprecated');
 var cart_service_1 = require('./cart.service');
 var shop_service_1 = require('../shop/shop.service');
 var ItemCartComponent = (function () {
-    function ItemCartComponent(_routerParams, _router, cartService) {
-        this._routerParams = _routerParams;
-        this._router = _router;
-        this.cartService = cartService;
-        this.userCartItems = {};
-        this.parmValue = this._routerParams.get('userid');
+    function ItemCartComponent(router, cart) {
+        this.router = router;
+        this.cart = cart;
     }
     ItemCartComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.cartService.getCustomerCart().subscribe(function (cart) { return _this.cart = cart; }, function (error) { return console.log(error); });
+        this.cart.getCartItemsWithDetails().subscribe(function (cart) { return _this.userCartItems = cart; }, function (error) { return console.log(error); });
     };
     ItemCartComponent.prototype.increaseQuantity = function (item) {
-        this.cartService.increaseQunatity(item).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });
+        this.cart.increaseCartItemQunatity(item).subscribe(function (items) { return console.log("Incremented"); }, function (error) { return console.log(error); });
     };
     ItemCartComponent.prototype.decreaseQunatity = function (item) {
-        this.cartService.decreaseQunatity(item).subscribe(function (items) { return console.log("Decremented"); }, function (error) { return console.log(error); });
+        this.cart.decreaseCartItemQunatity(item).subscribe(function (items) { return console.log("Decremented"); }, function (error) { return console.log(error); });
     };
-    ItemCartComponent.prototype.removeItem = function (item) {
-        this.cartService.removeItem(item).subscribe(function (items) { return console.log("Removed"); }, function (error) { return console.log(error); });
+    ItemCartComponent.prototype.removeCartItem = function (item) {
+        this.cart.removeCartItem(item).subscribe(function (items) { return console.log("Removed"); }, function (error) { return console.log(error); });
+    };
+    ItemCartComponent.prototype.goBack = function () {
+        this.router.navigate(['Items']);
     };
     ItemCartComponent = __decorate([
         core_1.Component({
             templateUrl: 'app/cart/cart-item-list.component.html',
             providers: [cart_service_1.CartService, shop_service_1.ShopService]
         }), 
-        __metadata('design:paramtypes', [router_deprecated_1.RouteParams, router_deprecated_1.Router, cart_service_1.CartService])
+        __metadata('design:paramtypes', [router_deprecated_1.Router, cart_service_1.CartService])
     ], ItemCartComponent);
     return ItemCartComponent;
 }());

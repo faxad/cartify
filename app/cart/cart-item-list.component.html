@@ -4,7 +4,7 @@
 </ol>
 <table class="table table-striped">
     <tr>
-        <th>Item</th>
+        <th>Ref.</th>
         <th>Name</th>
         <th>Code</th>
         <th>Unit Price</th>
@@ -12,22 +12,22 @@
         <th>Net Price</th>
         <th></th>
     </tr>
-    <tr *ngFor='let c of cart'>
-        <td>{{c.itemId}}</td>
-        <td>{{c.name}}</td>
-        <td>{{c.code}}</td>
-        <td></td>
-        <td>{{c.quantity}}</td>
-        <td></td>
+    <tr *ngFor='let cartItem of userCartItems'>
+        <td>{{cartItem.itemId}}</td>
+        <td>{{cartItem.name}}</td>
+        <td>{{cartItem.code}}</td>
+        <td>{{cartItem.unitPrice}}</td>
+        <td>{{cartItem.quantity}}</td>
+        <td>{{cartItem.unitPrice * cartItem.quantity}}</td>
         <td>
             <p>
-                <button type="button" class="btn btn-default btn-xs" (click)='increaseQuantity(c)'>
+                <button type="button" class="btn btn-default btn-xs" (click)='increaseQuantity(cartItem)'>
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </button>
-                <button type="button" class="btn btn-default btn-xs" (click)='decreaseQunatity(c)'>
+                <button type="button" class="btn btn-default btn-xs" (click)='decreaseQunatity(cartItem)'>
                     <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
                 </button>
-                <button type="button" class="btn btn-danger btn-xs" (click)='removeItem(c)'>Delete</button>
+                <button type="button" class="btn btn-danger btn-xs" (click)='removeCartItem(cartItem)'>Delete</button>
             </p>
         </td>
     </tr>

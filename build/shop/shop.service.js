@@ -12,32 +12,30 @@ var core_1 = require('@angular/core');
 var http_1 = require('@angular/http');
 var Observable_1 = require('rxjs/Observable');
 var ShopService = (function () {
-    function ShopService(_http) {
-        this._http = _http;
+    function ShopService(http) {
+        this.http = http;
     }
     ShopService.prototype.handleError = function (error, Response) {
         console.error(error);
         return Observable_1.Observable.throw(error.json().error || "Service Error");
     };
-    ShopService.prototype.getItems = function () {
-        return this._http.get("http://localhost:8080/items")
+    ShopService.prototype.getShopItems = function () {
+        return this.http.get("http://localhost:8080/items")
             .map(function (response) { return response.json(); })
             .catch(this.handleError);
         //.do(data => console.log(JSON.stringify(data)));
     };
-    ShopService.prototype.getItem = function (id) {
-        return this._http.get("http://localhost:8080/item?id=" + id)
-            .map(function (response) { return response.json(); })
-            .catch(this.handleError);
-        //.do(data => console.log(<IItem>data));
+    ShopService.prototype.getShopItem = function (id) {
+        return this.http.get("http://localhost:8080/item?id=" + id)
+            .map(function (response) { return response.json(); });
     };
-    ShopService.prototype.addItem = function (body) {
-        return this._http.post("http://localhost:8080/insert", JSON.stringify(body))
-            .map(function (res) { return res.json(); });
+    ShopService.prototype.addShopItem = function (body) {
+        return this.http.post("http://localhost:8080/insert", JSON.stringify(body))
+            .map(function (response) { return response.json(); });
     };
-    ShopService.prototype.updateItem = function (body) {
-        return this._http.post("http://localhost:8080/update", JSON.stringify(body))
-            .map(function (res) { return res.json(); });
+    ShopService.prototype.updateShopItem = function (body) {
+        return this.http.post("http://localhost:8080/update", JSON.stringify(body))
+            .map(function (response) { return response.json(); });
     };
     ShopService = __decorate([
         core_1.Injectable(), 

@@ -1,4 +1,4 @@
-export interface ICustomerCartItem {
+export interface ICartItemDetailed {
 	userId: string;
 	itemId: number;
 	name: string;
