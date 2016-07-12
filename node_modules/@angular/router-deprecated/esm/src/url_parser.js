@@ -1,12 +1,14 @@
 import { StringMapWrapper } from '../src/facade/collection';
-import { isPresent, isBlank, RegExpWrapper } from '../src/facade/lang';
 import { BaseException } from '../src/facade/exceptions';
+import { RegExpWrapper, isBlank, isPresent } from '../src/facade/lang';
 export function convertUrlParamsToArray(urlParams) {
     var paramsArray = [];
     if (isBlank(urlParams)) {
         return [];
     }
-    StringMapWrapper.forEach(urlParams, (value, key) => { paramsArray.push((value === true) ? key : key + '=' + value); });
+    StringMapWrapper.forEach(urlParams, (value /** TODO #9100 */, key /** TODO #9100 */) => {
+        paramsArray.push((value === true) ? key : key + '=' + value);
+    });
     return paramsArray;
 }
 // Convert an object of url parameters into a string that can be used in an URL

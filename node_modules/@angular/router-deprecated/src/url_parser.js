@@ -5,14 +5,16 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var collection_1 = require('../src/facade/collection');
-var lang_1 = require('../src/facade/lang');
 var exceptions_1 = require('../src/facade/exceptions');
+var lang_1 = require('../src/facade/lang');
 function convertUrlParamsToArray(urlParams) {
     var paramsArray = [];
     if (lang_1.isBlank(urlParams)) {
         return [];
     }
-    collection_1.StringMapWrapper.forEach(urlParams, function (value, key) { paramsArray.push((value === true) ? key : key + '=' + value); });
+    collection_1.StringMapWrapper.forEach(urlParams, function (value /** TODO #9100 */, key /** TODO #9100 */) {
+        paramsArray.push((value === true) ? key : key + '=' + value);
+    });
     return paramsArray;
 }
 exports.convertUrlParamsToArray = convertUrlParamsToArray;

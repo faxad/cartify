@@ -1,6 +1,6 @@
-import { AsyncRoute, AuxRoute, Route, Redirect } from './route_config_decorator';
-import { isType } from '../../src/facade/lang';
-import { BaseException } from '../../src/facade/exceptions';
+import { BaseException } from '../facade/exceptions';
+import { isType } from '../facade/lang';
+import { AsyncRoute, AuxRoute, Redirect, Route } from './route_config_decorator';
 /**
  * Given a JS Object that represents a route config, returns a corresponding Route, AsyncRoute,
  * AuxRoute or Redirect object.
@@ -24,12 +24,6 @@ export function normalizeRouteConfig(config, registry) {
     }
     if ((+!!config.component) + (+!!config.redirectTo) + (+!!config.loader) != 1) {
         throw new BaseException(`Route config should contain exactly one "component", "loader", or "redirectTo" property.`);
-    }
-    if (config.as && config.name) {
-        throw new BaseException(`Route config should contain exactly one "as" or "name" property.`);
-    }
-    if (config.as) {
-        config.name = config.as;
     }
     if (config.loader) {
         var wrappedLoader = wrapLoaderToReconfigureRegistry(config.loader, registry);
@@ -78,7 +72,7 @@ export function normalizeRouteConfig(config, registry) {
 }
 function wrapLoaderToReconfigureRegistry(loader, registry) {
     return () => {
-        return loader().then((componentType) => {
+        return loader().then((componentType /** TODO #9100 */) => {
             registry.configFromComponent(componentType);
             return componentType;
         });

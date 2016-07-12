@@ -1,14 +1,14 @@
 "use strict";
-var lang_1 = require('../../src/facade/lang');
-var exceptions_1 = require('../../src/facade/exceptions');
-var collection_1 = require('../../src/facade/collection');
-var async_1 = require('../../src/facade/async');
-var rules_1 = require('./rules');
+var async_1 = require('../facade/async');
+var collection_1 = require('../facade/collection');
+var exceptions_1 = require('../facade/exceptions');
+var lang_1 = require('../facade/lang');
 var route_config_impl_1 = require('../route_config/route_config_impl');
 var async_route_handler_1 = require('./route_handlers/async_route_handler');
 var sync_route_handler_1 = require('./route_handlers/sync_route_handler');
 var param_route_path_1 = require('./route_paths/param_route_path');
 var regex_route_path_1 = require('./route_paths/regex_route_path');
+var rules_1 = require('./rules');
 /**
  * A `RuleSet` is responsible for recognizing routes for a particular component.
  * It is consumed by `RouteRegistry`, which knows how to recognize an entire hierarchy of
@@ -34,7 +34,7 @@ var RuleSet = (function () {
         var handler;
         if (lang_1.isPresent(config.name) && config.name[0].toUpperCase() != config.name[0]) {
             var suggestedName = config.name[0].toUpperCase() + config.name.substring(1);
-            throw new exceptions_1.BaseException("Route \"" + config.path + "\" with name \"" + config.name + "\" does not begin with an uppercase letter. Route names should be CamelCase like \"" + suggestedName + "\".");
+            throw new exceptions_1.BaseException("Route \"" + config.path + "\" with name \"" + config.name + "\" does not begin with an uppercase letter. Route names should be PascalCase like \"" + suggestedName + "\".");
         }
         if (config instanceof route_config_impl_1.AuxRoute) {
             handler = new sync_route_handler_1.SyncRouteHandler(config.component, config.data);
@@ -122,7 +122,7 @@ var RuleSet = (function () {
         }
         return rule.generate(params);
     };
-    RuleSet.prototype._assertNoHashCollision = function (hash, path) {
+    RuleSet.prototype._assertNoHashCollision = function (hash, path /** TODO #9100 */) {
         this.rules.forEach(function (rule) {
             if (hash == rule.hash) {
                 throw new exceptions_1.BaseException("Configuration '" + path + "' conflicts with existing route '" + rule.path + "'");
@@ -132,7 +132,7 @@ var RuleSet = (function () {
     RuleSet.prototype._getRoutePath = function (config) {
         if (lang_1.isPresent(config.regex)) {
             if (lang_1.isFunction(config.serializer)) {
-                return new regex_route_path_1.RegexRoutePath(config.regex, config.serializer);
+                return new regex_route_path_1.RegexRoutePath(config.regex, config.serializer, config.regex_group_names);
             }
             else {
                 throw new exceptions_1.BaseException("Route provides a regex property, '" + config.regex + "', but no serializer property");

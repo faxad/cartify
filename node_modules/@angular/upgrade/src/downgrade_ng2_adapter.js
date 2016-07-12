@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 "use strict";
 var core_1 = require('@angular/core');
 var constants_1 = require('./constants');
@@ -25,10 +32,9 @@ var DowngradeNg2ComponentAdapter = (function () {
         this.childNodes = element.contents();
     }
     DowngradeNg2ComponentAdapter.prototype.bootstrapNg2 = function () {
-        var childInjector = core_1.ReflectiveInjector.resolveAndCreate([core_1.provide(constants_1.NG1_SCOPE, { useValue: this.componentScope })], this.parentInjector);
+        var childInjector = core_1.ReflectiveInjector.resolveAndCreate([{ provide: constants_1.NG1_SCOPE, useValue: this.componentScope }], this.parentInjector);
         this.contentInsertionPoint = document.createComment('ng1 insertion point');
-        this.componentRef =
-            this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], '#' + this.id);
+        this.componentRef = this.componentFactory.create(childInjector, [[this.contentInsertionPoint]], this.element[0]);
         this.changeDetector = this.componentRef.changeDetectorRef;
         this.component = this.componentRef.instance;
     };
@@ -40,9 +46,9 @@ var DowngradeNg2ComponentAdapter = (function () {
             var input = inputs[i];
             var expr = null;
             if (attrs.hasOwnProperty(input.attr)) {
-                var observeFn = (function (prop) {
+                var observeFn = (function (prop /** TODO #9100 */) {
                     var prevValue = INITIAL_VALUE;
-                    return function (value) {
+                    return function (value /** TODO #9100 */) {
                         if (_this.inputChanges !== null) {
                             _this.inputChangeCount++;
                             _this.inputChanges[prop] =
@@ -67,13 +73,15 @@ var DowngradeNg2ComponentAdapter = (function () {
                 expr = attrs[input.bracketParenAttr];
             }
             if (expr != null) {
-                var watchFn = (function (prop) { return function (value, prevValue) {
-                    if (_this.inputChanges != null) {
-                        _this.inputChangeCount++;
-                        _this.inputChanges[prop] = new Ng1Change(prevValue, value);
-                    }
-                    _this.component[prop] = value;
-                }; })(input.prop);
+                var watchFn = (function (prop /** TODO #9100 */) {
+                    return function (value /** TODO #9100 */, prevValue /** TODO #9100 */) {
+                        if (_this.inputChanges != null) {
+                            _this.inputChangeCount++;
+                            _this.inputChanges[prop] = new Ng1Change(prevValue, value);
+                        }
+                        _this.component[prop] = value;
+                    };
+                })(input.prop);
                 this.componentScope.$watch(expr, watchFn);
             }
         }
@@ -133,8 +141,11 @@ var DowngradeNg2ComponentAdapter = (function () {
                 var emitter = this.component[output.prop];
                 if (emitter) {
                     emitter.subscribe({
-                        next: assignExpr ? (function (setter) { return function (value) { return setter(_this.scope, value); }; })(setter) :
-                            (function (getter) { return function (value) { return getter(_this.scope, { $event: value }); }; })(getter)
+                        next: assignExpr ?
+                            (function (setter) { return function (v /** TODO #9100 */) { return setter(_this.scope, v); }; })(setter) :
+                            (function (getter) { return function (v /** TODO #9100 */) {
+                                return getter(_this.scope, { $event: v });
+                            }; })(getter)
                     });
                 }
                 else {

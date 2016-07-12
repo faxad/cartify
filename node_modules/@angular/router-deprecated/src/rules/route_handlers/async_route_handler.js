@@ -1,5 +1,5 @@
 "use strict";
-var lang_1 = require('../../../src/facade/lang');
+var lang_1 = require('../../facade/lang');
 var instruction_1 = require('../../instruction');
 var AsyncRouteHandler = (function () {
     function AsyncRouteHandler(_loader, data) {

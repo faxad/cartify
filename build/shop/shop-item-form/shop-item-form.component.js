@@ -10,8 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var common_1 = require('@angular/common');
-var shop_service_1 = require('../shop.service');
-var validation_service_1 = require('../../shared/validation.service');
+var index_1 = require('../../shared/index');
 var validators_1 = require('./validators');
 var FormComponent = (function () {
     function FormComponent(shop, validation, formBuilder) {
@@ -32,6 +31,8 @@ var FormComponent = (function () {
         }
     };
     FormComponent.prototype.ngOnInit = function () {
+        //console.log(this.modalId)
+        //console.log(this.shopItem)
         this.shopItemForm = this.formBuilder.group({
             'id': ['', common_1.Validators.required],
             'name': ['', common_1.Validators.compose([common_1.Validators.required,
@@ -45,7 +46,7 @@ var FormComponent = (function () {
         if (this.shopItem) {
             this.isCreateForm = false;
             for (var key in this.shopItemForm.controls) {
-                this.shopItemForm.controls[key]._value = this.shopItem[key];
+                this.shopItemForm.controls[key].updateValue(this.shopItem[key]);
             }
         }
         this.validation.configure(this.shopItemForm, {
@@ -74,9 +75,9 @@ var FormComponent = (function () {
             templateUrl: 'app/shop/shop-item-form/shop-item-form.component.html',
             styleUrls: ['app/shop/shop-item-form/shop-item-form.component.css'],
             directives: [common_1.FORM_DIRECTIVES],
-            providers: [validation_service_1.ValidationService]
+            providers: [index_1.ValidationService]
         }), 
-        __metadata('design:paramtypes', [shop_service_1.ShopService, validation_service_1.ValidationService, common_1.FormBuilder])
+        __metadata('design:paramtypes', [index_1.ShopService, index_1.ValidationService, common_1.FormBuilder])
     ], FormComponent);
     return FormComponent;
 }());

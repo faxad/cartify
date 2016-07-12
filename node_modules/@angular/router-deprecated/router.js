@@ -7,18 +7,19 @@
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
-var router_1 = require('./src/router');
-exports.Router = router_1.Router;
-var router_outlet_1 = require('./src/directives/router_outlet');
-exports.RouterOutlet = router_outlet_1.RouterOutlet;
 var router_link_1 = require('./src/directives/router_link');
 exports.RouterLink = router_link_1.RouterLink;
+var router_outlet_1 = require('./src/directives/router_outlet');
+exports.RouterOutlet = router_outlet_1.RouterOutlet;
 var instruction_1 = require('./src/instruction');
-exports.RouteParams = instruction_1.RouteParams;
 exports.RouteData = instruction_1.RouteData;
+exports.RouteParams = instruction_1.RouteParams;
 var route_registry_1 = require('./src/route_registry');
-exports.RouteRegistry = route_registry_1.RouteRegistry;
 exports.ROUTER_PRIMARY_COMPONENT = route_registry_1.ROUTER_PRIMARY_COMPONENT;
+exports.RouteRegistry = route_registry_1.RouteRegistry;
+var router_1 = require('./src/router');
+exports.RootRouter = router_1.RootRouter;
+exports.Router = router_1.Router;
 __export(require('./src/route_config/route_config_decorator'));
 var lifecycle_annotations_1 = require('./src/lifecycle/lifecycle_annotations');
 exports.CanActivate = lifecycle_annotations_1.CanActivate;

@@ -1,9 +1,9 @@
 "use strict";
-var router_providers_common_1 = require('./router_providers_common');
-var platform_browser_1 = require('@angular/platform-browser');
 var common_1 = require('@angular/common');
+var platform_browser_1 = require('@angular/platform-browser');
+var router_providers_common_1 = require('./router_providers_common');
 /**
- * A list of {@link Provider}s. To use the router, you must add this to your application.
+ * A list of providers. To use the router, you must add this to your application.
  *
  * ### Example ([live demo](http://plnkr.co/edit/iRUP8B5OUbxCWQ3AcIDm))
  *

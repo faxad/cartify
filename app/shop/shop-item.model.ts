@@ -1,4 +1,4 @@
-import { IShopItem } from './shop-item.interface';
+import { IShopItem } from '../shared/shop-item.interface';
 
 export class ShopItem implements IShopItem {
 	id: number;

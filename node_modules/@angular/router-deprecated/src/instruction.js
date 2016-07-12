@@ -4,9 +4,9 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var async_1 = require('../src/facade/async');
 var collection_1 = require('../src/facade/collection');
 var lang_1 = require('../src/facade/lang');
-var async_1 = require('../src/facade/async');
 /**
  * `RouteParams` is an immutable map of parameters for the given route
  * based on the url matcher and optional parameters for that route.
@@ -197,7 +197,7 @@ var Instruction = (function () {
     };
     /** @internal */
     Instruction.prototype._stringifyPathMatrixAux = function () {
-        if (lang_1.isBlank(this.component)) {
+        if (lang_1.isBlank(this.component) && lang_1.isBlank(this.urlPath)) {
             return '';
         }
         return this.urlPath + this._stringifyMatrixParams() + this._stringifyAux();
@@ -326,7 +326,7 @@ var ComponentInstruction = (function () {
     /**
      * @internal
      */
-    function ComponentInstruction(urlPath, urlParams, data, componentType, terminal, specificity, params, routeName) {
+    function ComponentInstruction(urlPath, urlParams, data, componentType /** TODO #9100 */, terminal, specificity, params, routeName) {
         if (params === void 0) { params = null; }
         this.urlPath = urlPath;
         this.urlParams = urlParams;

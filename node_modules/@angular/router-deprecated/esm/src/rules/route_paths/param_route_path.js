@@ -1,8 +1,8 @@
-import { RegExpWrapper, StringWrapper, isPresent, isBlank } from '../../../src/facade/lang';
-import { BaseException } from '../../../src/facade/exceptions';
-import { StringMapWrapper } from '../../../src/facade/collection';
-import { TouchMap, normalizeString } from '../../utils';
+import { StringMapWrapper } from '../../facade/collection';
+import { BaseException } from '../../facade/exceptions';
+import { RegExpWrapper, StringWrapper, isBlank, isPresent } from '../../facade/lang';
 import { RootUrl, convertUrlParamsToArray } from '../../url_parser';
+import { TouchMap, normalizeString } from '../../utils';
 import { GeneratedUrl, MatchedUrl } from './route_path';
 /**
  * Identified by a `...` URL segment. This indicates that the
@@ -90,21 +90,23 @@ export class ParamRoutePath {
         var captured = [];
         for (var i = 0; i < this._segments.length; i += 1) {
             var pathSegment = this._segments[i];
-            currentUrlSegment = nextUrlSegment;
             if (pathSegment instanceof ContinuationPathSegment) {
                 break;
             }
+            currentUrlSegment = nextUrlSegment;
             if (isPresent(currentUrlSegment)) {
                 // the star segment consumes all of the remaining URL, including matrix params
                 if (pathSegment instanceof StarPathSegment) {
-                    positionalParams[pathSegment.name] = currentUrlSegment.toString();
+                    positionalParams[pathSegment.name] =
+                        currentUrlSegment.toString();
                     captured.push(currentUrlSegment.toString());
                     nextUrlSegment = null;
                     break;
                 }
                 captured.push(currentUrlSegment.path);
                 if (pathSegment instanceof DynamicPathSegment) {
-                    positionalParams[pathSegment.name] = decodeDynamicSegment(currentUrlSegment.path);
+                    positionalParams[pathSegment.name] =
+                        decodeDynamicSegment(currentUrlSegment.path);
                 }
                 else if (!pathSegment.match(currentUrlSegment.path)) {
                     return null;
@@ -154,7 +156,7 @@ export class ParamRoutePath {
     _parsePathString(routePath) {
         // normalize route as not starting with a "/". Recognition will
         // also normalize.
-        if (routePath.startsWith("/")) {
+        if (routePath.startsWith('/')) {
             routePath = routePath.substring(1);
         }
         var segmentStrings = routePath.split('/');
@@ -191,7 +193,7 @@ export class ParamRoutePath {
         // The code below uses place values to combine the different types of segments into a single
         // string that we can sort later. Each static segment is marked as a specificity of "2," each
         // dynamic segment is worth "1" specificity, and stars are worth "0" specificity.
-        var i, length = this._segments.length, specificity;
+        var i /** TODO #9100 */, length = this._segments.length, specificity;
         if (length == 0) {
             // a single slash (or "empty segment" is as specific as a static segment
             specificity += '2';
@@ -207,7 +209,7 @@ export class ParamRoutePath {
     _calculateHash() {
         // this function is used to determine whether a route config path like `/foo/:id` collides with
         // `/foo/:name`
-        var i, length = this._segments.length;
+        var i /** TODO #9100 */, length = this._segments.length;
         var hashParts = [];
         for (i = 0; i < length; i++) {
             hashParts.push(this._segments[i].hash);

@@ -11,13 +11,13 @@ export class CanActivate {
     }
 }
 export const routerCanReuse = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerCanReuse");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerCanReuse');
 export const routerCanDeactivate = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerCanDeactivate");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerCanDeactivate');
 export const routerOnActivate = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerOnActivate");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerOnActivate');
 export const routerOnReuse = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerOnReuse");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerOnReuse');
 export const routerOnDeactivate = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerOnDeactivate");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerOnDeactivate');
 //# sourceMappingURL=lifecycle_annotations_impl.js.map

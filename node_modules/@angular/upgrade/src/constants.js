@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 "use strict";
 exports.NG2_COMPILER = 'ng2.Compiler';
 exports.NG2_INJECTOR = 'ng2.Injector';
@@ -12,5 +19,5 @@ exports.NG1_INJECTOR = '$injector';
 exports.NG1_PARSE = '$parse';
 exports.NG1_TEMPLATE_CACHE = '$templateCache';
 exports.NG1_TESTABILITY = '$$testability';
-exports.REQUIRE_INJECTOR = '^' + exports.NG2_INJECTOR;
+exports.REQUIRE_INJECTOR = '?^' + exports.NG2_INJECTOR;
 //# sourceMappingURL=constants.js.map

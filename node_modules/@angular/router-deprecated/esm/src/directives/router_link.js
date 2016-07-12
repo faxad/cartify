@@ -7,9 +7,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Directive } from '@angular/core';
 import { Location } from '@angular/common';
-import { isString } from '../../src/facade/lang';
+import { Directive } from '@angular/core';
+import { isString } from '../facade/lang';
 import { Router } from '../router';
 /**
  * The RouterLink directive lets you link to specific parts of your app.
@@ -18,7 +18,7 @@ import { Router } from '../router';
 
  * ```
  * @RouteConfig([
- *   { path: '/user', component: UserCmp, as: 'User' }
+ *   { path: '/user', component: UserCmp, name: 'User' }
  * ]);
  * class MyComp {}
  * ```

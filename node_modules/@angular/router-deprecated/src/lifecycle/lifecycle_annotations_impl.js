@@ -16,13 +16,13 @@ var CanActivate = (function () {
 }());
 exports.CanActivate = CanActivate;
 exports.routerCanReuse = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerCanReuse");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerCanReuse');
 exports.routerCanDeactivate = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerCanDeactivate");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerCanDeactivate');
 exports.routerOnActivate = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerOnActivate");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerOnActivate');
 exports.routerOnReuse = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerOnReuse");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerOnReuse');
 exports.routerOnDeactivate = 
-/*@ts2dart_const*/ new RouteLifecycleHook("routerOnDeactivate");
+/*@ts2dart_const*/ new RouteLifecycleHook('routerOnDeactivate');
 //# sourceMappingURL=lifecycle_annotations_impl.js.map

@@ -10,14 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { PromiseWrapper, EventEmitter, ObservableWrapper } from '../src/facade/async';
-import { Map, StringMapWrapper } from '../src/facade/collection';
-import { isBlank, isPresent, Type } from '../src/facade/lang';
-import { BaseException } from '../src/facade/exceptions';
 import { Location } from '@angular/common';
-import { RouteRegistry, ROUTER_PRIMARY_COMPONENT } from './route_registry';
+import { Inject, Injectable } from '@angular/core';
+import { EventEmitter, ObservableWrapper, PromiseWrapper } from '../src/facade/async';
+import { Map, StringMapWrapper } from '../src/facade/collection';
+import { BaseException } from '../src/facade/exceptions';
+import { Type, isBlank, isPresent } from '../src/facade/lang';
+import { DefaultInstruction } from './instruction';
 import { getCanActivateHook } from './lifecycle/route_lifecycle_reflector';
-import { Injectable, Inject } from '@angular/core';
+import { ROUTER_PRIMARY_COMPONENT, RouteRegistry } from './route_registry';
 let _resolveToTrue = PromiseWrapper.resolve(true);
 let _resolveToFalse = PromiseWrapper.resolve(false);
 /**
@@ -120,7 +121,8 @@ export let Router = class Router {
      */
     isRouteActive(instruction) {
         var router = this;
-        if (isBlank(this.currentInstruction)) {
+        var currentInstruction = this.currentInstruction;
+        if (isBlank(currentInstruction)) {
             return false;
         }
         // `instruction` corresponds to the root router
@@ -128,19 +130,26 @@ export let Router = class Router {
             router = router.parent;
             instruction = instruction.child;
         }
-        if (isBlank(instruction.component) || isBlank(this.currentInstruction.component) ||
-            this.currentInstruction.component.routeName != instruction.component.routeName) {
-            return false;
-        }
-        let paramEquals = true;
-        if (isPresent(this.currentInstruction.component.params)) {
-            StringMapWrapper.forEach(instruction.component.params, (value, key) => {
-                if (this.currentInstruction.component.params[key] !== value) {
-                    paramEquals = false;
-                }
-            });
-        }
-        return paramEquals;
+        let reason = true;
+        // check the instructions in depth
+        do {
+            if (isBlank(instruction.component) || isBlank(currentInstruction.component) ||
+                currentInstruction.component.routeName != instruction.component.routeName) {
+                return false;
+            }
+            if (isPresent(instruction.component.params)) {
+                StringMapWrapper.forEach(instruction.component.params, (value /** TODO #9100 */, key /** TODO #9100 */) => {
+                    if (currentInstruction.component.params[key] !== value) {
+                        reason = false;
+                    }
+                });
+            }
+            currentInstruction = currentInstruction.child;
+            instruction = instruction.child;
+        } while (isPresent(currentInstruction) && isPresent(instruction) &&
+            !(instruction instanceof DefaultInstruction) && reason);
+        // ignore DefaultInstruction
+        return reason && (isBlank(instruction) || instruction instanceof DefaultInstruction);
     }
     /**
      * Dynamically update the routing configuration and trigger a navigation.
@@ -216,7 +225,7 @@ export let Router = class Router {
             if (isPresent(instruction.child)) {
                 unsettledInstructions.push(this._settleInstruction(instruction.child));
             }
-            StringMapWrapper.forEach(instruction.auxInstruction, (instruction, _) => {
+            StringMapWrapper.forEach(instruction.auxInstruction, (instruction, _ /** TODO #9100 */) => {
                 unsettledInstructions.push(this._settleInstruction(instruction));
             });
             return PromiseWrapper.all(unsettledInstructions);
@@ -231,21 +240,23 @@ export let Router = class Router {
             if (!result) {
                 return false;
             }
-            return this._routerCanDeactivate(instruction)
-                .then((result) => {
+            return this._routerCanDeactivate(instruction).then((result) => {
                 if (result) {
-                    return this.commit(instruction, _skipLocationChange)
-                        .then((_) => {
-                        this._emitNavigationFinish(instruction.toRootUrl());
+                    return this.commit(instruction, _skipLocationChange).then((_) => {
+                        this._emitNavigationFinish(instruction.component);
                         return true;
                     });
                 }
             });
         });
     }
-    _emitNavigationFinish(url) { ObservableWrapper.callEmit(this._subject, url); }
+    _emitNavigationFinish(instruction) {
+        ObservableWrapper.callEmit(this._subject, { status: 'success', instruction });
+    }
     /** @internal */
-    _emitNavigationFail(url) { ObservableWrapper.callError(this._subject, url); }
+    _emitNavigationFail(url) {
+        ObservableWrapper.callEmit(this._subject, { status: 'fail', url });
+    }
     _afterPromiseFinishNavigating(promise) {
         return PromiseWrapper.catchError(promise.then((_) => this._finishNavigating()), (err) => {
             this._finishNavigating();
@@ -263,8 +274,7 @@ export let Router = class Router {
         if (isBlank(instruction.component)) {
             return _resolveToTrue;
         }
-        return this._outlet.routerCanReuse(instruction.component)
-            .then((result) => {
+        return this._outlet.routerCanReuse(instruction.component).then((result) => {
             instruction.component.reuse = result;
             if (result && isPresent(this._childRouter) && isPresent(instruction.child)) {
                 return this._childRouter._routerCanReuse(instruction.child);
@@ -411,11 +421,9 @@ export let RootRouter = class RootRouter extends Router {
         this._location = location;
         this._locationSub = this._location.subscribe((change) => {
             // we call recognize ourselves
-            this.recognize(change['url'])
-                .then((instruction) => {
+            this.recognize(change['url']).then((instruction) => {
                 if (isPresent(instruction)) {
-                    this.navigateByInstruction(instruction, isPresent(change['pop']))
-                        .then((_) => {
+                    this.navigateByInstruction(instruction, isPresent(change['pop'])).then((_) => {
                         // this is a popstate event; no need to change the URL
                         if (isPresent(change['pop']) && change['type'] != 'hashchange') {
                             return;
@@ -458,7 +466,12 @@ export let RootRouter = class RootRouter extends Router {
         }
         var promise = super.commit(instruction);
         if (!_skipLocationChange) {
-            promise = promise.then((_) => { this._location.go(emitPath, emitQuery); });
+            if (this._location.isCurrentPathEqualTo(emitPath, emitQuery)) {
+                promise = promise.then((_) => { this._location.replaceState(emitPath, emitQuery); });
+            }
+            else {
+                promise = promise.then((_) => { this._location.go(emitPath, emitQuery); });
+            }
         }
         return promise;
     }
@@ -475,7 +488,7 @@ RootRouter = __decorate([
     __metadata('design:paramtypes', [RouteRegistry, Location, Type])
 ], RootRouter);
 class ChildRouter extends Router {
-    constructor(parent, hostComponent) {
+    constructor(parent, hostComponent /** TODO #9100 */) {
         super(parent.registry, parent, hostComponent, parent.root);
         this.parent = parent;
     }

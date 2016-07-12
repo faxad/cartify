@@ -11,8 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var collection_1 = require('../src/facade/collection');
 var async_1 = require('../src/facade/async');
+var collection_1 = require('../src/facade/collection');
 var lang_1 = require('../src/facade/lang');
 var exceptions_1 = require('../src/facade/exceptions');
 var core_1 = require('@angular/core');
@@ -22,6 +22,7 @@ var rule_set_1 = require('./rules/rule_set');
 var instruction_1 = require('./instruction');
 var route_config_normalizer_1 = require('./route_config/route_config_normalizer');
 var url_parser_1 = require('./url_parser');
+var core_private_1 = require('../core_private');
 var _resolveToNull = async_1.PromiseWrapper.resolve(null);
 // A LinkItemArray is an array, which describes a set of routes
 // The items in the array are found in groups:
@@ -109,7 +110,7 @@ var RouteRegistry = (function () {
         if (this._rules.has(component)) {
             return;
         }
-        var annotations = core_1.reflector.annotations(component);
+        var annotations = core_private_1.reflector.annotations(component);
         if (lang_1.isPresent(annotations)) {
             for (var i = 0; i < annotations.length; i++) {
                 var annotation = annotations[i];
@@ -449,11 +450,11 @@ function compareSpecificityStrings(a, b) {
     }
     return a.length - b.length;
 }
-function assertTerminalComponent(component, path) {
+function assertTerminalComponent(component /** TODO #9100 */, path /** TODO #9100 */) {
     if (!lang_1.isType(component)) {
         return;
     }
-    var annotations = core_1.reflector.annotations(component);
+    var annotations = core_private_1.reflector.annotations(component);
     if (lang_1.isPresent(annotations)) {
         for (var i = 0; i < annotations.length; i++) {
             var annotation = annotations[i];

@@ -16,14 +16,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var common_1 = require('@angular/common');
+var core_1 = require('@angular/core');
 var async_1 = require('../src/facade/async');
 var collection_1 = require('../src/facade/collection');
-var lang_1 = require('../src/facade/lang');
 var exceptions_1 = require('../src/facade/exceptions');
-var common_1 = require('@angular/common');
-var route_registry_1 = require('./route_registry');
+var lang_1 = require('../src/facade/lang');
+var instruction_1 = require('./instruction');
 var route_lifecycle_reflector_1 = require('./lifecycle/route_lifecycle_reflector');
-var core_1 = require('@angular/core');
+var route_registry_1 = require('./route_registry');
 var _resolveToTrue = async_1.PromiseWrapper.resolve(true);
 var _resolveToFalse = async_1.PromiseWrapper.resolve(false);
 /**
@@ -125,9 +126,9 @@ var Router = (function () {
      * otherwise `false`.
      */
     Router.prototype.isRouteActive = function (instruction) {
-        var _this = this;
         var router = this;
-        if (lang_1.isBlank(this.currentInstruction)) {
+        var currentInstruction = this.currentInstruction;
+        if (lang_1.isBlank(currentInstruction)) {
             return false;
         }
         // `instruction` corresponds to the root router
@@ -135,19 +136,26 @@ var Router = (function () {
             router = router.parent;
             instruction = instruction.child;
         }
-        if (lang_1.isBlank(instruction.component) || lang_1.isBlank(this.currentInstruction.component) ||
-            this.currentInstruction.component.routeName != instruction.component.routeName) {
-            return false;
-        }
-        var paramEquals = true;
-        if (lang_1.isPresent(this.currentInstruction.component.params)) {
-            collection_1.StringMapWrapper.forEach(instruction.component.params, function (value, key) {
-                if (_this.currentInstruction.component.params[key] !== value) {
-                    paramEquals = false;
-                }
-            });
-        }
-        return paramEquals;
+        var reason = true;
+        // check the instructions in depth
+        do {
+            if (lang_1.isBlank(instruction.component) || lang_1.isBlank(currentInstruction.component) ||
+                currentInstruction.component.routeName != instruction.component.routeName) {
+                return false;
+            }
+            if (lang_1.isPresent(instruction.component.params)) {
+                collection_1.StringMapWrapper.forEach(instruction.component.params, function (value /** TODO #9100 */, key /** TODO #9100 */) {
+                    if (currentInstruction.component.params[key] !== value) {
+                        reason = false;
+                    }
+                });
+            }
+            currentInstruction = currentInstruction.child;
+            instruction = instruction.child;
+        } while (lang_1.isPresent(currentInstruction) && lang_1.isPresent(instruction) &&
+            !(instruction instanceof instruction_1.DefaultInstruction) && reason);
+        // ignore DefaultInstruction
+        return reason && (lang_1.isBlank(instruction) || instruction instanceof instruction_1.DefaultInstruction);
     };
     /**
      * Dynamically update the routing configuration and trigger a navigation.
@@ -229,7 +237,7 @@ var Router = (function () {
             if (lang_1.isPresent(instruction.child)) {
                 unsettledInstructions.push(_this._settleInstruction(instruction.child));
             }
-            collection_1.StringMapWrapper.forEach(instruction.auxInstruction, function (instruction, _) {
+            collection_1.StringMapWrapper.forEach(instruction.auxInstruction, function (instruction, _ /** TODO #9100 */) {
                 unsettledInstructions.push(_this._settleInstruction(instruction));
             });
             return async_1.PromiseWrapper.all(unsettledInstructions);
@@ -245,21 +253,23 @@ var Router = (function () {
             if (!result) {
                 return false;
             }
-            return _this._routerCanDeactivate(instruction)
-                .then(function (result) {
+            return _this._routerCanDeactivate(instruction).then(function (result) {
                 if (result) {
-                    return _this.commit(instruction, _skipLocationChange)
-                        .then(function (_) {
-                        _this._emitNavigationFinish(instruction.toRootUrl());
+                    return _this.commit(instruction, _skipLocationChange).then(function (_) {
+                        _this._emitNavigationFinish(instruction.component);
                         return true;
                     });
                 }
             });
         });
     };
-    Router.prototype._emitNavigationFinish = function (url) { async_1.ObservableWrapper.callEmit(this._subject, url); };
+    Router.prototype._emitNavigationFinish = function (instruction) {
+        async_1.ObservableWrapper.callEmit(this._subject, { status: 'success', instruction: instruction });
+    };
     /** @internal */
-    Router.prototype._emitNavigationFail = function (url) { async_1.ObservableWrapper.callError(this._subject, url); };
+    Router.prototype._emitNavigationFail = function (url) {
+        async_1.ObservableWrapper.callEmit(this._subject, { status: 'fail', url: url });
+    };
     Router.prototype._afterPromiseFinishNavigating = function (promise) {
         var _this = this;
         return async_1.PromiseWrapper.catchError(promise.then(function (_) { return _this._finishNavigating(); }), function (err) {
@@ -279,8 +289,7 @@ var Router = (function () {
         if (lang_1.isBlank(instruction.component)) {
             return _resolveToTrue;
         }
-        return this._outlet.routerCanReuse(instruction.component)
-            .then(function (result) {
+        return this._outlet.routerCanReuse(instruction.component).then(function (result) {
             instruction.component.reuse = result;
             if (result && lang_1.isPresent(_this._childRouter) && lang_1.isPresent(instruction.child)) {
                 return _this._childRouter._routerCanReuse(instruction.child);
@@ -435,11 +444,9 @@ var RootRouter = (function (_super) {
         this._location = location;
         this._locationSub = this._location.subscribe(function (change) {
             // we call recognize ourselves
-            _this.recognize(change['url'])
-                .then(function (instruction) {
+            _this.recognize(change['url']).then(function (instruction) {
                 if (lang_1.isPresent(instruction)) {
-                    _this.navigateByInstruction(instruction, lang_1.isPresent(change['pop']))
-                        .then(function (_) {
+                    _this.navigateByInstruction(instruction, lang_1.isPresent(change['pop'])).then(function (_) {
                         // this is a popstate event; no need to change the URL
                         if (lang_1.isPresent(change['pop']) && change['type'] != 'hashchange') {
                             return;
@@ -484,7 +491,12 @@ var RootRouter = (function (_super) {
         }
         var promise = _super.prototype.commit.call(this, instruction);
         if (!_skipLocationChange) {
-            promise = promise.then(function (_) { _this._location.go(emitPath, emitQuery); });
+            if (this._location.isCurrentPathEqualTo(emitPath, emitQuery)) {
+                promise = promise.then(function (_) { _this._location.replaceState(emitPath, emitQuery); });
+            }
+            else {
+                promise = promise.then(function (_) { _this._location.go(emitPath, emitQuery); });
+            }
         }
         return promise;
     };
@@ -504,7 +516,7 @@ var RootRouter = (function (_super) {
 exports.RootRouter = RootRouter;
 var ChildRouter = (function (_super) {
     __extends(ChildRouter, _super);
-    function ChildRouter(parent, hostComponent) {
+    function ChildRouter(parent, hostComponent /** TODO #9100 */) {
         _super.call(this, parent.registry, parent, hostComponent, parent.root);
         this.parent = parent;
     }

@@ -1,5 +1,5 @@
 import { RouteDefinition } from './route_config_impl';
-export { Route, Redirect, AuxRoute, AsyncRoute, RouteDefinition } from './route_config_impl';
+export { AsyncRoute, AuxRoute, Redirect, Route, RouteDefinition } from './route_config_impl';
 /**
  * The `RouteConfig` decorator defines routes for a given component.
  *

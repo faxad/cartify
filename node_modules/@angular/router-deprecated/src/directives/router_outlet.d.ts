@@ -1,7 +1,7 @@
-import { EventEmitter } from '../../src/facade/async';
-import { DynamicComponentLoader, ViewContainerRef, OnDestroy } from '@angular/core';
-import * as routerMod from '../router';
+import { DynamicComponentLoader, OnDestroy, ViewContainerRef } from '@angular/core';
+import { EventEmitter } from '../facade/async';
 import { ComponentInstruction } from '../instruction';
+import * as routerMod from '../router';
 /**
  * A router outlet is a placeholder that Angular dynamically fills based on the application's route.
  *

@@ -1,6 +1,6 @@
 "use strict";
-var async_1 = require('../../../src/facade/async');
-var lang_1 = require('../../../src/facade/lang');
+var async_1 = require('../../facade/async');
+var lang_1 = require('../../facade/lang');
 var instruction_1 = require('../../instruction');
 var SyncRouteHandler = (function () {
     function SyncRouteHandler(componentType, data) {

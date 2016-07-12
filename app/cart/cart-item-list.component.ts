@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouteParams, CanActivate} from '@angular/router-deprecated';
 
-import { ICartItem } from './cart-item.interface';
-import { ICartItemDetailed } from './cart-item-detailed.interface';
-import { CartService } from './cart.service';
-import { ShopService } from '../shop/shop.service';
+import {
+	CartService,
+	ShopService
+} from '../shared/index';
 
+import { ICartItem } from '../shared/cart-item.interface';
+import { ICartItemDetailed } from '../shared/cart-item-detailed.interface';
 
 @Component({
 	templateUrl: 'app/cart/cart-item-list.component.html',

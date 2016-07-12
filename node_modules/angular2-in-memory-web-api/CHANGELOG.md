@@ -1,3 +1,37 @@
+<a name="0.0.14"></a>
+# 0.0.14 (2016-06-30)
+* RC4
+
+<a name="0.0.13"></a>
+# 0.0.13 (2016-06-21)
+* RC3
+
+<a name="0.0.12"></a>
+# 0.0.12 (2016-06-15)
+* RC2
+
+<a name="0.0.11"></a>
+# 0.0.11 (2016-05-27)
+* add RegExp query support
+* find-by-id is sensitive to string ids that look like numbers
+
+<a name="0.0.10"></a>
+# 0.0.10 (2016-05-21)
+* added "main:index.js" to package.json
+* updated to typings v.1.0.4 (a breaking release)
+* dependencies -> peerDependencies|devDependencies
+* no es6-shim dependency.
+* use core-js as devDependency.
+
+<a name="0.0.9"></a>
+# 0.0.9 (2016-05-19)
+* renamed the barrel core.js -> index.js
+
+<a name="0.0.8"></a>
+# 0.0.8 (2016-05-19)
+* systemjs -> commonjs
+* replace es6-shim typings w/ core-js typings
+
 <a name="0.0.7"></a>
 # 0.0.7 (2016-05-03)
 * RC1

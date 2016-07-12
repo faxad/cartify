@@ -1,7 +1,7 @@
-import { AbstractRule, RouteRule, RouteMatch } from './rules';
+import { ComponentInstruction } from '../instruction';
 import { RouteDefinition } from '../route_config/route_config_impl';
 import { Url } from '../url_parser';
-import { ComponentInstruction } from '../instruction';
+import { AbstractRule, RouteMatch, RouteRule } from './rules';
 /**
  * A `RuleSet` is responsible for recognizing routes for a particular component.
  * It is consumed by `RouteRegistry`, which knows how to recognize an entire hierarchy of

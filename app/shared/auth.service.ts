@@ -4,9 +4,7 @@ import { tokenNotExpired } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-// We want to avoid any 'name not found'
-// warnings from TypeScript
-declare var Auth0Lock: any;
+declare var Auth0Lock: any; // to avoid warning from TS
 
 @Injectable()
 export class AuthService {

@@ -21,11 +21,12 @@ exports.RouteConfig = RouteConfig;
 /* @ts2dart_const */
 var AbstractRoute = (function () {
     function AbstractRoute(_a) {
-        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, serializer = _a.serializer, data = _a.data;
+        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, regex_group_names = _a.regex_group_names, serializer = _a.serializer, data = _a.data;
         this.name = name;
         this.useAsDefault = useAsDefault;
         this.path = path;
         this.regex = regex;
+        this.regex_group_names = regex_group_names;
         this.serializer = serializer;
         this.data = data;
     }
@@ -58,12 +59,13 @@ exports.AbstractRoute = AbstractRoute;
 var Route = (function (_super) {
     __extends(Route, _super);
     function Route(_a) {
-        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, serializer = _a.serializer, data = _a.data, component = _a.component;
+        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, regex_group_names = _a.regex_group_names, serializer = _a.serializer, data = _a.data, component = _a.component;
         _super.call(this, {
             name: name,
             useAsDefault: useAsDefault,
             path: path,
             regex: regex,
+            regex_group_names: regex_group_names,
             serializer: serializer,
             data: data
         });
@@ -97,12 +99,13 @@ exports.Route = Route;
 var AuxRoute = (function (_super) {
     __extends(AuxRoute, _super);
     function AuxRoute(_a) {
-        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, serializer = _a.serializer, data = _a.data, component = _a.component;
+        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, regex_group_names = _a.regex_group_names, serializer = _a.serializer, data = _a.data, component = _a.component;
         _super.call(this, {
             name: name,
             useAsDefault: useAsDefault,
             path: path,
             regex: regex,
+            regex_group_names: regex_group_names,
             serializer: serializer,
             data: data
         });
@@ -139,12 +142,13 @@ exports.AuxRoute = AuxRoute;
 var AsyncRoute = (function (_super) {
     __extends(AsyncRoute, _super);
     function AsyncRoute(_a) {
-        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, serializer = _a.serializer, data = _a.data, loader = _a.loader;
+        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, regex_group_names = _a.regex_group_names, serializer = _a.serializer, data = _a.data, loader = _a.loader;
         _super.call(this, {
             name: name,
             useAsDefault: useAsDefault,
             path: path,
             regex: regex,
+            regex_group_names: regex_group_names,
             serializer: serializer,
             data: data
         });
@@ -179,12 +183,13 @@ exports.AsyncRoute = AsyncRoute;
 var Redirect = (function (_super) {
     __extends(Redirect, _super);
     function Redirect(_a) {
-        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, serializer = _a.serializer, data = _a.data, redirectTo = _a.redirectTo;
+        var name = _a.name, useAsDefault = _a.useAsDefault, path = _a.path, regex = _a.regex, regex_group_names = _a.regex_group_names, serializer = _a.serializer, data = _a.data, redirectTo = _a.redirectTo;
         _super.call(this, {
             name: name,
             useAsDefault: useAsDefault,
             path: path,
             regex: regex,
+            regex_group_names: regex_group_names,
             serializer: serializer,
             data: data
         });

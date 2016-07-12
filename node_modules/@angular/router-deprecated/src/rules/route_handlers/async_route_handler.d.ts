@@ -1,10 +1,8 @@
-import { Type } from '../../../src/facade/lang';
-import { RouteHandler } from './route_handler';
+import { Type } from '../../facade/lang';
 import { RouteData } from '../../instruction';
+import { RouteHandler } from './route_handler';
 export declare class AsyncRouteHandler implements RouteHandler {
     private _loader;
-    /** @internal */
-    _resolvedComponent: Promise<Type>;
     componentType: Type;
     data: RouteData;
     constructor(_loader: () => Promise<Type>, data?: {

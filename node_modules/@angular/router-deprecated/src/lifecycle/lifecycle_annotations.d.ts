@@ -1,5 +1,5 @@
 import { ComponentInstruction } from '../instruction';
-export { routerCanReuse, routerCanDeactivate, routerOnActivate, routerOnReuse, routerOnDeactivate } from './lifecycle_annotations_impl';
+export { routerCanDeactivate, routerCanReuse, routerOnActivate, routerOnDeactivate, routerOnReuse } from './lifecycle_annotations_impl';
 /**
  * Defines route lifecycle hook `CanActivate`, which is called by the router to determine
  * if a component can be instantiated as part of a navigation.

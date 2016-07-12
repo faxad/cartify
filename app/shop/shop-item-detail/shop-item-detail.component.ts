@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouteParams, CanActivate} from '@angular/router-deprecated';
 import { tokenNotExpired } from 'angular2-jwt';
 
-import { IShopItem } from '../shop-item.interface';
-import { ShopService } from '../shop.service';
+import { IShopItem } from '../../shared/shop-item.interface';
+import { ShopService } from '../../shared/shop.service';
 
 @Component({
 	templateUrl: 'app/shop/shop-item-detail/shop-item-detail.component.html',

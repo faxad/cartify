@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 import { DirectiveResolver } from '@angular/compiler';
 var COMPONENT_SELECTOR = /^[\w|-]*$/;
 var SKEWER_CASE = /-(\w)/g;
@@ -8,7 +15,7 @@ export function getComponentInfo(type) {
     if (!selector.match(COMPONENT_SELECTOR)) {
         throw new Error('Only selectors matching element names are supported, got: ' + selector);
     }
-    var selector = selector.replace(SKEWER_CASE, (all, letter) => letter.toUpperCase());
+    var selector = selector.replace(SKEWER_CASE, (all /** TODO #9100 */, letter) => letter.toUpperCase());
     return {
         type: type,
         selector: selector,

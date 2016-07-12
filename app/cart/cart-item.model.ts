@@ -1,4 +1,4 @@
-import { ICartItem} from './cart-item.interface';
+import { ICartItem} from '../shared/cart-item.interface';
 
 export class CartItem implements ICartItem {
 	userId: string;

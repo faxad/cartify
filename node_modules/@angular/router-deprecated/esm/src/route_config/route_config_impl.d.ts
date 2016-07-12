@@ -1,4 +1,4 @@
-import { Type } from '../../src/facade/lang';
+import { Type } from '../facade/lang';
 import { RouteDefinition } from '../route_definition';
 import { RegexSerializer } from '../rules/route_paths/regex_route_path';
 export { RouteDefinition } from '../route_definition';
@@ -17,11 +17,12 @@ export declare abstract class AbstractRoute implements RouteDefinition {
     useAsDefault: boolean;
     path: string;
     regex: string;
+    regex_group_names: string[];
     serializer: RegexSerializer;
     data: {
         [key: string]: any;
     };
-    constructor({name, useAsDefault, path, regex, serializer, data}: RouteDefinition);
+    constructor({name, useAsDefault, path, regex, regex_group_names, serializer, data}: RouteDefinition);
 }
 /**
  * `Route` is a type of {@link RouteDefinition} used to route a path to a component.
@@ -49,7 +50,7 @@ export declare abstract class AbstractRoute implements RouteDefinition {
 export declare class Route extends AbstractRoute {
     component: any;
     aux: string;
-    constructor({name, useAsDefault, path, regex, serializer, data, component}: RouteDefinition);
+    constructor({name, useAsDefault, path, regex, regex_group_names, serializer, data, component}: RouteDefinition);
 }
 /**
  * `AuxRoute` is a type of {@link RouteDefinition} used to define an auxiliary route.
@@ -74,7 +75,7 @@ export declare class Route extends AbstractRoute {
  */
 export declare class AuxRoute extends AbstractRoute {
     component: any;
-    constructor({name, useAsDefault, path, regex, serializer, data, component}: RouteDefinition);
+    constructor({name, useAsDefault, path, regex, regex_group_names, serializer, data, component}: RouteDefinition);
 }
 /**
  * `AsyncRoute` is a type of {@link RouteDefinition} used to route a path to an asynchronously
@@ -104,7 +105,7 @@ export declare class AuxRoute extends AbstractRoute {
 export declare class AsyncRoute extends AbstractRoute {
     loader: () => Promise<Type>;
     aux: string;
-    constructor({name, useAsDefault, path, regex, serializer, data, loader}: RouteDefinition);
+    constructor({name, useAsDefault, path, regex, regex_group_names, serializer, data, loader}: RouteDefinition);
 }
 /**
  * `Redirect` is a type of {@link RouteDefinition} used to route a path to a canonical route.
@@ -130,5 +131,5 @@ export declare class AsyncRoute extends AbstractRoute {
  */
 export declare class Redirect extends AbstractRoute {
     redirectTo: any[];
-    constructor({name, useAsDefault, path, regex, serializer, data, redirectTo}: RouteDefinition);
+    constructor({name, useAsDefault, path, regex, regex_group_names, serializer, data, redirectTo}: RouteDefinition);
 }

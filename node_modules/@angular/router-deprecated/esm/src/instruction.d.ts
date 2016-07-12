@@ -127,8 +127,6 @@ export declare abstract class Instruction {
      * converts the instruction into a URL string
      */
     toRootUrl(): string;
-    /** @internal */
-    _toNonRootUrl(): string;
     toUrlQuery(): string;
     /**
      * Returns a new instruction that shares the state of the existing instruction, but with
@@ -140,16 +138,6 @@ export declare abstract class Instruction {
      */
     toUrlPath(): string;
     toLinkUrl(): string;
-    /** @internal */
-    _toLinkUrl(): string;
-    /** @internal */
-    _stringifyPathMatrixAuxPrefixed(): string;
-    /** @internal */
-    _stringifyMatrixParams(): string;
-    /** @internal */
-    _stringifyPathMatrixAux(): string;
-    /** @internal */
-    _stringifyAux(): string;
 }
 /**
  * a resolved instruction has an outlet instruction for itself, but maybe not for...
@@ -166,8 +154,6 @@ export declare class ResolvedInstruction extends Instruction {
 export declare class DefaultInstruction extends ResolvedInstruction {
     constructor(component: ComponentInstruction, child: DefaultInstruction);
     toLinkUrl(): string;
-    /** @internal */
-    _toLinkUrl(): string;
 }
 /**
  * Represents a component that may need to do some redirection or lazy loading at a later time.
@@ -212,10 +198,4 @@ export declare class ComponentInstruction {
     routeName: string;
     reuse: boolean;
     routeData: RouteData;
-    /**
-     * @internal
-     */
-    constructor(urlPath: string, urlParams: string[], data: RouteData, componentType: any, terminal: boolean, specificity: string, params: {
-        [key: string]: string;
-    }, routeName: string);
 }

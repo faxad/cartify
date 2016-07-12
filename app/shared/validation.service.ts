@@ -4,15 +4,15 @@ import { AbstractControl, ControlGroup } from '@angular/common';
 @Injectable()
 export class ValidationService {
 	formToVlidate: ControlGroup;
-	stateChecks: { [s: string]: any } = {}
-	validityChecks: { [s: string]: any } = {}
+	stateChecks: { [key: string]: string } = {}
+	validityChecks: { [key: string]: string } = {}
 
 	stateCheck(control: AbstractControl, code: string): boolean {
 		return (code in this.stateChecks) ? control[
 			this.stateChecks[code]] : control.touched
 	}
 
-	validityCheck(control: AbstractControl, code: string): { [s: string]: any } {
+	validityCheck(control: AbstractControl, code: string): { [key: string]: any } {
 		let check = this.validityChecks[code];
 
 		return check ? {
@@ -22,7 +22,7 @@ export class ValidationService {
 		} : { "result": false, "message": "" }
 	}
 
-	check(controlName: string): { [s: string]: any } {
+	check(controlName: string): { [key: string]: any } {
 		let control = this.formToVlidate.controls[controlName];
 
 		if (this.stateCheck(control, controlName)) {

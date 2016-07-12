@@ -11,14 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var async_1 = require('../../src/facade/async');
-var collection_1 = require('../../src/facade/collection');
-var lang_1 = require('../../src/facade/lang');
 var core_1 = require('@angular/core');
-var routerMod = require('../router');
+var async_1 = require('../facade/async');
+var collection_1 = require('../facade/collection');
+var lang_1 = require('../facade/lang');
 var instruction_1 = require('../instruction');
 var hookMod = require('../lifecycle/lifecycle_annotations');
 var route_lifecycle_reflector_1 = require('../lifecycle/route_lifecycle_reflector');
+var routerMod = require('../router');
 var _resolveToTrue = async_1.PromiseWrapper.resolve(true);
 /**
  * A router outlet is a placeholder that Angular dynamically fills based on the application's route.
@@ -57,9 +57,9 @@ var RouterOutlet = (function () {
         var componentType = nextInstruction.componentType;
         var childRouter = this._parentRouter.childRouter(componentType);
         var providers = core_1.ReflectiveInjector.resolve([
-            core_1.provide(instruction_1.RouteData, { useValue: nextInstruction.routeData }),
-            core_1.provide(instruction_1.RouteParams, { useValue: new instruction_1.RouteParams(nextInstruction.params) }),
-            core_1.provide(routerMod.Router, { useValue: childRouter })
+            { provide: instruction_1.RouteData, useValue: nextInstruction.routeData },
+            { provide: instruction_1.RouteParams, useValue: new instruction_1.RouteParams(nextInstruction.params) },
+            { provide: routerMod.Router, useValue: childRouter }
         ]);
         this._componentRef =
             this._loader.loadNextToLocation(componentType, this._viewContainerRef, providers);

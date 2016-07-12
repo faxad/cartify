@@ -1,5 +1,5 @@
 import { Url } from '../../url_parser';
-import { RoutePath, GeneratedUrl, MatchedUrl } from './route_path';
+import { GeneratedUrl, MatchedUrl, RoutePath } from './route_path';
 /**
  * Parses a URL string using a given matcher DSL, and generates URLs from param maps
  */

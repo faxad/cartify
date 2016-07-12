@@ -1,10 +1,13 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators } from '@angular/common';
+import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, Control } from '@angular/common';
 
-import { ShopService } from '../shop.service';
-import { ValidationService } from '../../shared/validation.service';
+import {
+	ValidationService,
+	ShopService
+} from '../../shared/index';
+
 import { ExtendedValidators } from './validators';
-import { IShopItem } from '../shop-item.interface';
+import { IShopItem } from '../../shared/shop-item.interface';
 
 @Component({
 	selector: 'shop-item-form',
@@ -37,6 +40,9 @@ export class FormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		//console.log(this.modalId)
+		//console.log(this.shopItem)
+
 		this.shopItemForm = this.formBuilder.group({
 			'id': ['', Validators.required],
 			'name': ['', Validators.compose(
@@ -52,7 +58,7 @@ export class FormComponent implements OnInit {
 		if (this.shopItem) {
 			this.isCreateForm = false;
 			for (let key in this.shopItemForm.controls) {
-				this.shopItemForm.controls[key]._value = this.shopItem[key]
+				(this.shopItemForm.controls[key] as Control).updateValue(this.shopItem[key])
 			}
 		}
 

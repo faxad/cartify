@@ -4,8 +4,8 @@
   var map = {
     'app':                        'build', // 'dist',
     'rxjs':                       'node_modules/rxjs',
-    'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     '@angular':                   'node_modules/@angular',
+    'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'angular2-jwt':               'node_modules/angular2-jwt/angular2-jwt.js'
   };
 

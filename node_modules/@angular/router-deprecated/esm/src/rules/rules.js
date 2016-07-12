@@ -1,9 +1,9 @@
-import { isPresent, isBlank } from '../../src/facade/lang';
-import { BaseException } from '../../src/facade/exceptions';
-import { PromiseWrapper } from '../../src/facade/promise';
-import { Map } from '../../src/facade/collection';
-import { convertUrlParamsToArray } from '../url_parser';
+import { Map } from '../facade/collection';
+import { BaseException } from '../facade/exceptions';
+import { isBlank, isPresent } from '../facade/lang';
+import { PromiseWrapper } from '../facade/promise';
 import { ComponentInstruction } from '../instruction';
+import { convertUrlParamsToArray } from '../url_parser';
 // RouteMatch objects hold information about a match between a rule and a URL
 export class RouteMatch {
 }
@@ -16,7 +16,7 @@ export class PathMatch extends RouteMatch {
     }
 }
 export class RedirectMatch extends RouteMatch {
-    constructor(redirectTo, specificity) {
+    constructor(redirectTo, specificity /** TODO #9100 */) {
         super();
         this.redirectTo = redirectTo;
         this.specificity = specificity;

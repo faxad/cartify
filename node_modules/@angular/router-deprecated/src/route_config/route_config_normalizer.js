@@ -1,7 +1,7 @@
 "use strict";
+var exceptions_1 = require('../facade/exceptions');
+var lang_1 = require('../facade/lang');
 var route_config_decorator_1 = require('./route_config_decorator');
-var lang_1 = require('../../src/facade/lang');
-var exceptions_1 = require('../../src/facade/exceptions');
 /**
  * Given a JS Object that represents a route config, returns a corresponding Route, AsyncRoute,
  * AuxRoute or Redirect object.
@@ -25,12 +25,6 @@ function normalizeRouteConfig(config, registry) {
     }
     if ((+!!config.component) + (+!!config.redirectTo) + (+!!config.loader) != 1) {
         throw new exceptions_1.BaseException("Route config should contain exactly one \"component\", \"loader\", or \"redirectTo\" property.");
-    }
-    if (config.as && config.name) {
-        throw new exceptions_1.BaseException("Route config should contain exactly one \"as\" or \"name\" property.");
-    }
-    if (config.as) {
-        config.name = config.as;
     }
     if (config.loader) {
         var wrappedLoader = wrapLoaderToReconfigureRegistry(config.loader, registry);
@@ -80,7 +74,7 @@ function normalizeRouteConfig(config, registry) {
 exports.normalizeRouteConfig = normalizeRouteConfig;
 function wrapLoaderToReconfigureRegistry(loader, registry) {
     return function () {
-        return loader().then(function (componentType) {
+        return loader().then(function (componentType /** TODO #9100 */) {
             registry.configFromComponent(componentType);
             return componentType;
         });

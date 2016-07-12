@@ -19,11 +19,7 @@ export declare class Url {
     });
     toString(): string;
     segmentToString(): string;
-    /** @internal */
-    _auxToString(): string;
     private _matrixParamsToString();
-    /** @internal */
-    _childString(): string;
 }
 export declare class RootUrl extends Url {
     constructor(path: string, child?: Url, auxiliary?: Url[], params?: {

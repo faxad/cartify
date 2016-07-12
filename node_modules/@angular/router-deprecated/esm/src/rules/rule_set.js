@@ -1,13 +1,13 @@
-import { isBlank, isPresent, isFunction } from '../../src/facade/lang';
-import { BaseException } from '../../src/facade/exceptions';
-import { Map } from '../../src/facade/collection';
-import { PromiseWrapper } from '../../src/facade/async';
-import { RouteRule, RedirectRule, PathMatch } from './rules';
-import { Route, AsyncRoute, AuxRoute, Redirect } from '../route_config/route_config_impl';
+import { PromiseWrapper } from '../facade/async';
+import { Map } from '../facade/collection';
+import { BaseException } from '../facade/exceptions';
+import { isBlank, isFunction, isPresent } from '../facade/lang';
+import { AsyncRoute, AuxRoute, Redirect, Route } from '../route_config/route_config_impl';
 import { AsyncRouteHandler } from './route_handlers/async_route_handler';
 import { SyncRouteHandler } from './route_handlers/sync_route_handler';
 import { ParamRoutePath } from './route_paths/param_route_path';
 import { RegexRoutePath } from './route_paths/regex_route_path';
+import { PathMatch, RedirectRule, RouteRule } from './rules';
 /**
  * A `RuleSet` is responsible for recognizing routes for a particular component.
  * It is consumed by `RouteRegistry`, which knows how to recognize an entire hierarchy of
@@ -33,7 +33,7 @@ export class RuleSet {
         let handler;
         if (isPresent(config.name) && config.name[0].toUpperCase() != config.name[0]) {
             let suggestedName = config.name[0].toUpperCase() + config.name.substring(1);
-            throw new BaseException(`Route "${config.path}" with name "${config.name}" does not begin with an uppercase letter. Route names should be CamelCase like "${suggestedName}".`);
+            throw new BaseException(`Route "${config.path}" with name "${config.name}" does not begin with an uppercase letter. Route names should be PascalCase like "${suggestedName}".`);
         }
         if (config instanceof AuxRoute) {
             handler = new SyncRouteHandler(config.component, config.data);
@@ -121,7 +121,7 @@ export class RuleSet {
         }
         return rule.generate(params);
     }
-    _assertNoHashCollision(hash, path) {
+    _assertNoHashCollision(hash, path /** TODO #9100 */) {
         this.rules.forEach((rule) => {
             if (hash == rule.hash) {
                 throw new BaseException(`Configuration '${path}' conflicts with existing route '${rule.path}'`);
@@ -131,7 +131,7 @@ export class RuleSet {
     _getRoutePath(config) {
         if (isPresent(config.regex)) {
             if (isFunction(config.serializer)) {
-                return new RegexRoutePath(config.regex, config.serializer);
+                return new RegexRoutePath(config.regex, config.serializer, config.regex_group_names);
             }
             else {
                 throw new BaseException(`Route provides a regex property, '${config.regex}', but no serializer property`);

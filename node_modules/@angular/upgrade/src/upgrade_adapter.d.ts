@@ -1,3 +1,10 @@
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
 import { ApplicationRef, Injector, Provider, Type } from '@angular/core';
 import * as angular from './angular_js';
 /**
@@ -68,12 +75,10 @@ import * as angular from './angular_js';
  *       "ng2[ng1[Hello World!](transclude)](project)");
  * });
  * ```
+ *
+ * @experimental
  */
 export declare class UpgradeAdapter {
-    private idPrefix;
-    private upgradedComponents;
-    private downgradedComponents;
-    private providers;
     /**
      * Allows Angular v2 Component to be used from AngularJS v1.
      *
@@ -273,7 +278,7 @@ export declare class UpgradeAdapter {
      * adapter.bootstrap(document.body, ['myExample']);
      *```
      */
-    addProvider(provider: Type | Provider | any[]): void;
+    addProvider(provider: Type | Provider | any[] | any): void;
     /**
      * Allows AngularJS v1 service to be accessible from Angular v2.
      *
@@ -332,18 +337,17 @@ export declare class UpgradeAdapter {
      * ```
      */
     downgradeNg2Provider(token: any): Function;
-    private compileNg2Components(compiler, componentFactoryRefMap);
 }
 /**
  * Use `UgradeAdapterRef` to control a hybrid AngularJS v1 / Angular v2 application.
+ *
+ * @experimental
  */
 export declare class UpgradeAdapterRef {
-    private _readyFn;
     ng1RootScope: angular.IRootScopeService;
     ng1Injector: angular.IInjectorService;
     ng2ApplicationRef: ApplicationRef;
     ng2Injector: Injector;
-    private _bootstrapDone(applicationRef, ng1Injector);
     /**
      * Register a callback function which is notified upon successful hybrid AngularJS v1 / Angular v2
      * application has been bootstrapped.

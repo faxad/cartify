@@ -1,14 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
-
-import { IShopItem } from '../shop-item.interface';
-import { ShopService } from '../shop.service';
-import { ShopItemFilterPipe } from './shop-item-filter.pipe';
-import { FormComponent } from '../shop-item-form/shop-item-form.component';
-import { CartService } from '../../cart/cart.service';
-import { AuthService } from '../../shared/auth.service';
 import { Observable } from 'rxjs/Observable';
 
+import {
+	AuthService,
+	CartService,
+	ShopService,
+} from '../../shared/index';
+
+import { FormComponent } from '../shop-item-form/shop-item-form.component';
+import { IShopItem } from '../../shared/shop-item.interface';
+import { ShopItemFilterPipe } from './shop-item-filter.pipe';
 
 @Component({
 	selector: 'list-item',

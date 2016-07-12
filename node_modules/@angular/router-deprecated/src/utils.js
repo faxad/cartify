@@ -1,13 +1,13 @@
 "use strict";
-var lang_1 = require('../src/facade/lang');
 var collection_1 = require('../src/facade/collection');
+var lang_1 = require('../src/facade/lang');
 var TouchMap = (function () {
     function TouchMap(map) {
         var _this = this;
         this.map = {};
         this.keys = {};
         if (lang_1.isPresent(map)) {
-            collection_1.StringMapWrapper.forEach(map, function (value, key) {
+            collection_1.StringMapWrapper.forEach(map, function (value /** TODO #9100 */, key /** TODO #9100 */) {
                 _this.map[key] = lang_1.isPresent(value) ? value.toString() : null;
                 _this.keys[key] = true;
             });

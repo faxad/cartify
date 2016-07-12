@@ -1,9 +1,9 @@
-import { Type } from '../src/facade/lang';
 import { Location } from '@angular/common';
-import { RouteRegistry } from './route_registry';
-import { Instruction } from './instruction';
+import { Type } from '../src/facade/lang';
 import { RouterOutlet } from './directives/router_outlet';
+import { Instruction } from './instruction';
 import { RouteDefinition } from './route_config/route_config_impl';
+import { RouteRegistry } from './route_registry';
 /**
  * The `Router` is responsible for mapping URLs to components.
  *
@@ -110,26 +110,14 @@ export declare class Router {
      * complete.
      */
     navigateByInstruction(instruction: Instruction, _skipLocationChange?: boolean): Promise<any>;
-    /** @internal */
-    _settleInstruction(instruction: Instruction): Promise<any>;
-    /** @internal */
-    _navigate(instruction: Instruction, _skipLocationChange: boolean): Promise<any>;
-    private _emitNavigationFinish(url);
-    /** @internal */
-    _emitNavigationFail(url: any): void;
+    private _emitNavigationFinish(instruction);
     private _afterPromiseFinishNavigating(promise);
-    /** @internal */
-    _routerCanReuse(instruction: Instruction): Promise<any>;
     private _canActivate(nextInstruction);
     private _routerCanDeactivate(instruction);
     /**
      * Updates this router and all descendant routers according to the given instruction
      */
     commit(instruction: Instruction, _skipLocationChange?: boolean): Promise<any>;
-    /** @internal */
-    _startNavigating(): void;
-    /** @internal */
-    _finishNavigating(): void;
     /**
      * Subscribe to URL updates from the router
      */
@@ -154,10 +142,6 @@ export declare class Router {
     generate(linkParams: any[]): Instruction;
 }
 export declare class RootRouter extends Router {
-    /** @internal */
-    _location: Location;
-    /** @internal */
-    _locationSub: Object;
     constructor(registry: RouteRegistry, location: Location, primaryComponent: Type);
     commit(instruction: Instruction, _skipLocationChange?: boolean): Promise<any>;
     dispose(): void;

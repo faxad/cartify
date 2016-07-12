@@ -1,7 +1,7 @@
-import { RouteHandler } from './route_handlers/route_handler';
-import { Url } from '../url_parser';
 import { ComponentInstruction } from '../instruction';
-import { RoutePath, GeneratedUrl } from './route_paths/route_path';
+import { Url } from '../url_parser';
+import { RouteHandler } from './route_handlers/route_handler';
+import { GeneratedUrl, RoutePath } from './route_paths/route_path';
 export declare abstract class RouteMatch {
 }
 export declare class PathMatch extends RouteMatch {

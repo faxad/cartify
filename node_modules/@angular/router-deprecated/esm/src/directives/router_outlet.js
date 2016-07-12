@@ -10,14 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-import { PromiseWrapper, EventEmitter } from '../../src/facade/async';
-import { StringMapWrapper } from '../../src/facade/collection';
-import { isBlank, isPresent } from '../../src/facade/lang';
-import { Directive, Attribute, DynamicComponentLoader, ViewContainerRef, provide, ReflectiveInjector, Output } from '@angular/core';
-import * as routerMod from '../router';
-import { RouteParams, RouteData } from '../instruction';
+import { Attribute, Directive, DynamicComponentLoader, Output, ReflectiveInjector, ViewContainerRef } from '@angular/core';
+import { EventEmitter, PromiseWrapper } from '../facade/async';
+import { StringMapWrapper } from '../facade/collection';
+import { isBlank, isPresent } from '../facade/lang';
+import { RouteData, RouteParams } from '../instruction';
 import * as hookMod from '../lifecycle/lifecycle_annotations';
 import { hasLifecycleHook } from '../lifecycle/route_lifecycle_reflector';
+import * as routerMod from '../router';
 let _resolveToTrue = PromiseWrapper.resolve(true);
 /**
  * A router outlet is a placeholder that Angular dynamically fills based on the application's route.
@@ -55,9 +55,9 @@ export let RouterOutlet = class RouterOutlet {
         var componentType = nextInstruction.componentType;
         var childRouter = this._parentRouter.childRouter(componentType);
         var providers = ReflectiveInjector.resolve([
-            provide(RouteData, { useValue: nextInstruction.routeData }),
-            provide(RouteParams, { useValue: new RouteParams(nextInstruction.params) }),
-            provide(routerMod.Router, { useValue: childRouter })
+            { provide: RouteData, useValue: nextInstruction.routeData },
+            { provide: RouteParams, useValue: new RouteParams(nextInstruction.params) },
+            { provide: routerMod.Router, useValue: childRouter }
         ]);
         this._componentRef =
             this._loader.loadNextToLocation(componentType, this._viewContainerRef, providers);
