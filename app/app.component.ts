@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig } from '@angular/router-deprecated';
+import { ROUTER_DIRECTIVES } from '@angular/router';
+
 import { HTTP_PROVIDERS } from '@angular/http';
 import 'rxjs/Rx';
 
@@ -12,7 +13,8 @@ import { AuthService } from './shared/auth.service'
 @Component({
 	selector: 'app-content',
 	directives: [ROUTER_DIRECTIVES, ShopItemListComponent, ItemCartComponent], // using component as directive
-	providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, AuthService],
+	providers: [HTTP_PROVIDERS, AuthService],
+	precompile: [ShopItemListComponent, ShopItemDetailComponent, ItemCartComponent],
 	template: `
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="container">
@@ -47,11 +49,6 @@ import { AuthService } from './shared/auth.service'
 	    </div>
 	`,
 })
-@RouteConfig([
-		{ path: '/items', name: 'Items', component: ShopItemListComponent, useAsDefault: true },
-		{ path: '/item/:id', name: 'Detail', component: ShopItemDetailComponent },
-		{ path: '/cart/:customerId', name: 'Cart', component: ItemCartComponent }
-])
 export class AppComponent {
 	constructor(private auth: AuthService) {}
 	login(): void {

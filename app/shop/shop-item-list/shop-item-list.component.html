@@ -13,7 +13,7 @@
                     </a>
                 </div>
                 <div class="input-group-addon">
-                    <a [routerLink]="['Cart', {customerId: customerId}]">
+                    <a [routerLink]="['/cart', customerId]">
                         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -53,7 +53,7 @@
                             <a href="#" class="btn btn-default btn disabled" role="button">
                                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{customerCartItems[shopItem.id]}}</span>
                             </a>
-                            <a [routerLink]="['Detail', {id: shopItem.id}]" class="btn btn-success" role="button">
+                            <a [routerLink]="['/item', shopItem.id]" class="btn btn-success" role="button">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                             </a>
                             <shop-item-form [shopItem]='shopItem' [modalId]='shopItem.id' (shopItemsUpdated)="getShopItems($event);"></shop-item-form>

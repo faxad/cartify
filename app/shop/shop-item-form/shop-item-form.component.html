@@ -8,40 +8,40 @@
                 <h4 class="modal-title" id="shopItemModalLabel">Shop Item</h4>
             </div>
             <div class="modal-body">
-                <form [ngFormModel]="shopItemForm">
+                <form [formGroup]="shopItemForm">
                     <div class="form-group">
                         <label for="productName">ID</label>
-                        <input class="form-control" id="id" placeholder="ID" [ngFormControl]="shopItemForm.controls['id']">
+                        <input class="form-control" id="id" placeholder="ID" [formControl]="shopItemForm.controls['id']">
                         <div *ngIf="validation.check('id').result" class="alert alert-danger">{{validation.check('id').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="name">Product Name</label>
-                        <input class="form-control" id="name" placeholder="Name" [ngFormControl]="shopItemForm.controls['name']">
+                        <input class="form-control" id="name" placeholder="Name" [formControl]="shopItemForm.controls['name']">
                         <div *ngIf="validation.check('name').result" class="alert alert-danger">{{validation.check('name').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="code">Product Code</label>
-                        <input class="form-control" id="code" placeholder="Code" [ngFormControl]="shopItemForm.controls['code']">
+                        <input class="form-control" id="code" placeholder="Code" [formControl]="shopItemForm.controls['code']">
                         <div *ngIf="validation.check('code').result" class="alert alert-danger">{{validation.check('code').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="unitPrice">Unit Price</label>
-                        <input class="form-control" id="unitPrice" placeholder="Unit Price" [ngFormControl]="shopItemForm.controls['unitPrice']">
+                        <input class="form-control" id="unitPrice" placeholder="Unit Price" [formControl]="shopItemForm.controls['unitPrice']">
                         <div *ngIf="validation.check('unitPrice').result" class="alert alert-danger">{{validation.check('unitPrice').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="quantityInStock">Quantity In Stock</label>
-                        <input class="form-control" id="quantityInStock" placeholder="Quantity In Stock" [ngFormControl]="shopItemForm.controls['quantityInStock']">
+                        <input class="form-control" id="quantityInStock" placeholder="Quantity In Stock" [formControl]="shopItemForm.controls['quantityInStock']">
                         <div *ngIf="validation.check('quantityInStock').result" class="alert alert-danger">{{validation.check('quantityInStock').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="releaseDate">Release Date</label>
-                        <input class="form-control" id="releaseDate" placeholder="releaseDate" [ngFormControl]="shopItemForm.controls['releaseDate']">
+                        <input class="form-control" id="releaseDate" placeholder="releaseDate" [formControl]="shopItemForm.controls['releaseDate']">
                         <div *ngIf="validation.check('releaseDate').result" class="alert alert-danger">{{validation.check('releaseDate').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea class="form-control" id="description" placeholder="description" [ngFormControl]="shopItemForm.controls['description']"></textarea>
+                        <textarea class="form-control" id="description" placeholder="description" [formControl]="shopItemForm.controls['description']"></textarea>
                         <div *ngIf="validation.check('description').result" class="alert alert-danger">{{validation.check('description').message}}</div>
                     </div>
                     <div class="modal-footer">

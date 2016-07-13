@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, ControlGroup } from '@angular/common';
+import { AbstractControl, FormGroup } from '@angular/forms';
+
 
 @Injectable()
 export class ValidationService {
-	formToVlidate: ControlGroup;
+	formToVlidate: FormGroup;
 	stateChecks: { [key: string]: string } = {}
 	validityChecks: { [key: string]: string } = {}
 
@@ -34,7 +35,7 @@ export class ValidationService {
 		else { return { "result": false, "message": "" } }
 	}
 
-	configure(form: ControlGroup, validityChecks, stateChecks) {
+	configure(form: FormGroup, validityChecks, stateChecks) {
 		this.formToVlidate = form;
 		this.validityChecks = validityChecks;
 		this.stateChecks = stateChecks;

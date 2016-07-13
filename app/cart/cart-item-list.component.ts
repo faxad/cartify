@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouteParams, CanActivate} from '@angular/router-deprecated';
+//import { Router, RouteParams } from '@angular/router-deprecated';
+import { Router } from '@angular/router';
+
 
 import {
 	CartService,
@@ -43,6 +45,6 @@ export class ItemCartComponent implements OnInit {
 	}
 
 	goBack(): void {
-		this.router.navigate(['Items']);
+		this.router.navigate(['/items']);
 	}
 }

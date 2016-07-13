@@ -1,5 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { FORM_DIRECTIVES, FormBuilder, ControlGroup, Validators, Control } from '@angular/common';
+import { REACTIVE_FORM_DIRECTIVES, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+
 
 import {
 	ValidationService,
@@ -13,11 +14,11 @@ import { IShopItem } from '../../shared/shop-item.interface';
 	selector: 'shop-item-form',
 	templateUrl: 'app/shop/shop-item-form/shop-item-form.component.html',
 	styleUrls: ['app/shop/shop-item-form/shop-item-form.component.css'],
-	directives: [FORM_DIRECTIVES],
+	directives: [REACTIVE_FORM_DIRECTIVES],
 	providers: [ValidationService]
 })
 export class FormComponent implements OnInit {
-	shopItemForm: ControlGroup;
+	shopItemForm: FormGroup;
 	isCreateForm: boolean = true;
 	@Input() modalId: string; // modal identifier
 	@Input() shopItem: IShopItem;
@@ -40,9 +41,6 @@ export class FormComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		//console.log(this.modalId)
-		//console.log(this.shopItem)
-
 		this.shopItemForm = this.formBuilder.group({
 			'id': ['', Validators.required],
 			'name': ['', Validators.compose(
@@ -58,7 +56,7 @@ export class FormComponent implements OnInit {
 		if (this.shopItem) {
 			this.isCreateForm = false;
 			for (let key in this.shopItemForm.controls) {
-				(this.shopItemForm.controls[key] as Control).updateValue(this.shopItem[key])
+				(this.shopItemForm.controls[key] as FormControl).updateValue(this.shopItem[key])
 			}
 		}
 
