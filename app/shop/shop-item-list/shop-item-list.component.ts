@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-//import { ROUTER_DIRECTIVES, Router } from '@angular/router-deprecated';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
-
 import { Observable } from 'rxjs/Observable';
 
 import {

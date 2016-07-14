@@ -6,11 +6,13 @@ import { ShopItemDetailComponent } from './shop/shop-item-detail/shop-item-detai
 import { ItemCartComponent } from './cart/cart-item-list.component';
 
 const routes: RouterConfig = [
+    { path: '', component: ShopItemListComponent },
     { path: 'items', component: ShopItemListComponent },
-    { path: 'item/:id', component: ShopItemDetailComponent, }, //canActivate:[AuthGuard] },
+    { path: 'item/:id', component: ShopItemDetailComponent, canActivate:[AuthGuard] },
     { path: 'cart/:customerId', component: ItemCartComponent }
 ];
 
 export const appRouterProviders = [
+    AuthGuard,
     provideRouter(routes)
 ];

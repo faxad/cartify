@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { tokenNotExpired } from 'angular2-jwt';
 
 import { IShopItem } from '../../shared/shop-item.interface';
 import { ShopService } from '../../shared/shop.service';
@@ -9,13 +8,12 @@ import { ShopService } from '../../shared/shop.service';
 	templateUrl: 'app/shop/shop-item-detail/shop-item-detail.component.html',
 	providers: [ShopService]
 })
-//@CanActivate(() => tokenNotExpired())
 export class ShopItemDetailComponent implements OnInit {
 	shopItem: IShopItem;
 
 	constructor(
 		private route: ActivatedRoute,
-        private router: Router,
+    private router: Router,
 		private shop: ShopService) {}
 
 	ngOnInit(): void {

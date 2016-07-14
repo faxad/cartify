@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import { Router, RouteParams } from '@angular/router-deprecated';
 import { Router } from '@angular/router';
-
 
 import {
 	CartService,

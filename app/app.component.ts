@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-
 import { HTTP_PROVIDERS } from '@angular/http';
 import 'rxjs/Rx';
 
@@ -8,7 +7,6 @@ import { ShopItemListComponent } from './shop/shop-item-list/shop-item-list.comp
 import { ShopItemDetailComponent } from './shop/shop-item-detail/shop-item-detail.component';
 import { ItemCartComponent } from './cart/cart-item-list.component';
 import { AuthService } from './shared/auth.service'
-
 
 @Component({
 	selector: 'app-content',

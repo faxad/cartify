@@ -1,6 +1,10 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { REACTIVE_FORM_DIRECTIVES, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-
+import {
+	REACTIVE_FORM_DIRECTIVES,
+	FormBuilder, FormGroup,
+	FormControl,
+	Validators
+} from '@angular/forms';
 
 import {
 	ValidationService,
