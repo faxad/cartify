@@ -14,7 +14,7 @@ import { ICartItemDetailed } from '../shared/cart-item-detailed.interface';
 	providers: [CartService, ShopService]
 })
 export class ItemCartComponent implements OnInit {
-	userCartItems: ICartItem[];
+	private userCartItems: ICartItem[];
 
 	constructor(private router: Router, private cart: CartService) {}
 

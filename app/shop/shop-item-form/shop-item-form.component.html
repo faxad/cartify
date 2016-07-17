@@ -8,7 +8,9 @@
                 <h4 class="modal-title" id="shopItemModalLabel">Shop Item</h4>
             </div>
             <div class="modal-body">
-                <form [formGroup]="shopItemForm">
+              <form [formGroup]="shopItemForm">
+                <div class="row">
+                  <div class="col-md-6">
                     <div class="form-group">
                         <label for="productName">ID</label>
                         <input class="form-control" id="id" placeholder="ID" [formControl]="shopItemForm.controls['id']">
@@ -24,6 +26,8 @@
                         <input class="form-control" id="code" placeholder="Code" [formControl]="shopItemForm.controls['code']">
                         <div *ngIf="validation.check('code').result" class="alert alert-danger">{{validation.check('code').message}}</div>
                     </div>
+                  </div>
+                  <div class="col-md-6">
                     <div class="form-group">
                         <label for="unitPrice">Unit Price</label>
                         <input class="form-control" id="unitPrice" placeholder="Unit Price" [formControl]="shopItemForm.controls['unitPrice']">
@@ -39,15 +43,17 @@
                         <input class="form-control" id="releaseDate" placeholder="releaseDate" [formControl]="shopItemForm.controls['releaseDate']">
                         <div *ngIf="validation.check('releaseDate').result" class="alert alert-danger">{{validation.check('releaseDate').message}}</div>
                     </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" id="description" placeholder="description" [formControl]="shopItemForm.controls['description']"></textarea>
-                        <div *ngIf="validation.check('description').result" class="alert alert-danger">{{validation.check('description').message}}</div>
-                    </div>
-                    <div class="modal-footer">
-                        <button [disabled]="!shopItemForm.valid" type="button" class="btn btn-default" data-dismiss="modal" (click)='submitItem(shopItemForm)'>Save & Close</button>
-                    </div>
-                </form>
+                  </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" placeholder="description" [formControl]="shopItemForm.controls['description']"></textarea>
+                    <div *ngIf="validation.check('description').result" class="alert alert-danger">{{validation.check('description').message}}</div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="!shopItemForm.valid" type="button" class="btn btn-default" data-dismiss="modal" (click)='submitItem(shopItemForm)'>Save & Close</button>
+                </div>
+              </form>
             </div>
         </div>
     </div>

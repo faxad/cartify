@@ -10,7 +10,7 @@ import { AuthService } from './shared/auth.service'
 
 @Component({
 	selector: 'app-content',
-	directives: [ROUTER_DIRECTIVES, ShopItemListComponent, ItemCartComponent], // using component as directive
+	directives: [ROUTER_DIRECTIVES], // using component as directive
 	providers: [HTTP_PROVIDERS, AuthService],
 	precompile: [ShopItemListComponent, ShopItemDetailComponent, ItemCartComponent],
 	template: `

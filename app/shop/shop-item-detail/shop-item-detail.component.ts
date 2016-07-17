@@ -9,7 +9,7 @@ import { ShopService } from '../../shared/shop.service';
 	providers: [ShopService]
 })
 export class ShopItemDetailComponent implements OnInit {
-	shopItem: IShopItem;
+	private shopItem: IShopItem;
 
 	constructor(
 		private route: ActivatedRoute,

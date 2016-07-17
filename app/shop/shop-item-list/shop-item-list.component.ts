@@ -21,11 +21,11 @@ import { ShopItemFilterPipe } from './shop-item-filter.pipe';
 	providers: [ShopService, CartService]
 })
 export class ShopItemListComponent implements OnInit {
-	modalIdentifier: string = 'shopItemModal';
-	filterBy: string;
-	customerId: string;
-	customerCartItems = {};
-	shopItems: IShopItem[];
+	private modalIdentifier: string = 'shopItemModal';
+	private filterBy: string;
+	private customerId: string;
+	private customerCartItems = {};
+	private shopItems: IShopItem[];
 
 	constructor(private shop: ShopService, private auth: AuthService, private cart: CartService) { }
 
