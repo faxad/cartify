@@ -4,12 +4,14 @@ import { Observable } from 'rxjs/Observable';
 
 import { IShopItem } from './shop-item.interface';
 import { ICartItem } from './cart-item.interface';
+import { ICartService } from './cart-service.interface';
+
 import { ICartItemDetailed } from './cart-item-detailed.interface';
 import { AuthService } from './auth.service';
 import { ShopService } from './shop.service';
 
 @Injectable()
-export class CartService {
+export class CartService implements ICartService {
 	constructor(private http: Http, private shop: ShopService) {}
 
 	getCartItems(): Observable<ICartItem[]> {
@@ -45,10 +47,10 @@ export class CartService {
 		})
 	}
 
-	addCartItem(cartItem: IShopItem): Observable<ICartItem> {
+	addCartItem(item: IShopItem): Observable<ICartItem> {
 		let body: any = {
 			"userId": AuthService.getUser(),
-			"itemId": cartItem.id,
+			"itemId": item.id,
 			"quantity": 1,
 		}
 

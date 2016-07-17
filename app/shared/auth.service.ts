@@ -3,11 +3,12 @@ import { Injectable, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { IAuthService } from './auth-service.interface';
 
 declare var Auth0Lock: any; // to avoid warning from TS
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
     auth0Lock: any;
 
     constructor(private changeDetector: ChangeDetectorRef) { 

@@ -3,9 +3,10 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { IShopItem } from './shop-item.interface';
+import { IShopService } from './shop-service.interface';
 
 @Injectable()
-export class ShopService {
+export class ShopService implements IShopService {
 	constructor(private http: Http) {}
 
 	handleError(error, Response) {
