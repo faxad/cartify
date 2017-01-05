@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { HTTP_PROVIDERS } from '@angular/http';
+//import { ROUTER_DIRECTIVES } from '@angular/router';
+//import { HTTP_PROVIDERS } from '@angular/http';
 import 'rxjs/Rx';
 
 import { ShopItemListComponent } from './shop/shop-item-list/shop-item-list.component';
@@ -10,9 +10,10 @@ import { AuthService } from './shared/auth.service'
 
 @Component({
 	selector: 'app-content',
-	directives: [ROUTER_DIRECTIVES], // using component as directive
-	providers: [HTTP_PROVIDERS, AuthService],
-	precompile: [ShopItemListComponent, ShopItemDetailComponent, ItemCartComponent],
+	//directives: [ROUTER_DIRECTIVES], // using component as directive
+	//providers: [HTTP_PROVIDERS, AuthService],
+  //providers: [AuthService],
+	//precompile: [ShopItemListComponent, ShopItemDetailComponent, ItemCartComponent],
 	template: `
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="container">

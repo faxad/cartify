@@ -1,4 +1,5 @@
-import { Injectable, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
+//import { ChangeDetectorRef } from '@angular/core';
 
 import { tokenNotExpired } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
@@ -11,7 +12,8 @@ declare var Auth0Lock: any; // to avoid warning from TS
 export class AuthService implements IAuthService {
     auth0Lock: any;
 
-    constructor(private changeDetector: ChangeDetectorRef) { 
+    //constructor(private changeDetector: ChangeDetectorRef) {
+    constructor() { 
         this.auth0Lock = new Auth0Lock(
             'IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com');
     }
@@ -33,7 +35,7 @@ export class AuthService implements IAuthService {
         this.initiateAuth0LogIn().subscribe((d) => {
             if (d) {} // TODO: something here to be added
 
-            this.changeDetector.detectChanges();
+            //this.changeDetector.detectChanges();
         },
         e => console.log('error occured'))
     }
@@ -41,7 +43,7 @@ export class AuthService implements IAuthService {
     logout(): void {
         localStorage.removeItem('profile');
         localStorage.removeItem('id_token');
-        this.changeDetector.detectChanges();
+        //this.changeDetector.detectChanges();
     }
 
     isLoggedIn(): boolean {

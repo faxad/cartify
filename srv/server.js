@@ -1,5 +1,5 @@
 var http = require('http');
-var dispatcher = require('httpdispatcher');
+var HttpDispatcher = require('httpdispatcher');
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
@@ -11,6 +11,7 @@ var query = require('querystring');
 
 const PORT=8080;
 var mongoDBUrl = 'mongodb://fawad:fawad@ds013574.mlab.com:13574/foxtaildb';
+var dispatcher = new HttpDispatcher();
 
 function handleRequest(request, response){
     try {
@@ -181,4 +182,3 @@ dispatcher.onPost("/remove", function(req, res) {
       });
     })
 });
-
