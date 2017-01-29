@@ -19,7 +19,7 @@ import { IShopItem } from '../../shared/shop-item.interface';
 	templateUrl: 'app/shop/shop-item-form/shop-item-form.component.html',
 	styleUrls: ['app/shop/shop-item-form/shop-item-form.component.css'],
 	//directives: [REACTIVE_FORM_DIRECTIVES],
-	//providers: [ValidationService]
+	providers: [ValidationService]
 })
 export class FormComponent implements OnInit {
 	private shopItemForm: FormGroup;

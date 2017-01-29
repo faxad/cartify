@@ -8,34 +8,34 @@
                 <h4 class="modal-title" id="shopItemModalLabel">Shop Item</h4>
             </div>
             <div class="modal-body">
-              <form [formGroup]="shopItemForm">
+              <form novalidate [formGroup]="shopItemForm">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                         <label for="productName">ID</label>
-                        <input class="form-control" id="id" placeholder="ID" [formControl]="shopItemForm.controls['id']">
+                        <input required class="form-control" id="id" placeholder="ID" [formControl]="shopItemForm.controls['id']">
                         <div *ngIf="validation.check('id').result" class="alert alert-danger">{{validation.check('id').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="name">Product Name</label>
-                        <input class="form-control" id="name" placeholder="Name" [formControl]="shopItemForm.controls['name']">
+                        <input required class="form-control" id="name" placeholder="Name" [formControl]="shopItemForm.controls['name']">
                         <div *ngIf="validation.check('name').result" class="alert alert-danger">{{validation.check('name').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="code">Product Code</label>
-                        <input class="form-control" id="code" placeholder="Code" [formControl]="shopItemForm.controls['code']">
+                        <input required class="form-control" id="code" placeholder="Code" [formControl]="shopItemForm.controls['code']">
                         <div *ngIf="validation.check('code').result" class="alert alert-danger">{{validation.check('code').message}}</div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                         <label for="unitPrice">Unit Price</label>
-                        <input class="form-control" id="unitPrice" placeholder="Unit Price" [formControl]="shopItemForm.controls['unitPrice']">
+                        <input required class="form-control" id="unitPrice" placeholder="Unit Price" [formControl]="shopItemForm.controls['unitPrice']">
                         <div *ngIf="validation.check('unitPrice').result" class="alert alert-danger">{{validation.check('unitPrice').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="quantityInStock">Quantity In Stock</label>
-                        <input class="form-control" id="quantityInStock" placeholder="Quantity In Stock" [formControl]="shopItemForm.controls['quantityInStock']">
+                        <input required class="form-control" id="quantityInStock" placeholder="Quantity In Stock" [formControl]="shopItemForm.controls['quantityInStock']">
                         <div *ngIf="validation.check('quantityInStock').result" class="alert alert-danger">{{validation.check('quantityInStock').message}}</div>
                     </div>
                     <div class="form-group">

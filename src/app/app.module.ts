@@ -13,7 +13,6 @@ import { FormComponent } from './shop/shop-item-form/shop-item-form.component';
 import { ShopItemFilterPipe } from './shop/shop-item-list//shop-item-filter.pipe';
 
 import { AuthService } from './shared/auth.service'
-import { ValidationService } from './shared/validation.service';
 import { CartService } from './shared/cart.service';
 import { ShopService } from './shared/shop.service';
 
@@ -32,7 +31,7 @@ import { AppRoutingModule } from './app-routing.module';
     RouterModule,
     AppRoutingModule
   ],
-  providers: [AuthService, ValidationService, ShopService, CartService],
+  providers: [AuthService, ShopService, CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
