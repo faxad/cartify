@@ -15,6 +15,7 @@ import { AuthService } from './shared/auth.service'
   //providers: [AuthService],
 	//precompile: [ShopItemListComponent, ShopItemDetailComponent, ItemCartComponent],
 	template: `
+	 <div>
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="container">
 	        <div class="navbar-header">
@@ -41,11 +42,10 @@ import { AuthService } from './shared/auth.service'
 	      </div>
 	    </nav>
 	    <div class="container">
-	    	<div class="starter-template">
 	    		<br/><br/><br/>
 	    		<router-outlet></router-outlet>
-	    	</div>
 	    </div>
+		</div>
 	`,
 })
 export class AppComponent {

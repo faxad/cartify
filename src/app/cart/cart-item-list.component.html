@@ -12,6 +12,11 @@
         <th>Net Price</th>
         <th></th>
     </tr>
+    <tr>
+        <td colspan=6>
+            <p *ngIf='showLoading' style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
+        </td>
+    </tr>
     <tr *ngFor='let cartItem of userCartItems'>
         <td>{{cartItem.itemId}}</td>
         <td>{{cartItem.name}}</td>

@@ -20,6 +20,7 @@
             </div>
         </div>
         <br/>
+        <p *ngIf='showLoading' style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
         <div class="row" *ngIf='shopItems && shopItems.length'>
             <div class="col-sm-4 col-lg-4 col-md-4" *ngFor='let shopItem of shopItems | shopItemFilter:filterBy'>
                 <div class="thumbnail">

@@ -26,6 +26,7 @@ export class ShopItemListComponent implements OnInit {
 	private customerId: string;
 	private customerCartItems = {};
 	private shopItems: IShopItem[];
+	private showLoading: boolean = true;
 
 	constructor(private shop: ShopService, private auth: AuthService, private cart: CartService) { }
 
@@ -44,7 +45,9 @@ export class ShopItemListComponent implements OnInit {
 				}
 				this.getShopItems(true);
 			},
-			error => console.log(error));
+			error => console.log(error),
+			() => this.showLoading = false
+		);
 	}
 
 	addToCart(item: any): void {

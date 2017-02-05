@@ -15,13 +15,16 @@ import { ICartItemDetailed } from '../shared/cart-item-detailed.interface';
 })
 export class ItemCartComponent implements OnInit {
 	private userCartItems: ICartItem[];
+	private showLoading: boolean = true;
 
 	constructor(private router: Router, private cart: CartService) {}
 
 	ngOnInit(): void {
 		this.cart.getCartItemsWithDetails().subscribe(
 			cart => this.userCartItems = cart,
-			error => console.log(error));
+			error => console.log(error),
+			() => this.showLoading = false
+		);
 	}
 
 	increaseQuantity(item: ICartItem): void {
