@@ -58,20 +58,26 @@ export class CartService implements ICartService {
 			.map((response: Response) => response.json());
 	}
 
-	addOrUpdateCartItem(item: IShopItem, callback): void {
-		this.getCartItems().subscribe(
-			cart => {
-				for (let cartItem of cart) {
-					if (cartItem['itemId'] == item['id']) {
-						this.increaseCartItemQunatity(cartItem).subscribe(
-							items => console.log("Incremented"),
-							error => console.log(error));
-						return
+	addOrUpdateCartItem(item: IShopItem, callback): Observable<void> {
+		return Observable.create(observer => {
+			this.getCartItems().subscribe(
+				cart => {
+					for (let cartItem of cart) {
+						if (cartItem['itemId'] == item['id']) {
+							this.increaseCartItemQunatity(cartItem).subscribe(
+								items => console.log("Incremented"),
+								error => console.log(error));
+							observer.next();
+							observer.complete();
+							return
+						}
 					}
-				}
-				callback(this, item);
-			},
-			error => console.log(error));
+					callback(this, item);
+					observer.next();
+					observer.complete();
+				},
+				error => console.log(error));
+		})
 	}
 
 	removeCartItem(cartItem: ICartItem): Observable<ICartItem> {

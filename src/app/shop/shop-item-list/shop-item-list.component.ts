@@ -27,6 +27,7 @@ export class ShopItemListComponent implements OnInit {
 	private customerCartItems = {};
 	private shopItems: IShopItem[];
 	private showLoading: boolean = true;
+	private ccCount: number = 0;
 
 	constructor(private shop: ShopService, private auth: AuthService, private cart: CartService) { }
 
@@ -55,6 +56,10 @@ export class ShopItemListComponent implements OnInit {
 			service.addCartItem(item).subscribe(
 				items => console.log("Added to Cart"),
 				error => console.log(error));
-		})
+		}).subscribe(
+			() => { 
+				this.customerCartItems[item.id] = this.customerCartItems[item.id] + 1
+			}
+		)
 	}
 }
