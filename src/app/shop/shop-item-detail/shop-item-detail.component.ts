@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { IShopItem } from '../../shared/shop-item.interface';
+import { IShopItemReview } from '../../shared/shop-item-review.interface';
 import { ShopService } from '../../shared/shop.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { ShopService } from '../../shared/shop.service';
 })
 export class ShopItemDetailComponent implements OnInit {
 	private shopItem: IShopItem;
+	private shopItemReviews: IShopItemReview[];
 
 	constructor(
 		private route: ActivatedRoute,
@@ -21,6 +23,11 @@ export class ShopItemDetailComponent implements OnInit {
 			this.shop.getShopItem(
 				Number(+param['id'])).subscribe(
 					shopItem => this.shopItem = shopItem,
+					error => console.log(error)
+				);
+			this.shop.getShopItemReviews(
+				Number(+param['id'])).subscribe(
+					shopItemReviews => this.shopItemReviews = shopItemReviews,
 					error => console.log(error)
 				);
 		})

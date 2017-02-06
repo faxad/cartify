@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { IShopItem } from './shop-item.interface';
+import { IShopItemReview } from './shop-item-review.interface';
 import { IShopService } from './shop-service.interface';
 
 @Injectable()
@@ -34,5 +35,10 @@ export class ShopService implements IShopService {
 	updateShopItem(body: any): Observable<IShopItem> {
 		return this.http.post("http://localhost:8080/update", JSON.stringify(body))
 			.map((response: Response) => response.json());
+	}
+
+	getShopItemReviews(itemId: number): Observable<IShopItemReview[]> {
+		return this.http.get("http://localhost:8080/review?itemId=" + itemId)
+			.map((response: Response) => <IShopItemReview[]>response.json())
 	}
 }

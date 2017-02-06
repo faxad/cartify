@@ -49,7 +49,7 @@
             </p>
             <h4>Customers' Reviews</h4>
             <hr>
-            <div class="row">
+            <div class="row" *ngFor='let shopItemReview of shopItemReviews'>
                 <div class="col-md-12">
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star"></span>
@@ -57,7 +57,7 @@
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star-empty"></span> Anonymous
                     <span class="pull-right">10 days ago</span>
-                    <p>This is placeholder text.</p>
+                    <p>{{ shopItemReview.remarks }}</p>
                 </div>
             </div>
         </div>

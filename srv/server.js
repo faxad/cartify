@@ -182,3 +182,32 @@ dispatcher.onPost("/remove", function(req, res) {
       });
     })
 });
+
+
+// Dispatcher: Get reviews by item
+
+dispatcher.onGet("/review", function(req, res) {
+    initialize(res, function(db) {
+      db.collection('review').find({ "itemId": url.parse(req.url, true).query.itemId }).toArray(function(err, result) {
+        assert.equal(err, null);
+        if (result != null) {
+            res.end(JSON.stringify(result));
+            db.close();
+        }
+      });
+    })
+}); 
+
+// Dispatcher: Set review
+
+dispatcher.onPost("/addreview", function(req, res) {
+    initialize(res, function(db) {
+      db.collection('review').insertOne(JSON.parse(req.body), function(err, result) {
+        assert.equal(err, null);
+        if (result != null) {
+            res.end(JSON.stringify({ msg: '' }));
+            db.close();
+        }
+      });
+    })
+});
