@@ -37,7 +37,13 @@ export class ShopItemDetailComponent implements OnInit {
 		this.router.navigate(['/items']);
 	}
 
-	onSubmit(val: string): void {
-		alert(val)
+	onSubmit(remarks: string): void {
+		this.route.params.subscribe(param => {
+			this.shop.setShopItemreview(
+				Number(+param['id']), remarks).subscribe(
+					shopItemReview => console.log("Review added"),
+					error => console.log(error)
+				);
+		})
 	}
 }
