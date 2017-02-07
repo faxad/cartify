@@ -36,4 +36,8 @@ export class ShopItemDetailComponent implements OnInit {
 	goBack(): void {
 		this.router.navigate(['/items']);
 	}
+
+	onSubmit(val: string): void {
+		alert(val)
+	}
 }

@@ -44,9 +44,6 @@
             </div>
         </div>
         <div class="well">
-            <p class="pull-right">
-                <a class="btn btn-success">Leave a Review</a>
-            </p>
             <h4>Customers' Reviews</h4>
             <hr>
             <div class="row" *ngFor='let shopItemReview of shopItemReviews'>
@@ -55,11 +52,24 @@
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span> Anonymous
+                    <span class="glyphicon glyphicon-star-empty"></span> {{ shopItemReview.userId }}
                     <span class="pull-right">10 days ago</span>
                     <p>{{ shopItemReview.remarks }}</p>
                 </div>
             </div>
+            <br/>
+            <form (ngSubmit)="onSubmit(remarks.value)">
+                <div class="row">
+                  <div class="col-xs-12 col-md-8">
+                    <div class="form-group">
+                        <textarea class="form-control" id="remarks" #remarks placeholder="Enter comment message"></textarea>
+                    </div>
+                  </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success">Submit Review</button>
+                </div>
+                </div>
+              </form>
         </div>
     </div>
 </div>
