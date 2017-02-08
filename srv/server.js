@@ -198,6 +198,19 @@ dispatcher.onGet("/review", function(req, res) {
     })
 }); 
 
+
+// Dispatcher: Get review count for given item
+
+dispatcher.onGet("/reviewcount", function(req, res) {
+    initialize(res, function(db) {
+        db.collection('review').find({ "itemId": url.parse(req.url, true).query.itemId }).count(function(err, count){
+            res.end(JSON.stringify(count));
+            db.close();
+        })
+    })
+}); 
+
+
 // Dispatcher: Set review
 
 dispatcher.onPost("/addreview", function(req, res) {

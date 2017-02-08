@@ -42,7 +42,12 @@ export class ShopService implements IShopService {
 			.map((response: Response) => <IShopItemReview[]>response.json())
 	}
 
-	setShopItemreview(itemId: number, remarks: string): Observable<IShopItemReview> {
+	getShopItemReviewsCount(itemId: number): Observable<number> {
+		return this.http.get("http://localhost:8080/reviewcount?itemId=" + itemId)
+			.map((response: Response) => <number>response.json())
+	}
+
+	setShopItemReview(itemId: number, remarks: string): Observable<IShopItemReview> {
 		let body: any = {
 			"itemId": itemId.toString(),
 			"userId": "fawad", //AuthService.getUser(),

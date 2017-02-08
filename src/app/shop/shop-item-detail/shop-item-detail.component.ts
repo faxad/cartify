@@ -12,6 +12,7 @@ import { ShopService } from '../../shared/shop.service';
 export class ShopItemDetailComponent implements OnInit {
 	private shopItem: IShopItem;
 	private shopItemReviews: IShopItemReview[];
+	private reviewsCount: number;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -30,6 +31,11 @@ export class ShopItemDetailComponent implements OnInit {
 					shopItemReviews => this.shopItemReviews = shopItemReviews,
 					error => console.log(error)
 				);
+			this.shop.getShopItemReviewsCount(
+				Number(+param['id'])).subscribe(
+					reviewsCount => this.reviewsCount = reviewsCount,
+					error => console.log(error)
+			)
 		})
 	}
 
@@ -39,7 +45,7 @@ export class ShopItemDetailComponent implements OnInit {
 
 	onSubmit(remarks: string): void {
 		this.route.params.subscribe(param => {
-			this.shop.setShopItemreview(
+			this.shop.setShopItemReview(
 				Number(+param['id']), remarks).subscribe(
 					shopItemReview => console.log("Review added"),
 					error => console.log(error)

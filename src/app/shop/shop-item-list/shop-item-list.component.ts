@@ -25,6 +25,7 @@ export class ShopItemListComponent implements OnInit {
 	private filterBy: string;
 	private customerId: string;
 	private customerCartItems = {};
+	private cartItemReviews = {};
 	private shopItems: IShopItem[];
 	private showLoading: boolean = true;
 	private ccCount: number = 0;
@@ -33,7 +34,15 @@ export class ShopItemListComponent implements OnInit {
 
 	getShopItems(event: boolean): void {
 		this.shop.getShopItems().subscribe(
-			shopItems => this.shopItems = shopItems,
+			shopItems => {
+				this.shopItems = shopItems
+				for (let shopItem of shopItems) {
+					this.shop.getShopItemReviewsCount(shopItem.id).subscribe(
+						reviews => this.cartItemReviews[shopItem.id] = reviews,
+						error => console.log(error)
+					)
+				}
+			},
 			error => console.log(error))
 	}
 
