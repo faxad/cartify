@@ -13,6 +13,7 @@ export class ShopItemDetailComponent implements OnInit {
 	private shopItem: IShopItem;
 	private shopItemReviews: IShopItemReview[];
 	private reviewsCount: number;
+	private reviewText: string = "";
 
 	constructor(
 		private route: ActivatedRoute,
@@ -47,7 +48,11 @@ export class ShopItemDetailComponent implements OnInit {
 		this.route.params.subscribe(param => {
 			this.shop.setShopItemReview(
 				Number(+param['id']), remarks).subscribe(
-					shopItemReview => console.log("Review added"),
+					shopItemReview => {
+						this.reviewText = ""
+						this.ngOnInit()
+						console.log("Review added")
+					},
 					error => console.log(error)
 				);
 		})

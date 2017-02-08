@@ -62,7 +62,7 @@
                 <div class="row">
                   <div class="col-xs-12 col-md-8">
                     <div class="form-group">
-                        <textarea class="form-control" id="remarks" #remarks placeholder="Enter comment message"></textarea>
+                        <textarea class="form-control" id="remarks" #remarks placeholder="Enter comment message" [(ngModel)]="reviewText" [ngModelOptions]="{standalone: true}"></textarea>
                     </div>
                   </div>
                 <div class="col-md-2">
