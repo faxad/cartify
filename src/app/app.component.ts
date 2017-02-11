@@ -50,7 +50,4 @@ import { AuthService } from './shared/auth.service'
 })
 export class AppComponent {
 	constructor(private auth: AuthService) {}
-	login(): void {
-		this.auth.login();
-	}
 }

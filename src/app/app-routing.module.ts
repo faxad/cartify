@@ -9,6 +9,7 @@ import { ItemCartComponent } from './cart/cart-item-list.component';
 const routes: Routes = [
     { path: '', component: ShopItemListComponent },
     { path: 'items', component: ShopItemListComponent },
+    { path: 'items/:reload', component: ShopItemListComponent }, // workaround to re-init loaded component
     { path: 'item/:id', component: ShopItemDetailComponent }, //canActivate:[AuthGuard]
     { path: 'cart/:customerId', component: ItemCartComponent }
 ];

@@ -1,5 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
-//import { ChangeDetectorRef } from '@angular/core';
+import { ApplicationRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { tokenNotExpired } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
@@ -12,9 +13,8 @@ declare var Auth0Lock: any; // to avoid warning from TS
 export class AuthService implements IAuthService {
     auth0Lock: any;
 
-    //constructor(private changeDetector: ChangeDetectorRef) {
-    constructor() { 
-        this.auth0Lock = new Auth0Lock(
+    constructor(private router: Router, private appRef: ApplicationRef) {
+         this.auth0Lock = new Auth0Lock(
             'IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com');
     }
 
@@ -33,9 +33,10 @@ export class AuthService implements IAuthService {
  
     login(): void {
         this.initiateAuth0LogIn().subscribe((d) => {
-            if (d) {} // TODO: something here to be added
-
-            //this.changeDetector.detectChanges();
+            if (d) {
+                this.router.navigate(['/items', { reload: 'yes' }]);
+            } // TODO: something here to be added
+            this.appRef.tick()            
         },
         e => console.log('error occured'))
     }
@@ -43,12 +44,11 @@ export class AuthService implements IAuthService {
     logout(): void {
         localStorage.removeItem('profile');
         localStorage.removeItem('id_token');
-        //this.changeDetector.detectChanges();
+        this.appRef.tick()
     }
 
     isLoggedIn(): boolean {
         //return true; //TODO: Remove!
-        
          return tokenNotExpired();
     }
 
@@ -66,12 +66,10 @@ export class AuthService implements IAuthService {
 
     static getUser(): string {
         try{
-            // return JSON.parse(localStorage.getItem(
-            //     'profile'))['identities'][0]['user_id']
             return JSON.parse(localStorage.getItem(
                 'profile'))['identities'][0]['user_id']
         } catch(e) {
-            alert('please log in!')
+            console.log('please log in!')
         }
     }
 }

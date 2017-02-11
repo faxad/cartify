@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 //import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { ActivatedRoute, Params } from '@angular/router';
+import { ApplicationRef } from '@angular/core';
 
 import {
 	AuthService,
@@ -30,7 +32,13 @@ export class ShopItemListComponent implements OnInit {
 	private showLoading: boolean = true;
 	private ccCount: number = 0;
 
-	constructor(private shop: ShopService, private auth: AuthService, private cart: CartService) { }
+	constructor(
+		private shop: ShopService,
+		private auth: AuthService,
+		private cart: CartService,
+		private route: ActivatedRoute,
+		private appRef: ApplicationRef
+	) {}
 
 	getShopItems(event: boolean): void {
 		this.shop.getShopItems().subscribe(
@@ -47,17 +55,20 @@ export class ShopItemListComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.customerId = AuthService.getUser();
-		this.cart.getCartItems().subscribe(
-			cartItems => {
-				for (let cartItem of cartItems) {
-					this.customerCartItems[cartItem.itemId] = cartItem.quantity
-				}
-				this.getShopItems(true);
-			},
-			error => console.log(error),
-			() => this.showLoading = false
-		);
+		this.route.params.subscribe(params => {
+			this.customerId = AuthService.getUser();
+			this.cart.getCartItems().subscribe(
+				cartItems => {
+					for (let cartItem of cartItems) {
+						this.customerCartItems[cartItem.itemId] = cartItem.quantity
+					}
+					this.getShopItems(true);
+					this.appRef.tick()
+				},
+				error => console.log(error),
+				() => this.showLoading = false
+			);                  
+        });
 	}
 
 	addToCart(item: any): void {
