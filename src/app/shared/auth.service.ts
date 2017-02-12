@@ -8,11 +8,12 @@ import { Subject } from 'rxjs/Subject';
 import { IAuthService } from './auth-service.interface';
 
 declare var Auth0Lock: any; // to avoid warning from TS
+//let Auth0Lock = require('auth0-lock').default;
 
 @Injectable()
 export class AuthService implements IAuthService {
     auth0Lock: any;
-
+    
     constructor(private router: Router, private appRef: ApplicationRef) {
          this.auth0Lock = new Auth0Lock(
             'IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com');

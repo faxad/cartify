@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -31,7 +31,7 @@ import { AppRoutingModule } from './app-routing.module';
     RouterModule,
     AppRoutingModule
   ],
-  providers: [AuthService, ShopService, CartService],
+  providers: [AuthService, ShopService, CartService, Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

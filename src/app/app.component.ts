@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title }     from '@angular/platform-browser';
 //import { ROUTER_DIRECTIVES } from '@angular/router';
 //import { HTTP_PROVIDERS } from '@angular/http';
 import 'rxjs/Rx';
@@ -49,5 +50,7 @@ import { AuthService } from './shared/auth.service'
 	`,
 })
 export class AppComponent {
-	constructor(private auth: AuthService) {}
+	constructor(private auth: AuthService, private titleService: Title) {
+		this.titleService.setTitle('Cartify')
+	}
 }
