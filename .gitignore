@@ -21,3 +21,6 @@ typings
 
 # IDE
 .vscode
+
+# Test Coverage
+coverage
