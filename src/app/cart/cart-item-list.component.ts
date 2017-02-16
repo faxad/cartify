@@ -10,7 +10,7 @@ import { ICartItem } from '../shared/cart-item.interface';
 import { ICartItemDetailed } from '../shared/cart-item-detailed.interface';
 
 @Component({
-	templateUrl: 'app/cart/cart-item-list.component.html',
+	templateUrl: './cart-item-list.component.html',
 	providers: [CartService, ShopService]
 })
 export class ItemCartComponent implements OnInit {

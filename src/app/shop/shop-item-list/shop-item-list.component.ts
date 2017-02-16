@@ -16,8 +16,8 @@ import { ShopItemFilterPipe } from './shop-item-filter.pipe';
 
 @Component({
 	selector: 'list-item',
-	templateUrl: 'app/shop/shop-item-list/shop-item-list.component.html',
-	styleUrls: ['app/shop/shop-item-list/shop-item-list.component.css'],
+	templateUrl: './shop-item-list.component.html',
+	styleUrls: ['./shop-item-list.component.css'],
 	//pipes: [ShopItemFilterPipe],
 	//directives: [FormComponent, ROUTER_DIRECTIVES],
 	//providers: [ShopService, CartService]

@@ -16,8 +16,8 @@ import { IShopItem } from '../../shared/shop-item.interface';
 
 @Component({
 	selector: 'shop-item-form',
-	templateUrl: 'app/shop/shop-item-form/shop-item-form.component.html',
-	styleUrls: ['app/shop/shop-item-form/shop-item-form.component.css'],
+	templateUrl: './shop-item-form.component.html',
+	styleUrls: ['./shop-item-form.component.css'],
 	//directives: [REACTIVE_FORM_DIRECTIVES],
 	providers: [ValidationService]
 })

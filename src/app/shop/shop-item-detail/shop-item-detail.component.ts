@@ -6,7 +6,7 @@ import { IShopItemReview } from '../../shared/shop-item-review.interface';
 import { ShopService } from '../../shared/shop.service';
 
 @Component({
-	templateUrl: 'app/shop/shop-item-detail/shop-item-detail.component.html',
+	templateUrl: './shop-item-detail.component.html',
 	providers: [ShopService]
 })
 export class ShopItemDetailComponent implements OnInit {
