@@ -7,39 +7,25 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { IAuthService } from './auth-service.interface';
 
-declare var Auth0Lock: any; // to avoid warning from TS
-//let Auth0Lock = require('auth0-lock').default;
+const Auth0Lock = require('auth0-lock').default;
 
 @Injectable()
 export class AuthService implements IAuthService {
-    auth0Lock: any;
+    lock = new Auth0Lock('IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com', {});
     
     constructor(private router: Router, private appRef: ApplicationRef) {
-         this.auth0Lock = new Auth0Lock(
-            'IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com');
-    }
-
-    initiateAuth0LogIn() {
-        return Observable.create(observer => {
-            this.auth0Lock.show((error: string, profile: Object, id_token: string) => {
-                if (error) { console.log(error); }
-
+        this.lock.on("authenticated", (authResult) => {
+            localStorage.setItem('id_token', authResult.idToken);
+            this.lock.getProfile(authResult.idToken, (error, profile) => {
                 localStorage.setItem('profile', JSON.stringify(profile));
-                localStorage.setItem('id_token', id_token);
-                observer.next(true);
-                observer.complete();
+                this.router.navigate(['/items', { reload: 'yes' }]);
+                this.appRef.tick()
             });
         });
     }
  
     login(): void {
-        this.initiateAuth0LogIn().subscribe((d) => {
-            if (d) {
-                this.router.navigate(['/items', { reload: 'yes' }]);
-            } // TODO: something here to be added
-            this.appRef.tick()            
-        },
-        e => console.log('error occured'))
+        this.lock.show();
     }
 
     logout(): void {
@@ -68,7 +54,7 @@ export class AuthService implements IAuthService {
     static getUser(): string {
         try{
             return JSON.parse(localStorage.getItem(
-                'profile'))['identities'][0]['user_id']
+                'profile'))['user_id'].split("|").pop()
         } catch(e) {
             console.log('please log in!')
         }
