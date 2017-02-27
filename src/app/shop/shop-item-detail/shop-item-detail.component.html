@@ -3,6 +3,7 @@
         <ol class="breadcrumb">
             <li><a class="btn btn-default btn-link" role="button" (click)='goBack()'>Home</a></li>
             <li class="active">Detail</li>
+            <li class="active" *ngIf='shopItem'>{{ shopItem.code }}</li>
         </ol>
         <div class="thumbnail" *ngIf='shopItem'>
             <div class="row">
@@ -10,30 +11,28 @@
                     <img class="img-responsive" src="http://placehold.it/800x300" alt="">
                 </div>
                 <div class="col-md-2">
-                    <h1>
+                    <h3>
                         <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                    </h1>
-                    <dl>
-                        <br/>
-                        <dt>Code</dt>
-                        <dd>{{ shopItem.code }}</dd>
-                        <br/>
-                        <dt>Quantity In Stock</dt>
-                        <dd>{{ shopItem.quantityInStock }}</dd>
-                        <br/>
-                        <dt>Release Date</dt>
-                        <dd>{{ shopItem.releaseDate }}</dd>
-                    </dl>
-                    <a class="btn btn-default btn-sm" role="button" (click)='goBack()'>Back</a>
+                    </h3>
+                    <br/>
+                    <h5>Code: <small>{{ shopItem.code }}</small></h5>
+                    <h5>Quantity: <small>{{ shopItem.quantityInStock }}</small></h5>
+                    <h5>Released: <small>{{ shopItem.releaseDate }}</small></h5>
+                    <h5>Price: <small>${{ shopItem.unitPrice }}</small></h5>
+                    <br/>
+                    <nav aria-label="...">
+                        <ul class="pager">
+                            <li class="previous"><a class="btn btn-default btn-sm" role="button" (click)='goBack()'><span aria-hidden="true">&larr;</span> Back</a></li>
+                        </ul>
+                     </nav>
                 </div>
             </div>
             <div class="caption-full">
-                <h4 class="pull-right">${{ shopItem.unitPrice }}</h4>
-                <h4>{{ shopItem.name }}</h4>
+                <h4>Product: <small>{{ shopItem.name }}</small></h4>
                 <p>{{ shopItem.description }}</p>
+                <p class="pull-right">{{ reviewsCount }} reviews</p>
             </div>
             <div class="ratings">
-                <p class="pull-right">{{ reviewsCount }} reviews</p>
                 <p>
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star"></span>
@@ -52,7 +51,7 @@
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star"></span>
                     <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span> {{ shopItemReview.userId }}
+                    <span class="glyphicon glyphicon-star-empty"></span> - {{ shopItemReview.userId }}
                     <span class="pull-right">10 days ago</span>
                     <p>{{ shopItemReview.remarks }}</p>
                 </div>
