@@ -1,5 +1,5 @@
 <div>
-    <shop-item-form [modalId]='modalIdentifier' (shopItemsUpdated)="getShopItems($event);"></shop-item-form>
+    <shop-item-form [modalId]='modalIdentifier' (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></shop-item-form>
     <div class='panel-body'>
         <div class='row'>
             <div class="input-group">
@@ -12,7 +12,7 @@
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                     </a>
                 </div>
-                <div class="input-group-addon">
+                <div class="input-group-addon" *ngIf='auth.isLoggedIn()'>
                     <a [routerLink]="['/cart', customerId]">
                         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                     </a>
@@ -28,7 +28,7 @@
                     <div class="caption">
                         <h4 class="pull-right">${{shopItem.unitPrice}}</h4>
                         <h4 id='shopItem{{shopItem.id}}Title'>{{shopItem.name}}
-                          <a data-toggle="modal" href="#{{shopItem.id}}">
+                          <a data-toggle="modal" href="#{{shopItem.id}}" *ngIf='auth.isUserAdmin()'>
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                           </a>
                        </h4>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-10">
-                            <button type="button" class="btn btn-primary" (click)='addToCart(shopItem)'>
+                            <button type="button" class="btn btn-primary" (click)='addToCart(shopItem)' [disabled]='!auth.isLoggedIn()'>
                                 <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy
                             </button>
                             <a href="#" class="btn btn-default btn disabled" role="button">
@@ -57,7 +57,7 @@
                             <a [routerLink]="['/item', shopItem.id]" class="btn btn-success" role="button">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                             </a>
-                            <shop-item-form [shopItem]='shopItem' [modalId]='shopItem.id' (shopItemsUpdated)="getShopItems($event);"></shop-item-form>
+                            <shop-item-form [shopItem]='shopItem' [modalId]='shopItem.id' (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></shop-item-form>
                         </div>
                     </div>
                 </div>

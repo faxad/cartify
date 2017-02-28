@@ -3,7 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { IShopItem } from '../../shared/shop-item.interface';
 import { IShopItemReview } from '../../shared/shop-item-review.interface';
-import { ShopService } from '../../shared/shop.service';
+import {
+	AuthService,
+	ShopService,
+} from '../../shared/index';
 
 @Component({
 	templateUrl: './shop-item-detail.component.html',
@@ -16,8 +19,9 @@ export class ShopItemDetailComponent implements OnInit {
 	private reviewText: string = "";
 
 	constructor(
+		private auth: AuthService,
 		private route: ActivatedRoute,
-    private router: Router,
+    	private router: Router,
 		private shop: ShopService) {}
 
 	ngOnInit(): void {

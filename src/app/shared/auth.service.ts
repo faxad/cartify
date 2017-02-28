@@ -40,19 +40,18 @@ export class AuthService implements IAuthService {
     }
 
     isUserAdmin(): boolean {
-        return true; //TODO: Remove!
-
-        // try {
-        //   return JSON.parse(
-        //     localStorage.getItem('profile')
-        //   )['role'] == 'admin' ? true : false;
-        // } catch(e) {
-        //       return false;
-        // }
+        //return true; //TODO: Remove!
+        try {
+          return JSON.parse(
+            localStorage.getItem('profile')
+          )['role'] == 'admin' && this.isLoggedIn() ? true : false;
+        } catch(e) {
+              return false;
+        }
     }
 
     static getUser(): string {
-        try{
+        try {
             return JSON.parse(localStorage.getItem(
                 'profile'))['user_id'].split("|").pop()
         } catch(e) {
