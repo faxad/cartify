@@ -18,7 +18,7 @@ export class AuthService implements IAuthService {
             localStorage.setItem('id_token', authResult.idToken);
             this.lock.getProfile(authResult.idToken, (error, profile) => {
                 localStorage.setItem('profile', JSON.stringify(profile));
-                this.router.navigate(['/items', { reload: 'yes' }]);
+                this.navigateToHome()
                 this.appRef.tick()
             });
         });
@@ -31,7 +31,7 @@ export class AuthService implements IAuthService {
     logout(): void {
         localStorage.removeItem('profile');
         localStorage.removeItem('id_token');
-        this.router.navigate(['/items'])
+        this.navigateToHome();
     }
 
     isLoggedIn(): boolean {
@@ -58,5 +58,12 @@ export class AuthService implements IAuthService {
         } catch(e) {
             console.log('please log in!')
         }
+    }
+
+    navigateToHome(): void {
+        let params = this.router.url == '/items' ? ['/items', {
+            reload: 'yes' }] : ['/items']
+
+        this.router.navigate(params)
     }
 }
