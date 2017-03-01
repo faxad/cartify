@@ -31,7 +31,7 @@ export class AuthService implements IAuthService {
     logout(): void {
         localStorage.removeItem('profile');
         localStorage.removeItem('id_token');
-        this.appRef.tick()
+        this.router.navigate(['/items'])
     }
 
     isLoggedIn(): boolean {
@@ -52,6 +52,7 @@ export class AuthService implements IAuthService {
 
     static getUser(): string {
         try {
+            if (!tokenNotExpired()) { return }
             return JSON.parse(localStorage.getItem(
                 'profile'))['user_id'].split("|").pop()
         } catch(e) {

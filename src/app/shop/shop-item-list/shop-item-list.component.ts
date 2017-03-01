@@ -56,6 +56,7 @@ export class ShopItemListComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.route.params.subscribe(params => {
+			this.customerCartItems = {} // re-initialize collection
 			this.customerId = AuthService.getUser();
 			this.cart.getCartItems().subscribe(
 				cartItems => {
