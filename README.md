@@ -1,31 +1,55 @@
 # Cartify
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.24.
+### Introduction
+**Cartify** provides the core functionality of an online Shopping Cart. The application can serve as a shell for building e-commerce web applications. Visitors can browse the list of available products, further dig deep into the detail of each individual product, search for a product, check availability, price etc. Non-authenticated users can register for an account which enables them to purchase items, manage their shopping cart and submit reviews. Users with administrator rights can manage and maintain inventory of shop items. Developers should find code organized enough to rapidly customize almost every aspect of the application as they see fit.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Technology Stack
+- Angular 2
+- TypeScript
+- JavaScript
+- Node JS
+- MongoDB (DBaaS - Database-as-a-Service)
+- Auth0 (AaaS - Authentication-as-a-Service)
+- Bootstrap
 
-## Code scaffolding
+### Usage & Configuration
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
+#### Step 1: Configure SSO & Token Based Authentication Provider
+- Register for authentication service at https://auth0.com
+- Configure Client ID and Domain in **cartify/.../auth.service.ts**
 
-## Build
+  ```typescript
+  lock = new Auth0Lock('<CLIENT ID>', '<DOMAIN>', {});
+  ```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+#### Step 2: Configure Database Provider
+- Register for database service at https://mlab.com
+- Configure URI in **cartify/srv/server.js**
 
-## Running unit tests
+  ```javascript
+  var mongoDBUrl = '<URI>';
+  ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### How to run Cartify?
+- Install required node packages
+  ```
+  npm install
+  ```
+  
+- Bring up the server (API)
+  ```
+  node ./srv/server.js
+  ```
+  
+- Bring up the angular application
+  ```
+  npm start
+  ```
+  
+- Navigate to the following URL http://localhost:4200
 
-## Running end-to-end tests
+#### Demo
+- Execute the above commands to start Cartify
+- Sign up for an account or browse in view only mode
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Deploying to Github Pages
-
-Run `ng github-pages:deploy` to deploy to Github Pages.
-
-## Further help
-
-To get more help on the `angular-cli` use `ng help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+If you don't wish to register with the providers as mentioned in Step 1 & 2, it's ok, you can still test run the application without the permissions to perform any administrator related tasks
