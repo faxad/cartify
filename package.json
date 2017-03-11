@@ -32,7 +32,8 @@
     "angular2-jwt": "0.1.27",
     "httpdispatcher": "2.0.1",
     "systemjs": "0.19.41",
-    "reflect-metadata": "0.1.9"
+    "reflect-metadata": "0.1.9",
+    "primeng": "2.0.3"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^2.3.1",

@@ -40,7 +40,12 @@
                     </div>
                     <div class="form-group">
                         <label for="releaseDate">Release Date</label>
-                        <input class="form-control" id="releaseDate" placeholder="releaseDate" [formControl]="shopItemForm.controls['releaseDate']">
+                        <p-calendar
+                            id="releaseDate"
+                            placeholder="mm/dd/yyyy"
+                            inputStyleClass="form-control"
+                            [formControl]="shopItemForm.controls['releaseDate']">
+                        </p-calendar>
                         <div *ngIf="validation.check('releaseDate').result" class="alert alert-danger">{{validation.check('releaseDate').message}}</div>
                     </div>
                   </div>

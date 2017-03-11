@@ -17,6 +17,7 @@ import { CartService } from './shared/cart.service';
 import { ShopService } from './shared/shop.service';
 
 import { AppRoutingModule } from './app-routing.module';
+import { CalendarModule } from 'primeng/primeng';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AppRoutingModule } from './app-routing.module';
     ReactiveFormsModule,
     HttpModule,
     RouterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    CalendarModule
   ],
   providers: [AuthService, ShopService, CartService, Title],
   bootstrap: [AppComponent]

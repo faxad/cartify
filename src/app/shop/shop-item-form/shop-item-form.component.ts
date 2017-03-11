@@ -60,7 +60,14 @@ export class FormComponent implements OnInit {
 		if (this.shopItem) {
 			this.isCreateForm = false;
 			for (let key in this.shopItemForm.controls) {
-				(this.shopItemForm.controls[key] as FormControl).setValue(this.shopItem[key]) // updateValue
+				let value
+				if  (key == "releaseDate") {
+					value = new Date(this.shopItem[key])
+				} else {
+					value = this.shopItem[key]
+				}
+
+				(this.shopItemForm.controls[key] as FormControl).setValue(value) // updateValue
 			}
 		}
 
