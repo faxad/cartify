@@ -38,11 +38,7 @@
                         <p class="pull-right">{{cartItemReviews[shopItem.id]}} reviews</p>
                         <div class="crop">
                             <div style="width: 86px">
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
-                                <span class="glyphicon glyphicon-star"></span>
+                                <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating>
                             </div>
                         </div>
                     </div>

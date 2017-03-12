@@ -17,7 +17,7 @@ import { CartService } from './shared/cart.service';
 import { ShopService } from './shared/shop.service';
 
 import { AppRoutingModule } from './app-routing.module';
-import { CalendarModule } from 'primeng/primeng';
+import { CalendarModule, RatingModule } from 'primeng/primeng';
 
 
 @NgModule({
@@ -31,7 +31,8 @@ import { CalendarModule } from 'primeng/primeng';
     HttpModule,
     RouterModule,
     AppRoutingModule,
-    CalendarModule
+    CalendarModule,
+    RatingModule
   ],
   providers: [AuthService, ShopService, CartService, Title],
   bootstrap: [AppComponent]

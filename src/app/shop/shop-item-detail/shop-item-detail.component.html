@@ -33,13 +33,7 @@
                 <p class="pull-right">{{ reviewsCount }} reviews</p>
             </div>
             <div class="ratings">
-                <p>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span> 4.0 stars
-                </p>
+                <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating> {{ shopItem.rating }} stars
             </div>
         </div>
         <div class="well">
