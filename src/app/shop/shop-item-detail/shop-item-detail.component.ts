@@ -17,6 +17,7 @@ export class ShopItemDetailComponent implements OnInit {
 	private shopItemReviews: IShopItemReview[];
 	private reviewsCount: number;
 	private reviewText: string = "";
+	private starRating: number = 0;
 
 	constructor(
 		private auth: AuthService,
@@ -51,9 +52,10 @@ export class ShopItemDetailComponent implements OnInit {
 	onSubmit(remarks: string): void {
 		this.route.params.subscribe(param => {
 			this.shop.setShopItemReview(
-				Number(+param['id']), remarks).subscribe(
+				Number(+param['id']), remarks, this.starRating).subscribe(
 					shopItemReview => {
 						this.reviewText = ""
+						this.starRating = 0
 						this.ngOnInit()
 						console.log("Review added")
 					},

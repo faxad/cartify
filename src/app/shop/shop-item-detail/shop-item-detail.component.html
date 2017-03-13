@@ -41,11 +41,7 @@
             <hr>
             <div class="row" *ngFor='let shopItemReview of shopItemReviews'>
                 <div class="col-md-12">
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span> - {{ shopItemReview.userId }}
+                    <p-rating [(ngModel)]="shopItemReview.rating" [cancel]="false" readonly="true"></p-rating> - {{ shopItemReview.userId }}
                     <span class="pull-right">10 days ago</span>
                     <p>{{ shopItemReview.remarks }}</p>
                 </div>
@@ -59,6 +55,7 @@
                     </div>
                   </div>
                 <div class="col-md-2">
+                    <p-rating name="rating" [(ngModel)]="starRating"></p-rating>
                     <button type="submit" class="btn btn-success" [disabled]='!auth.isLoggedIn()'>Submit Review</button>
                 </div>
                 </div>
