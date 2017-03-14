@@ -38,7 +38,7 @@
                         <p class="pull-right">{{cartItemReviews[shopItem.id]}} reviews</p>
                         <div class="crop">
                             <div style="width: 86px">
-                                <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating>
+                                <p-rating [(ngModel)]="shopItemRatings[shopItem.id]" [cancel]="false" readonly="true"></p-rating>
                             </div>
                         </div>
                     </div>

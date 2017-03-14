@@ -210,6 +210,21 @@ dispatcher.onGet("/reviewcount", function(req, res) {
     })
 }); 
 
+// Dispatcher: Get ratings for shop items
+
+dispatcher.onGet("/ratings", function(req, res) {
+    initialize(res, function(db) {
+        db.collection('review').aggregate([{$group : {_id : "$itemId", rating : {$avg : "$rating"}}}]).toArray(function(err, result){
+            var ratings = {}
+            for (item of result) {
+                ratings[item['_id']] = item['rating']
+            }
+
+            res.end(JSON.stringify(ratings));
+            db.close();
+        })
+    })
+}); 
 
 // Dispatcher: Set review
 

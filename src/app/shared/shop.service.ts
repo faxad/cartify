@@ -47,6 +47,11 @@ export class ShopService implements IShopService {
 			.map((response: Response) => <number>response.json())
 	}
 
+	getShopItemsRating(): Observable<any> {
+		return this.http.get("http://localhost:8080/ratings")
+			.map((response: Response) => <number>response.json())
+	}
+
 	setShopItemReview(itemId: number, remarks: string, rating: number): Observable<IShopItemReview> {
 		let body: any = {
 			"itemId": itemId.toString(),

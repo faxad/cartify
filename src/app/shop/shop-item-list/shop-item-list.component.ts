@@ -28,6 +28,7 @@ export class ShopItemListComponent implements OnInit {
 	private customerId: string;
 	private customerCartItems = {};
 	private cartItemReviews = {};
+	private shopItemRatings = {};
 	private shopItems: IShopItem[];
 	private showLoading: boolean = true;
 	private ccCount: number = 0;
@@ -68,7 +69,14 @@ export class ShopItemListComponent implements OnInit {
 				},
 				error => console.log(error),
 				() => this.showLoading = false
-			);                  
+			);    
+
+			this.shop.getShopItemsRating().subscribe(
+				ratings => {
+					this.shopItemRatings = ratings;
+				},
+				error => console.log(error)
+			);       
         });
 	}
 
