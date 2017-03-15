@@ -16,8 +16,8 @@ export class ShopItemDetailComponent implements OnInit {
 	private shopItem: IShopItem;
 	private shopItemReviews: IShopItemReview[];
 	private reviewsCount: number;
-	private reviewText: string = "";
-	private starRating: number = 0;
+	private reviewText = '';
+	private starRating = 0;
 
 	constructor(
 		private auth: AuthService,
@@ -41,8 +41,8 @@ export class ShopItemDetailComponent implements OnInit {
 				Number(+param['id'])).subscribe(
 					reviewsCount => this.reviewsCount = reviewsCount,
 					error => console.log(error)
-			)
-		})
+			);
+		});
 	}
 
 	goBack(): void {
@@ -54,13 +54,13 @@ export class ShopItemDetailComponent implements OnInit {
 			this.shop.setShopItemReview(
 				Number(+param['id']), remarks, this.starRating).subscribe(
 					shopItemReview => {
-						this.reviewText = ""
-						this.starRating = 0
-						this.ngOnInit()
-						console.log("Review added")
+						this.reviewText = '';
+						this.starRating = 0;
+						this.ngOnInit();
+						console.log('Review added');
 					},
 					error => console.log(error)
 				);
-		})
+		});
 	}
 }

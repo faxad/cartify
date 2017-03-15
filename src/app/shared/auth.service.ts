@@ -12,18 +12,18 @@ const Auth0Lock = require('auth0-lock').default;
 @Injectable()
 export class AuthService implements IAuthService {
     lock = new Auth0Lock('IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com', {});
-    
+
     constructor(private router: Router, private appRef: ApplicationRef) {
-        this.lock.on("authenticated", (authResult) => {
+        this.lock.on('authenticated', (authResult) => {
             localStorage.setItem('id_token', authResult.idToken);
             this.lock.getProfile(authResult.idToken, (error, profile) => {
                 localStorage.setItem('profile', JSON.stringify(profile));
-                this.navigateToHome()
-                this.appRef.tick()
+                this.navigateToHome();
+                this.appRef.tick();
             });
         });
     }
- 
+
     login(): void {
         this.lock.show();
     }
@@ -45,25 +45,25 @@ export class AuthService implements IAuthService {
           return JSON.parse(
             localStorage.getItem('profile')
           )['role'] == 'admin' && this.isLoggedIn() ? true : false;
-        } catch(e) {
+        } catch (e) {
               return false;
         }
     }
 
     static getUser(): string {
         try {
-            if (!tokenNotExpired()) { return }
+            if (!tokenNotExpired()) { return; }
             return JSON.parse(localStorage.getItem(
-                'profile'))['user_id'].split("|").pop()
-        } catch(e) {
-            console.log('please log in!')
+                'profile'))['user_id'].split('|').pop();
+        } catch (e) {
+            console.log('please log in!');
         }
     }
 
     navigateToHome(): void {
         let params = this.router.url == '/items' ? ['/items', {
-            reload: 'yes' }] : ['/items']
+            reload: 'yes' }] : ['/items'];
 
-        this.router.navigate(params)
+        this.router.navigate(params);
     }
 }

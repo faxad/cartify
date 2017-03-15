@@ -23,7 +23,7 @@ import { IShopItem } from '../../shared/shop-item.interface';
 })
 export class FormComponent implements OnInit {
 	private shopItemForm: FormGroup;
-	private isCreateForm: boolean = true;
+	private isCreateForm = true;
 	@Input() modalId: string; // modal identifier
 	@Input() shopItem: IShopItem;
 	@Output() shopItemsUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -60,14 +60,14 @@ export class FormComponent implements OnInit {
 		if (this.shopItem) {
 			this.isCreateForm = false;
 			for (let key in this.shopItemForm.controls) {
-				let value
-				if  (key == "releaseDate") {
-					value = new Date(this.shopItem[key])
+				let value;
+				if  (key == 'releaseDate') {
+					value = new Date(this.shopItem[key]);
 				} else {
-					value = this.shopItem[key]
+					value = this.shopItem[key];
 				}
 
-				(this.shopItemForm.controls[key] as FormControl).setValue(value) // updateValue
+				(this.shopItemForm.controls[key] as FormControl).setValue(value); // updateValue
 			}
 		}
 

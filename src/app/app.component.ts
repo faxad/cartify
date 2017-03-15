@@ -7,7 +7,7 @@ import 'rxjs/Rx';
 import { ShopItemListComponent } from './shop/shop-item-list/shop-item-list.component';
 import { ShopItemDetailComponent } from './shop/shop-item-detail/shop-item-detail.component';
 import { ItemCartComponent } from './cart/cart-item-list.component';
-import { AuthService } from './shared/auth.service'
+import { AuthService } from './shared/auth.service';
 
 @Component({
 	selector: 'app-content',
@@ -51,6 +51,6 @@ import { AuthService } from './shared/auth.service'
 })
 export class AppComponent {
 	constructor(private auth: AuthService, private titleService: Title) {
-		this.titleService.setTitle('Cartify')
+		this.titleService.setTitle('Cartify');
 	}
 }

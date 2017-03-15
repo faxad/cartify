@@ -15,12 +15,12 @@ export class CartService implements ICartService {
 	constructor(private http: Http, private shop: ShopService) {}
 
 	getCartItems(): Observable<ICartItem[]> {
-		return this.http.get("http://localhost:8080/cart?userId=" + AuthService.getUser())
-			.map((response: Response) => <ICartItem[]>response.json())
+		return this.http.get('http://localhost:8080/cart?userId=' + AuthService.getUser())
+			.map((response: Response) => <ICartItem[]>response.json());
 	}
 
 	getCartItemsWithDetails(): Observable<ICartItemDetailed[]> {
-		let detailedCartItems: ICartItemDetailed[] = []
+		let detailedCartItems: ICartItemDetailed[] = [];
 
 		return Observable.create(observer => {
 			this.getCartItems().subscribe(
@@ -37,24 +37,24 @@ export class CartService implements ICartService {
 									'unitPrice': shopItem.unitPrice,
 									'quantity': cartItem.quantity,
 									'paid': cartItem.paid,
-								})
-							})
+								});
+							});
 					}
 					observer.next(detailedCartItems);
 					observer.complete();
 				},
 				error => console.log(error));
-		})
+		});
 	}
 
 	addCartItem(item: IShopItem): Observable<ICartItem> {
 		let body: any = {
-			"userId": AuthService.getUser(),
-			"itemId": item.id,
-			"quantity": 1,
-		}
+			'userId': AuthService.getUser(),
+			'itemId': item.id,
+			'quantity': 1,
+		};
 
-		return this.http.post("http://localhost:8080/add", JSON.stringify(body))
+		return this.http.post('http://localhost:8080/add', JSON.stringify(body))
 			.map((response: Response) => response.json());
 	}
 
@@ -65,11 +65,11 @@ export class CartService implements ICartService {
 					for (let cartItem of cart) {
 						if (cartItem['itemId'] == item['id']) {
 							this.increaseCartItemQunatity(cartItem).subscribe(
-								items => console.log("Incremented"),
+								items => console.log('Incremented'),
 								error => console.log(error));
 							observer.next();
 							observer.complete();
-							return
+							return;
 						}
 					}
 					callback(this, item);
@@ -77,23 +77,23 @@ export class CartService implements ICartService {
 					observer.complete();
 				},
 				error => console.log(error));
-		})
+		});
 	}
 
 	removeCartItem(cartItem: ICartItem): Observable<ICartItem> {
-		return this.http.post("http://localhost:8080/remove", JSON.stringify(cartItem))
+		return this.http.post('http://localhost:8080/remove', JSON.stringify(cartItem))
 			.map((response: Response) => response.json());
 	}
 
 	increaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
 		cartItem.quantity = cartItem.quantity + 1;
-		return this.http.post("http://localhost:8080/revise", JSON.stringify(cartItem))
+		return this.http.post('http://localhost:8080/revise', JSON.stringify(cartItem))
 			.map((response: Response) => response.json());
 	}
 
 	decreaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
 		cartItem.quantity = cartItem.quantity - 1;
-		return this.http.post("http://localhost:8080/revise", JSON.stringify(cartItem))
+		return this.http.post('http://localhost:8080/revise', JSON.stringify(cartItem))
 			.map((response: Response) => response.json());
 	}
 

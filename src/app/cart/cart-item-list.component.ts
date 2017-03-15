@@ -15,7 +15,7 @@ import { ICartItemDetailed } from '../shared/cart-item-detailed.interface';
 })
 export class ItemCartComponent implements OnInit {
 	private userCartItems: ICartItem[];
-	private showLoading: boolean = true;
+	private showLoading = true;
 
 	constructor(private router: Router, private cart: CartService) {}
 
@@ -29,19 +29,19 @@ export class ItemCartComponent implements OnInit {
 
 	increaseQuantity(item: ICartItem): void {
 		this.cart.increaseCartItemQunatity(item).subscribe(
-			items => console.log("Incremented"),
+			items => console.log('Incremented'),
 			error => console.log(error));
 	}
 
 	decreaseQunatity(item: ICartItem): void {
 		this.cart.decreaseCartItemQunatity(item).subscribe(
-			items => console.log("Decremented"),
+			items => console.log('Decremented'),
 			error => console.log(error));
 	}
 
 	removeCartItem(item: ICartItem): void {
 		this.cart.removeCartItem(item).subscribe(
-			items => console.log("Removed"),
+			items => console.log('Removed'),
 			error => console.log(error));
 	}
 

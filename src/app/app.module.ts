@@ -12,7 +12,7 @@ import { ItemCartComponent } from './cart/cart-item-list.component';
 import { FormComponent } from './shop/shop-item-form/shop-item-form.component';
 import { ShopItemFilterPipe } from './shop/shop-item-list//shop-item-filter.pipe';
 
-import { AuthService } from './shared/auth.service'
+import { AuthService } from './shared/auth.service';
 import { CartService } from './shared/cart.service';
 import { ShopService } from './shared/shop.service';
 

@@ -23,15 +23,15 @@ import { ShopItemFilterPipe } from './shop-item-filter.pipe';
 	//providers: [ShopService, CartService]
 })
 export class ShopItemListComponent implements OnInit {
-	private modalIdentifier: string = 'shopItemModal';
+	private modalIdentifier = 'shopItemModal';
 	private filterBy: string;
 	private customerId: string;
 	private customerCartItems = {};
 	private cartItemReviews = {};
 	private shopItemRatings = {};
 	private shopItems: IShopItem[];
-	private showLoading: boolean = true;
-	private ccCount: number = 0;
+	private showLoading = true;
+	private ccCount = 0;
 
 	constructor(
 		private shop: ShopService,
@@ -44,51 +44,51 @@ export class ShopItemListComponent implements OnInit {
 	getShopItems(event: boolean): void {
 		this.shop.getShopItems().subscribe(
 			shopItems => {
-				this.shopItems = shopItems
+				this.shopItems = shopItems;
 				for (let shopItem of shopItems) {
 					this.shop.getShopItemReviewsCount(shopItem.id).subscribe(
 						reviews => this.cartItemReviews[shopItem.id] = reviews,
 						error => console.log(error)
-					)
+					);
 				}
 			},
-			error => console.log(error))
+			error => console.log(error));
 	}
 
 	ngOnInit(): void {
 		this.route.params.subscribe(params => {
-			this.customerCartItems = {} // re-initialize collection
+			this.customerCartItems = {}; // re-initialize collection
 			this.customerId = AuthService.getUser();
 			this.cart.getCartItems().subscribe(
 				cartItems => {
 					for (let cartItem of cartItems) {
-						this.customerCartItems[cartItem.itemId] = cartItem.quantity
+						this.customerCartItems[cartItem.itemId] = cartItem.quantity;
 					}
 					this.getShopItems(true);
-					this.appRef.tick()
+					this.appRef.tick();
 				},
 				error => console.log(error),
 				() => this.showLoading = false
-			);    
+			);
 
 			this.shop.getShopItemsRating().subscribe(
 				ratings => {
 					this.shopItemRatings = ratings;
 				},
 				error => console.log(error)
-			);       
+			);
         });
 	}
 
 	addToCart(item: any): void {
 		this.cart.addOrUpdateCartItem(item, function(service, item) {
 			service.addCartItem(item).subscribe(
-				items => console.log("Added to Cart"),
+				items => console.log('Added to Cart'),
 				error => console.log(error));
 		}).subscribe(
-			() => { 
-				this.customerCartItems[item.id] = this.customerCartItems[item.id] + 1
+			() => {
+				this.customerCartItems[item.id] = this.customerCartItems[item.id] + 1;
 			}
-		)
+		);
 	}
 }

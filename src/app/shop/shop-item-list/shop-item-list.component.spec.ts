@@ -7,27 +7,27 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ShopItemListComponent } from './shop-item-list.component';
-import { CartService } from '../../shared/cart.service'
-import { ShopService } from '../../shared/shop.service'
-import { AuthService } from '../../shared/auth.service'
+import { CartService } from '../../shared/cart.service';
+import { ShopService } from '../../shared/shop.service';
+import { AuthService } from '../../shared/auth.service';
 import { FormComponent } from '../shop-item-form/shop-item-form.component';
 import { ShopItemFilterPipe } from './shop-item-filter.pipe';
 
 describe('ShopItemListComponent', () => {
   let component: ShopItemListComponent;
   let fixture: ComponentFixture<ShopItemListComponent>;
-  let cartData = [{}]
+  let cartData = [{}];
   let shopData = [{
-      "id": "1765",
-      "name": "Walter Rake",
-      "code": "GDN-0011",
-      "releaseDate": "March 19, 2016",
-      "description": "Lorem ipsum dolor....",
-      "unitPrice": 19.95,
-      "quantityInStock": "13",
-      "rating": 3.2,
-      "imageUrl": "http://placehold.it/320x150"
-  }]
+      'id': '1765',
+      'name': 'Walter Rake',
+      'code': 'GDN-0011',
+      'releaseDate': 'March 19, 2016',
+      'description': 'Lorem ipsum dolor....',
+      'unitPrice': 19.95,
+      'quantityInStock': '13',
+      'rating': 3.2,
+      'imageUrl': 'http://placehold.it/320x150'
+  }];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -79,9 +79,9 @@ describe('ShopItemListComponent', () => {
 
       shopService.getShopItems().subscribe( data => {
         expect(data).toEqual(shopData);
-        fixture.detectChanges();      
+        fixture.detectChanges();
         let compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('#shopItem1765Title').textContent).toContain('Walter')
+        expect(compiled.querySelector('#shopItem1765Title').textContent).toContain('Walter');
       });
 
   }));

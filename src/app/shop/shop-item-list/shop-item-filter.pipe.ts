@@ -1,6 +1,6 @@
-import { PipeTransform, Pipe } from '@angular/core'
+import { PipeTransform, Pipe } from '@angular/core';
 
-import { IShopItem } from '../../shared/shop-item.interface'
+import { IShopItem } from '../../shared/shop-item.interface';
 
 @Pipe({
 	name: 'shopItemFilter'
