@@ -1,7 +1,7 @@
 export interface IShopItemReview {
-	itemId: number;
+    itemId: number;
     userId: string;
-	reviewDate: string;
-	remarks: string;
-	rating: number;
+    reviewDate: string;
+    remarks: string;
+    rating: number;
 }
