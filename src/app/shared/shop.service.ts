@@ -19,7 +19,7 @@ export class ShopService implements IShopService {
         return this.http.get('http://localhost:8080/items')
             .map((response: Response) => <IShopItem[]>response.json())
             .catch(this.handleError);
-            //.do(data => console.log(JSON.stringify(data)));
+            // .do(data => console.log(JSON.stringify(data)));
     }
 
     getShopItem(id: number): Observable<IShopItem> {
@@ -55,7 +55,7 @@ export class ShopService implements IShopService {
     setShopItemReview(itemId: number, remarks: string, rating: number): Observable<IShopItemReview> {
         let body: any = {
             'itemId': itemId.toString(),
-            'userId': 'fawad', //AuthService.getUser(),
+            'userId': 'fawad', // AuthService.getUser(),
             'reviewDate': 'March 19, 2016',
             'remarks': remarks,
             'rating': rating

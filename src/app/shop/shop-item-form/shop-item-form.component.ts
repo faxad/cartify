@@ -1,6 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import {
-    //REACTIVE_FORM_DIRECTIVES,
+    // REACTIVE_FORM_DIRECTIVES,
     FormBuilder, FormGroup,
     FormControl,
     Validators
@@ -18,7 +18,7 @@ import { IShopItem } from '../../shared/shop-item.interface';
     selector: 'shop-item-form',
     templateUrl: './shop-item-form.component.html',
     styleUrls: ['./shop-item-form.component.css'],
-    //directives: [REACTIVE_FORM_DIRECTIVES],
+    // directives: [REACTIVE_FORM_DIRECTIVES],
     providers: [ValidationService]
 })
 export class FormComponent implements OnInit {
@@ -61,7 +61,7 @@ export class FormComponent implements OnInit {
             this.isCreateForm = false;
             for (let key in this.shopItemForm.controls) {
                 let value;
-                if  (key == 'releaseDate') {
+                if  (key === 'releaseDate') {
                     value = new Date(this.shopItem[key]);
                 } else {
                     value = this.shopItem[key];

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-//import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+// import { ROUTER_DIRECTIVES, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ApplicationRef } from '@angular/core';
@@ -18,9 +18,9 @@ import { ShopItemFilterPipe } from './shop-item-filter.pipe';
     selector: 'list-item',
     templateUrl: './shop-item-list.component.html',
     styleUrls: ['./shop-item-list.component.css'],
-    //pipes: [ShopItemFilterPipe],
-    //directives: [FormComponent, ROUTER_DIRECTIVES],
-    //providers: [ShopService, CartService]
+    // pipes: [ShopItemFilterPipe],
+    // directives: [FormComponent, ROUTER_DIRECTIVES],
+    // providers: [ShopService, CartService]
 })
 export class ShopItemListComponent implements OnInit {
     private modalIdentifier = 'shopItemModal';

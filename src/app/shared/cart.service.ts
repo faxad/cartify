@@ -63,7 +63,7 @@ export class CartService implements ICartService {
             this.getCartItems().subscribe(
                 cart => {
                     for (let cartItem of cart) {
-                        if (cartItem['itemId'] == item['id']) {
+                        if (cartItem['itemId'] === item['id']) {
                             this.increaseCartItemQunatity(cartItem).subscribe(
                                 items => console.log('Incremented'),
                                 error => console.log(error));
