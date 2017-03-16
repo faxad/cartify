@@ -6,6 +6,8 @@ import { MockBackend, MockConnection } from '@angular/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { CalendarModule, RatingModule } from 'primeng/primeng';
+
 import { ShopItemListComponent } from './shop-item-list.component';
 import { CartService } from '../../shared/cart.service';
 import { ShopService } from '../../shared/shop.service';
@@ -31,7 +33,7 @@ describe('ShopItemListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ FormsModule, ReactiveFormsModule, RouterTestingModule ],
+      imports: [ FormsModule, ReactiveFormsModule, RouterTestingModule, CalendarModule, RatingModule ],
       declarations: [
         ShopItemListComponent,
         ShopItemFilterPipe,
