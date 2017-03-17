@@ -29,7 +29,7 @@ function initialize(res, callback) {
   MongoClient.connect(mongoDBUrl, function(err, db) {
       assert.equal(null, err);
       if (db != null) { callback(db); }
-    })
+    });
 }
 
 var server = http.createServer(handleRequest);
@@ -63,8 +63,7 @@ dispatcher.onGet("/item", function(req, res) {
       db.collection('items').find({ "id": url.parse(req.url, true).query.id }).each(function(err, result) {
         assert.equal(err, null);
         if (result != null) {
-            //res.end(JSON.stringify(result));
-            console.log(JSON.stringify(result))
+            console.log(JSON.stringify(result));
             res.end(JSON.stringify(result));
             db.close();
         }
@@ -146,9 +145,9 @@ function removeUnwantedKeys(body) {
 // Dispatcher: Get cart item by identifier
 
 dispatcher.onPost("/revise", function(req, res) {
-    body = JSON.parse(req.body)
-    body = removeUnwantedKeys(body)
-    body._id = new ObjectId(body._id)
+    var body = JSON.parse(req.body);
+    body = removeUnwantedKeys(body);
+    body._id = new ObjectId(body._id);
 
     initialize(res, function(db) {
       db.collection('cart').find({ "itemId": body.itemId }).each(function(err, result) {
@@ -169,9 +168,9 @@ dispatcher.onPost("/revise", function(req, res) {
 // Dispatcher: Remove cart item
 
 dispatcher.onPost("/remove", function(req, res) {
-    body = JSON.parse(req.body)
-    body = removeUnwantedKeys(body)
-    body._id = new ObjectId(body._id)
+    var body = JSON.parse(req.body);
+    body = removeUnwantedKeys(body);
+    body._id = new ObjectId(body._id);
     initialize(res, function(db) {
       db.collection('cart').deleteOne(body, function(err, result) {
         assert.equal(err, null);
@@ -180,7 +179,7 @@ dispatcher.onPost("/remove", function(req, res) {
             db.close();
         }
       });
-    })
+    });
 });
 
 
@@ -195,7 +194,7 @@ dispatcher.onGet("/review", function(req, res) {
             db.close();
         }
       });
-    })
+    });
 }); 
 
 
@@ -203,18 +202,18 @@ dispatcher.onGet("/review", function(req, res) {
 
 dispatcher.onGet("/reviewcount", function(req, res) {
     initialize(res, function(db) {
-        db.collection('review').find({ "itemId": url.parse(req.url, true).query.itemId }).count(function(err, count){
+        db.collection('review').find({ "itemId": url.parse(req.url, true).query.itemId }).count(function(err, count) {
             res.end(JSON.stringify(count));
             db.close();
         })
-    })
+    });
 }); 
 
 // Dispatcher: Get ratings for shop items
 
 dispatcher.onGet("/ratings", function(req, res) {
     initialize(res, function(db) {
-        db.collection('review').aggregate([{$group : {_id : "$itemId", rating : {$avg : "$rating"}}}]).toArray(function(err, result){
+        db.collection('review').aggregate([{$group : {_id : "$itemId", rating : {$avg : "$rating"}}}]).toArray(function(err, result) {
             var ratings = {}
             for (item of result) {
                 ratings[item['_id']] = item['rating']
@@ -222,8 +221,8 @@ dispatcher.onGet("/ratings", function(req, res) {
 
             res.end(JSON.stringify(ratings));
             db.close();
-        })
-    })
+        });
+    });
 }); 
 
 // Dispatcher: Set review
@@ -237,5 +236,5 @@ dispatcher.onPost("/addreview", function(req, res) {
             db.close();
         }
       });
-    })
+    });
 });
