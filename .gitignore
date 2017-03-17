@@ -3,6 +3,7 @@
 logs
 *.log
 npm-debug.log*
+.coveralls.yml
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build
