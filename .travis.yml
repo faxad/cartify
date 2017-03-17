@@ -15,7 +15,7 @@ before_script:
   - ng build
 
 script:
-  - ng test --no-watch
+  - ng test -cc --no-watch
 
 after_success:
   - npm run coveralls
