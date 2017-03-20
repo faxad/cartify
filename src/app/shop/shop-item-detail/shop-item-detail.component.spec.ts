@@ -97,5 +97,12 @@ describe('ShopItemDetailComponent', () => {
         let compiled = fixture.debugElement.nativeElement;
         //expect(compiled.textContent).toContain('2 reviews');
     }));
-    
+
+    it('should confirm setting shop item review', fakeAsync(() => {
+        spyOn(shopService, 'setShopItemReview').and.callThrough();
+        component.onSubmit("these are my remarks")
+        fixture.detectChanges();
+        let compiled = fixture.debugElement.nativeElement;
+        expect(shopService.setShopItemReview).toHaveBeenCalledWith(NaN, "these are my remarks", 0);
+    }));
 });
