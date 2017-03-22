@@ -22,7 +22,7 @@ import { IShopItem } from '../../shared/shop-item.interface';
     providers: [ValidationService]
 })
 export class FormComponent implements OnInit {
-    private shopItemForm: FormGroup;
+    public shopItemForm: FormGroup;
     private isCreateForm = true;
     @Input() modalId: string; // modal identifier
     @Input() shopItem: IShopItem;
@@ -36,7 +36,6 @@ export class FormComponent implements OnInit {
     submitItem(form: any): void {
         if (form.valid) {
             let action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
-
             this.shop[action](form.value).subscribe(
                 shopItem => { this.shopItemsUpdated.emit(true); },
                 error => console.log(error));

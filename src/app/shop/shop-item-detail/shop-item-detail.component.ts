@@ -13,7 +13,7 @@ import {
     providers: [ShopService]
 })
 export class ShopItemDetailComponent implements OnInit {
-    private shopItem: IShopItem;
+    public shopItem: IShopItem;
     private shopItemReviews: IShopItemReview[];
     private reviewsCount: number;
     private reviewText = '';

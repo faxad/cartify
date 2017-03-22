@@ -19,20 +19,21 @@ describe('ShopItemDetailComponent', () => {
     let component: ShopItemDetailComponent;
     let fixture: ComponentFixture<ShopItemDetailComponent>;
     let shopService;
-    let shopData = {
-        'id': '1765',
+
+    let shopItemData = {
+        'id': 1765,
         'name': 'Walter Rake',
         'code': 'GDN-0011',
         'releaseDate': 'March 19, 2016',
         'description': 'Lorem ipsum dolor....',
         'unitPrice': 19.95,
-        'quantityInStock': '13',
+        'quantityInStock': 13,
         'rating': 3.2,
         'imageUrl': 'http://placehold.it/320x150'
         };
 
     let shopItemReviews = [{
-        'itemId': '1765',
+        'itemId': 1765,
         'userId': 'john.doe',
         'reviewDate': 'March 19, 2016',
         'remarks': 'this is my first review',
@@ -58,11 +59,12 @@ describe('ShopItemDetailComponent', () => {
                     provide: Http,
                     useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
                         return new Http(backend, defaultOptions);
-                    },
+                        },
                     deps: [MockBackend, BaseRequestOptions],
                 },
             ]
         }).compileComponents();
+
         fixture = TestBed.createComponent(ShopItemDetailComponent);
         component = fixture.componentInstance;
         shopService = fixture.debugElement.injector.get(ShopService);
@@ -71,38 +73,44 @@ describe('ShopItemDetailComponent', () => {
     it('should create the ShopItemDetail component', async(() => {
         let fixture = TestBed.createComponent(ShopItemDetailComponent);
         let app = fixture.debugElement.componentInstance;
+
         expect(app).toBeTruthy();
     }));
 
     it('should confirm shop item detail', fakeAsync(() => {
         spyOn(shopService, 'getShopItem')
-            .and.returnValue(Observable.of(shopData));
+            .and.returnValue(Observable.of(shopItemData));
         fixture.detectChanges();
-        let compiled = fixture.debugElement.nativeElement;
-        expect(compiled.querySelector('h5').textContent).toContain('GDN-0011');
+
+        expect(fixture.debugElement.nativeElement.querySelector(
+            'h5').textContent).toContain('GDN-0011');
     }));
 
     it('should confirm shop item reviews', fakeAsync(() => {
         spyOn(shopService, 'getShopItemReviews')
             .and.returnValue(Observable.of(shopItemReviews));
         fixture.detectChanges();
-        let compiled = fixture.debugElement.nativeElement;
-        expect(compiled.textContent).toContain('this is my first review');
+
+        expect(fixture.debugElement.nativeElement.textContent).toContain(
+            'this is my first review');
     }));
 
     it('should confirm shop item reviews count', fakeAsync(() => {
         spyOn(shopService, 'getShopItemReviewsCount')
             .and.returnValue(Observable.of(shopItemReviewsCount));
+        component.shopItem = shopItemData;
         fixture.detectChanges();
-        let compiled = fixture.debugElement.nativeElement;
-        //expect(compiled.textContent).toContain('2 reviews');
+
+        expect(fixture.debugElement.nativeElement.textContent).toContain('2 reviews');
     }));
 
     it('should confirm setting shop item review', fakeAsync(() => {
-        spyOn(shopService, 'setShopItemReview').and.callThrough();
+        spyOn(shopService, 'setShopItemReview')
+            .and.returnValue(Observable.of(shopItemReviews[0]));
         component.onSubmit("these are my remarks")
         fixture.detectChanges();
-        let compiled = fixture.debugElement.nativeElement;
-        expect(shopService.setShopItemReview).toHaveBeenCalledWith(NaN, "these are my remarks", 0);
+
+        expect(shopService.setShopItemReview).toHaveBeenCalledWith(
+            NaN, "these are my remarks", 0);
     }));
 });
