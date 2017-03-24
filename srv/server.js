@@ -28,7 +28,7 @@ function initialize(res, callback) {
   
   MongoClient.connect(mongoDBUrl, function(err, db) {
       assert.equal(null, err);
-      if (db != null) { callback(db); }
+      if (db !== null) { callback(db); }
     });
 }
 
@@ -48,7 +48,7 @@ dispatcher.onGet("/items", function(req, res) {
     initialize(res, function(db) {
       db.collection('items').find().toArray(function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
             res.end(JSON.stringify(result));
             db.close();
         }
@@ -62,7 +62,7 @@ dispatcher.onGet("/item", function(req, res) {
     initialize(res, function(db) {
       db.collection('items').find({ "id": url.parse(req.url, true).query.id }).each(function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
             console.log(JSON.stringify(result));
             res.end(JSON.stringify(result));
             db.close();
@@ -77,7 +77,7 @@ dispatcher.onPost("/insert", function(req, res) {
     initialize(res, function(db) {
       db.collection('items').insertOne(JSON.parse(req.body), function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
             res.end(JSON.stringify({ msg: '' }));
             db.close();
         }
@@ -92,10 +92,10 @@ dispatcher.onPost("/update", function(req, res) {
 
       db.collection('items').find({ "id": JSON.parse(req.body).id }).each(function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
               db.collection('items').updateOne(result, {$set: JSON.parse(req.body)}, function(err, result) {
                 assert.equal(err, null);
-                if (result != null) {
+                if (result !== null) {
                     res.end(JSON.stringify({ msg: '' }));
                     db.close();
                 }
@@ -112,7 +112,7 @@ dispatcher.onGet("/cart", function(req, res) {
     initialize(res, function(db) {
       db.collection('cart').find({ "userId": url.parse(req.url, true).query.userId }).toArray(function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
             res.end(JSON.stringify(result));
             db.close();
         }
@@ -126,7 +126,7 @@ dispatcher.onPost("/add", function(req, res) {
     initialize(res, function(db) {
       db.collection('cart').insertOne(JSON.parse(req.body), function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
             res.end(JSON.stringify({ msg: '' }));
             db.close();
         }
@@ -152,10 +152,10 @@ dispatcher.onPost("/revise", function(req, res) {
     initialize(res, function(db) {
       db.collection('cart').find({ "itemId": body.itemId }).each(function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
               db.collection('cart').updateOne(result, {$set: body}, function(err, result) {
                 assert.equal(err, null);
-                if (result != null) {
+                if (result !== null) {
                     res.end(JSON.stringify({ msg: '' }));
                     db.close();
                 }
@@ -174,7 +174,7 @@ dispatcher.onPost("/remove", function(req, res) {
     initialize(res, function(db) {
       db.collection('cart').deleteOne(body, function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
             res.end(JSON.stringify({ msg: '' }));
             db.close();
         }
@@ -189,7 +189,7 @@ dispatcher.onGet("/review", function(req, res) {
     initialize(res, function(db) {
       db.collection('review').find({ "itemId": url.parse(req.url, true).query.itemId }).toArray(function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
             res.end(JSON.stringify(result));
             db.close();
         }
@@ -231,7 +231,7 @@ dispatcher.onPost("/addreview", function(req, res) {
     initialize(res, function(db) {
       db.collection('review').insertOne(JSON.parse(req.body), function(err, result) {
         assert.equal(err, null);
-        if (result != null) {
+        if (result !== null) {
             res.end(JSON.stringify({ msg: '' }));
             db.close();
         }
