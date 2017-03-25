@@ -31,8 +31,8 @@
         "../node_modules/systemjs/dist/system.src.js",
         "../node_modules/rxjs/bundles/Rx.js"
       ],
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
