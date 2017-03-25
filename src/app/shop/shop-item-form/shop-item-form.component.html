@@ -5,7 +5,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="shopItemModalLabel">Shop Item</h4>
+                
+                <h4 class="modal-title" id="shopItemModalLabel">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Shop Item
+                </h4>
             </div>
             <div class="modal-body">
               <form novalidate [formGroup]="shopItemForm">
@@ -13,29 +16,29 @@
                   <div class="col-md-6">
                     <div class="form-group">
                         <label for="productName">ID</label>
-                        <input required class="form-control" id="id" placeholder="ID" [formControl]="shopItemForm.controls['id']">
+                        <input required class="form-control" id="id" placeholder="identifier" [formControl]="shopItemForm.controls['id']">
                         <div *ngIf="validation.check('id').result" class="alert alert-danger">{{validation.check('id').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="name">Product Name</label>
-                        <input required class="form-control" id="name" placeholder="Name" [formControl]="shopItemForm.controls['name']">
+                        <input required class="form-control" id="name" [formControl]="shopItemForm.controls['name']">
                         <div *ngIf="validation.check('name').result" class="alert alert-danger">{{validation.check('name').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="code">Product Code</label>
-                        <input required class="form-control" id="code" placeholder="Code" [formControl]="shopItemForm.controls['code']">
+                        <input required class="form-control" id="code" placeholder="e.g. KPX-285C" [formControl]="shopItemForm.controls['code']">
                         <div *ngIf="validation.check('code').result" class="alert alert-danger">{{validation.check('code').message}}</div>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                         <label for="unitPrice">Unit Price</label>
-                        <input required class="form-control" id="unitPrice" placeholder="Unit Price" [formControl]="shopItemForm.controls['unitPrice']">
+                        <input required class="form-control" id="unitPrice" [formControl]="shopItemForm.controls['unitPrice']">
                         <div *ngIf="validation.check('unitPrice').result" class="alert alert-danger">{{validation.check('unitPrice').message}}</div>
                     </div>
                     <div class="form-group">
                         <label for="quantityInStock">Quantity In Stock</label>
-                        <input required class="form-control" id="quantityInStock" placeholder="Quantity In Stock" [formControl]="shopItemForm.controls['quantityInStock']">
+                        <input required class="form-control" id="quantityInStock" [formControl]="shopItemForm.controls['quantityInStock']">
                         <div *ngIf="validation.check('quantityInStock').result" class="alert alert-danger">{{validation.check('quantityInStock').message}}</div>
                     </div>
                     <div class="form-group">
@@ -52,11 +55,11 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" id="description" placeholder="description" [formControl]="shopItemForm.controls['description']"></textarea>
+                    <textarea class="form-control" id="description" placeholder="a brief description of the product" [formControl]="shopItemForm.controls['description']"></textarea>
                     <div *ngIf="validation.check('description').result" class="alert alert-danger">{{validation.check('description').message}}</div>
                 </div>
                 <div class="modal-footer">
-                    <button [disabled]="!shopItemForm.valid" type="button" class="btn btn-default" data-dismiss="modal" (click)='submitItem(shopItemForm)'>Save & Close</button>
+                    <button [disabled]="!shopItemForm.valid" type="button" class="btn btn-primary" data-dismiss="modal" (click)='submitItem(shopItemForm)'>Save & Close</button>
                 </div>
               </form>
             </div>

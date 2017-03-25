@@ -28,36 +28,53 @@
                 </div>
             </div>
             <div class="caption-full">
-                <h4>Product: <small>{{ shopItem.name }}</small></h4>
-                <p>{{ shopItem.description }}</p>
-                <p class="pull-right">{{ reviewsCount }} reviews</p>
+                <div class="col-md-12">
+                    <h4>Product: <small>{{ shopItem.name }}</small></h4>
+                    <p>{{ shopItem.description }}</p>
+                    <p class="pull-right">{{ reviewsCount }} reviews</p>
+                </div>
             </div>
             <div class="ratings">
-                <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating> {{ shopItem.rating }} stars
+                Rating: <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating>
             </div>
         </div>
         <div class="well">
-            <h4>Customers' Reviews</h4>
+            <h4>
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Customer Reviews
+            </h4>
             <hr>
             <div class="row" *ngFor='let shopItemReview of shopItemReviews'>
                 <div class="col-md-12">
-                    <p-rating [(ngModel)]="shopItemReview.rating" [cancel]="false" readonly="true"></p-rating> - {{ shopItemReview.userId }}
+                    <br/>
+                    <p-rating [(ngModel)]="shopItemReview.rating" [cancel]="false" readonly="true"></p-rating>
                     <span class="pull-right">10 days ago</span>
-                    <p>{{ shopItemReview.remarks }}</p>
+                    <p>{{ shopItemReview.remarks }}</p> - by {{ shopItemReview.userId }}
                 </div>
             </div>
             <br/>
             <form (ngSubmit)="onSubmit(remarks.value)">
                 <div class="row">
+                    <div class="col-xs-12 col-md-8">
+                        <h4>
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span> Compose
+                        </h4>
+                    </div>
+                </div>              
+                <div class="row">
+                    <div class="col-xs-12 col-md-8">
+                        <p-rating name="rating" [(ngModel)]="starRating"></p-rating>
+                    </div>
+                </div>
+                <div class="row">
+                    <br/>
                   <div class="col-xs-12 col-md-8">
                     <div class="form-group">
-                        <textarea class="form-control" id="remarks" #remarks placeholder="Enter comment message" [(ngModel)]="reviewText" [ngModelOptions]="{standalone: true}" [disabled]='!auth.isLoggedIn()'></textarea>
+                        <textarea class="form-control" id="remarks" #remarks placeholder="Share with us your thoughts & experiences" [(ngModel)]="reviewText" [ngModelOptions]="{standalone: true}" [disabled]='!auth.isLoggedIn()'></textarea>
                     </div>
                   </div>
-                <div class="col-md-2">
-                    <p-rating name="rating" [(ngModel)]="starRating"></p-rating>
-                    <button type="submit" class="btn btn-success" [disabled]='!auth.isLoggedIn()'>Submit Review</button>
-                </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success" [disabled]='!auth.isLoggedIn()'>Submit Review</button>
+                    </div>
                 </div>
               </form>
         </div>
