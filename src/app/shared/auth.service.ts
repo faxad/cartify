@@ -45,12 +45,10 @@ export class AuthService implements IAuthService {
     }
 
     isLoggedIn(): boolean {
-        // return true; // TODO: Remove!
          return tokenNotExpired();
     }
 
     isUserAdmin(): boolean {
-        // return true; // TODO: Remove!
         try {
           return JSON.parse(
             localStorage.getItem('profile')
