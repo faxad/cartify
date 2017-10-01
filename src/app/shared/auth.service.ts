@@ -11,11 +11,16 @@ const Auth0Lock = require('auth0-lock').default;
 
 @Injectable()
 export class AuthService implements IAuthService {
-    lock = new Auth0Lock('IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com', {});
+    lock = new Auth0Lock('IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com', {
+        auth: {
+            redirect: true,
+            sso: false
+        }
+    });
 
     static getUser(): string {
         try {
-            if (!tokenNotExpired()) { return; }
+            if (!tokenNotExpired('id_token')) { return; }
             return JSON.parse(localStorage.getItem(
                 'profile'))['user_id'].split('|').pop();
         } catch (e) {
@@ -45,7 +50,7 @@ export class AuthService implements IAuthService {
     }
 
     isLoggedIn(): boolean {
-         return tokenNotExpired();
+         return tokenNotExpired('id_token');
     }
 
     isUserAdmin(): boolean {
