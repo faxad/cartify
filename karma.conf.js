@@ -15,7 +15,9 @@ module.exports = function (config) {
       require('karma-spec-reporter')
     ],
     files: [
-      { pattern: './src/test.ts', watched: false }
+      "./node_modules/babel-polyfill/dist/polyfill.js",
+      "./node_modules/jquery/dist/jquery.min.js",      
+      { pattern: './src/test.ts', watched: false },
     ],
     preprocessors: {
       './src/test.ts': ['@angular/cli']
