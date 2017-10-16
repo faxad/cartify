@@ -22,7 +22,6 @@ import { IShopItem } from '../../shared/shop-item.interface';
 export class FormComponent implements OnInit {
     public shopItemForm: FormGroup;
     private isCreateForm = true;
-    @Input() modalId: string; // modal identifier
     @Input() shopItem: IShopItem;
     @Output() shopItemsUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
 
