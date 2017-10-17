@@ -3,6 +3,7 @@
 import { TestBed, ComponentFixture, async, fakeAsync, inject} from '@angular/core/testing';
 import { BaseRequestOptions, Response, ResponseOptions, Http } from '@angular/http';
 import { MockBackend, MockConnection } from '@angular/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -37,9 +38,16 @@ describe('FormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ FormsModule, ReactiveFormsModule, RouterTestingModule, CalendarModule, RatingModule ],
+            imports: [ 
+                BrowserAnimationsModule,
+                FormsModule,
+                ReactiveFormsModule,
+                RouterTestingModule,
+                CalendarModule,
+                RatingModule 
+            ],
             declarations: [
-            FormComponent,
+                FormComponent,
             ],
             providers: [
                 ShopService,
