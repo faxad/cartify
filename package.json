@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "^4.4.4",
     "@angular/platform-server": "^4.4.4",
     "@angular/router": "^4.4.4",
-    "angular-in-memory-web-api": "^0.4.6",
+    "angular-in-memory-web-api": "^0.5.0",
     "angular2-jwt": "^0.2.3",
     "auth0-lock": "^10.22.0",
     "babel-polyfill": "^6.26.0",
