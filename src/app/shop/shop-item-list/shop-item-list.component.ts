@@ -37,7 +37,7 @@ export class ShopItemListComponent implements OnInit {
         private appRef: ApplicationRef
     ) {}
 
-    getShopItems(event: boolean): void {
+    getShopItems(event: any): void {
         this.shop.getShopItems().subscribe(
             shopItems => {
                 this.shopItems = shopItems;
@@ -60,7 +60,7 @@ export class ShopItemListComponent implements OnInit {
                     for (let cartItem of cartItems) {
                         this.customerCartItems[cartItem.itemId] = cartItem.quantity;
                     }
-                    this.getShopItems(true);
+                    this.getShopItems(null);
                     this.appRef.tick();
                 },
                 error => console.log(error),

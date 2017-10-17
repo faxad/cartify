@@ -23,7 +23,7 @@ export class FormComponent implements OnInit {
     public shopItemForm: FormGroup;
     private isCreateForm = true;
     @Input() shopItem: IShopItem;
-    @Output() shopItemsUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() shopItemsUpdated: EventEmitter<any> = new EventEmitter();
 
     constructor(
         private shop: ShopService,
@@ -34,7 +34,7 @@ export class FormComponent implements OnInit {
         if (form.valid) {
             let action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
             this.shop[action](form.value).subscribe(
-                shopItem => { this.shopItemsUpdated.emit(true); },
+                shopItem => { this.shopItemsUpdated.emit(null); },
                 error => console.log(error));
         }
         else { alert('Form Validation Failed! Please Re-Submit.'); }
