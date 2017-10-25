@@ -30,8 +30,9 @@ export class ValidationService {
                 'result': true,
                 'message': 'Required Field!'
             } : this.validityCheck(control, controlName);
+        } else {
+            return { 'result': false, 'message': '' };
         }
-        else { return { 'result': false, 'message': '' }; }
     }
 
     configure(form: FormGroup, validityChecks, stateChecks) {

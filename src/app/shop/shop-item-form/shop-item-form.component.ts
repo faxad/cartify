@@ -36,8 +36,9 @@ export class FormComponent implements OnInit {
             this.shop[action](form.value).subscribe(
                 shopItem => { this.shopItemsUpdated.emit(null); },
             );
+        } else {
+            alert('Form Validation Failed! Please Re-Submit.');
         }
-        else { alert('Form Validation Failed! Please Re-Submit.'); }
     }
 
     ngOnInit(): void {

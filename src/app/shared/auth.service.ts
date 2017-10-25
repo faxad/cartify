@@ -27,7 +27,7 @@ export class AuthService implements IAuthService {
             console.log('please log in!');
         }
     }
-    
+
     constructor(private router: Router, private appRef: ApplicationRef) {
         this.lock.on('authenticated', (authResult) => {
             localStorage.setItem('id_token', authResult.idToken);

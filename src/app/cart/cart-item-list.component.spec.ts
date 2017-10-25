@@ -29,7 +29,7 @@ describe('ItemCartComponent', () => {
         'paid': false,
     }];
 
-    var cartItemQty1 = {
+    let cartItemQty1 = {
         'userId': 'john.doe',
         'itemId': 1765,
         'quantity': 1,
@@ -37,7 +37,7 @@ describe('ItemCartComponent', () => {
         'paid': false
     }
 
-    var cartItemQty2 = {
+    let cartItemQty2 = {
         'userId': 'john.doe',
         'itemId': 1765,
         'quantity': 2,
@@ -47,8 +47,14 @@ describe('ItemCartComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ FormsModule, ReactiveFormsModule, RouterTestingModule, CalendarModule, RatingModule ],
-            declarations: [ ItemCartComponent ],
+            imports: [
+                FormsModule,
+                ReactiveFormsModule,
+                RouterTestingModule,
+                CalendarModule,
+                RatingModule
+            ],
+            declarations: [ItemCartComponent],
             providers: [
                 CartService,
                 AuthService,
@@ -70,7 +76,7 @@ describe('ItemCartComponent', () => {
     });
 
     it('should create the CartItemList component', async(() => {
-        let fixture = TestBed.createComponent(ItemCartComponent);
+        fixture = TestBed.createComponent(ItemCartComponent);
         let app = fixture.debugElement.componentInstance;
 
         expect(app).toBeTruthy();

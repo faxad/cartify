@@ -5,7 +5,7 @@ import { ICartItem } from './cart-item.interface';
 import { ICartItemDetailed } from './cart-item-detailed.interface';
 
 export interface ICartService {
-	getCartItems(): Observable<ICartItem[]>;
+    getCartItems(): Observable<ICartItem[]>;
     getCartItemsWithDetails(): Observable<ICartItemDetailed[]>;
     addCartItem(IShopItem): Observable<ICartItem>;
     addOrUpdateCartItem(IShopItem, callback): void;

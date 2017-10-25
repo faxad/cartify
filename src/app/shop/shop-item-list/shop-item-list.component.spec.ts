@@ -59,7 +59,7 @@ describe('ShopItemListComponent', () => {
     });
 
     it('should create the ShopItemList component', async(() => {
-        let fixture = TestBed.createComponent(ShopItemListComponent);
+        fixture = TestBed.createComponent(ShopItemListComponent);
         let app = fixture.debugElement.componentInstance;
         expect(app).toBeTruthy();
     }));

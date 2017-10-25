@@ -29,18 +29,15 @@ export class ShopItemDetailComponent implements OnInit {
         this.route.params.subscribe(param => {
             this.shop.getShopItem(
                 Number(+param['id'])).subscribe(
-                    shopItem => this.shopItem = shopItem,
-                    error => console.log(error)
+                    shopItem => this.shopItem = shopItem
                 );
             this.shop.getShopItemReviews(
                 Number(+param['id'])).subscribe(
-                    shopItemReviews => this.shopItemReviews = shopItemReviews,
-                    error => console.log(error)
+                    shopItemReviews => this.shopItemReviews = shopItemReviews
                 );
             this.shop.getShopItemReviewsCount(
                 Number(+param['id'])).subscribe(
-                    reviewsCount => this.reviewsCount = reviewsCount,
-                    error => console.log(error)
+                    reviewsCount => this.reviewsCount = reviewsCount
             );
         });
     }
@@ -58,8 +55,7 @@ export class ShopItemDetailComponent implements OnInit {
                         this.starRating = 0;
                         this.ngOnInit();
                         console.log('Review added');
-                    },
-                    error => console.log(error)
+                    }
                 );
         });
     }

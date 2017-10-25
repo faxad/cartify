@@ -51,9 +51,10 @@ export class ShopItemListComponent implements OnInit {
             },
             (error: BaseError) => {
                 if (error instanceof NotFoundError) {
-                    console.log("NOT FOUND");
-                } else
+                    console.log('NOT FOUND');
+                } else {
                     throw error;
+                }
             });
     }
 

@@ -38,13 +38,13 @@ describe('FormComponent', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [ 
+            imports: [
                 BrowserAnimationsModule,
                 FormsModule,
                 ReactiveFormsModule,
                 RouterTestingModule,
                 CalendarModule,
-                RatingModule 
+                RatingModule
             ],
             declarations: [
                 FormComponent,
@@ -70,7 +70,7 @@ describe('FormComponent', () => {
     });
 
     it('should create the FormComponent component', async(() => {
-        let fixture = TestBed.createComponent(FormComponent);
+        fixture = TestBed.createComponent(FormComponent);
         let app = fixture.debugElement.componentInstance;
         component.shopItem = shopItemData;
         component.ngOnInit();
@@ -86,13 +86,13 @@ describe('FormComponent', () => {
     it('should confirm update shop item', fakeAsync(() => {
         spyOn(shopService, 'updateShopItem')
             .and.returnValue(Observable.of(shopItemData));
-        
+
         component.shopItem = shopItemData;
         component.ngOnInit();
         fixture.detectChanges();
 
-        var shopItemForm = component.shopItemForm
-        var controls = shopItemForm.controls;
+        let shopItemForm = component.shopItemForm
+        let controls = shopItemForm.controls;
 
         controls['id'].setValue(1765)
         controls['name'].setValue('abc Walter Rake')
