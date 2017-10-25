@@ -12,6 +12,8 @@ import {
 import { FormComponent } from '../shop-item-form/shop-item-form.component';
 import { IShopItem } from '../../shared/shop-item.interface';
 import { ShopItemFilterPipe } from './shop-item-filter.pipe';
+import { BaseError } from '../../error/base-error';
+import { NotFoundError } from '../../error/not-found-error';
 
 @Component({
     selector: 'list-item',
@@ -44,11 +46,15 @@ export class ShopItemListComponent implements OnInit {
                 for (let shopItem of shopItems) {
                     this.shop.getShopItemReviewsCount(shopItem.id).subscribe(
                         reviews => this.cartItemReviews[shopItem.id] = reviews,
-                        error => console.log(error)
                     );
                 }
             },
-            error => console.log(error));
+            (error: BaseError) => {
+                if (error instanceof NotFoundError) {
+                    console.log("NOT FOUND");
+                } else
+                    throw error;
+            });
     }
 
     ngOnInit(): void {
@@ -70,8 +76,7 @@ export class ShopItemListComponent implements OnInit {
             this.shop.getShopItemsRating().subscribe(
                 ratings => {
                     this.shopItemRatings = ratings;
-                },
-                error => console.log(error)
+                }
             );
         });
     }
@@ -79,8 +84,7 @@ export class ShopItemListComponent implements OnInit {
     addToCart(item: any): void {
         this.cart.addOrUpdateCartItem(item, function(service, item) {
             service.addCartItem(item).subscribe(
-                items => console.log('Added to Cart'),
-                error => console.log(error));
+                items => console.log('Added to Cart'));
         }).subscribe(
             () => {
                 this.customerCartItems[item.id] = this.customerCartItems[item.id] + 1;

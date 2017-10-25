@@ -35,7 +35,7 @@ export class FormComponent implements OnInit {
             let action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
             this.shop[action](form.value).subscribe(
                 shopItem => { this.shopItemsUpdated.emit(null); },
-                error => console.log(error));
+            );
         }
         else { alert('Form Validation Failed! Please Re-Submit.'); }
     }

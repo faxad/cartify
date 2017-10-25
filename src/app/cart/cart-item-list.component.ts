@@ -22,27 +22,23 @@ export class ItemCartComponent implements OnInit {
     ngOnInit(): void {
         this.cart.getCartItemsWithDetails().subscribe(
             cart => this.userCartItems = cart,
-            error => console.log(error),
             () => this.showLoading = false
         );
     }
 
     increaseQuantity(item: ICartItem): void {
         this.cart.increaseCartItemQunatity(item).subscribe(
-            items => console.log('Incremented'),
-            error => console.log(error));
+            items => console.log('Incremented'));
     }
 
     decreaseQunatity(item: ICartItem): void {
         this.cart.decreaseCartItemQunatity(item).subscribe(
-            items => console.log('Decremented'),
-            error => console.log(error));
+            items => console.log('Decremented'));
     }
 
     removeCartItem(item: ICartItem): void {
         this.cart.removeCartItem(item).subscribe(
-            items => console.log('Removed'),
-            error => console.log(error));
+            items => console.log('Removed'));
     }
 
     goBack(): void {

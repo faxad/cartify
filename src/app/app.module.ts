@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { ErrorHandler } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
@@ -16,6 +17,7 @@ import { ShopItemFilterPipe } from './shop/shop-item-list//shop-item-filter.pipe
 import { AuthService } from './shared/auth.service';
 import { CartService } from './shared/cart.service';
 import { ShopService } from './shared/shop.service';
+import { AppErrorHandler } from './error/app-error-handler';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CalendarModule, RatingModule } from 'primeng/primeng';
@@ -36,7 +38,13 @@ import { CalendarModule, RatingModule } from 'primeng/primeng';
     CalendarModule,
     RatingModule
   ],
-  providers: [AuthService, ShopService, CartService, Title],
+  providers: [
+    AuthService,
+    ShopService,
+    CartService,
+    Title,
+    { provide: ErrorHandler, useClass: AppErrorHandler }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

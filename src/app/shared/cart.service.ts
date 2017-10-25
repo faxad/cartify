@@ -9,6 +9,7 @@ import { ICartService } from './cart-service.interface';
 import { ICartItemDetailed } from './cart-item-detailed.interface';
 import { AuthService } from './auth.service';
 import { ShopService } from './shop.service';
+import { AppError } from '../error/app-error';
 
 @Injectable()
 export class CartService implements ICartService {
@@ -16,7 +17,8 @@ export class CartService implements ICartService {
 
     getCartItems(): Observable<ICartItem[]> {
         return this.http.get('http://localhost:8080/cart?userId=' + AuthService.getUser())
-            .map((response: Response) => <ICartItem[]>response.json());
+            .map((response: Response) => <ICartItem[]>response.json())
+            .catch(AppError.handle);
     }
 
     getCartItemsWithDetails(): Observable<ICartItemDetailed[]> {
@@ -55,7 +57,8 @@ export class CartService implements ICartService {
         };
 
         return this.http.post('http://localhost:8080/add', JSON.stringify(body))
-            .map((response: Response) => response.json());
+            .map((response: Response) => response.json())
+            .catch(AppError.handle);
     }
 
     addOrUpdateCartItem(item: IShopItem, callback): Observable<void> {
@@ -82,19 +85,22 @@ export class CartService implements ICartService {
 
     removeCartItem(cartItem: ICartItem): Observable<ICartItem> {
         return this.http.post('http://localhost:8080/remove', JSON.stringify(cartItem))
-            .map((response: Response) => response.json());
+            .map((response: Response) => response.json())
+            .catch(AppError.handle);
     }
 
     increaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
         cartItem.quantity = cartItem.quantity + 1;
         return this.http.post('http://localhost:8080/revise', JSON.stringify(cartItem))
-            .map((response: Response) => response.json());
+            .map((response: Response) => response.json())
+            .catch(AppError.handle);
     }
 
     decreaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
         cartItem.quantity = cartItem.quantity - 1;
         return this.http.post('http://localhost:8080/revise', JSON.stringify(cartItem))
-            .map((response: Response) => response.json());
+            .map((response: Response) => response.json())
+            .catch(AppError.handle);
     }
 
     checkOut(): void {} // TODO: for later implementation
