@@ -25,7 +25,7 @@ describe('FormComponent', () => {
     let shopService;
 
     let shopItemData = {
-        'id': 1765,
+        '_id': '1765',
         'name': 'abc Walter Rake',
         'code': 'GDN-0011',
         'releaseDate': '2017-03-07T21:00:00.000Z',
@@ -94,7 +94,7 @@ describe('FormComponent', () => {
         let shopItemForm = component.shopItemForm
         let controls = shopItemForm.controls;
 
-        controls['id'].setValue(1765)
+        controls['_id'].setValue('1765')
         controls['name'].setValue('abc Walter Rake')
         controls['code'].setValue('GDN-0011')
         controls['releaseDate'].setValue(new Date('2017-03-07T21:00:00.000Z'))

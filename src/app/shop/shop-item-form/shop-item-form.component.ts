@@ -43,10 +43,11 @@ export class FormComponent implements OnInit {
 
     ngOnInit(): void {
         this.shopItemForm = this.formBuilder.group({
-            'id': ['', Validators.required],
-            'name': ['', Validators.compose(
-                [Validators.required,
-                    ExtendedValidators.nameValidator])],
+            '_id': [{ value: null, disabled: false }],
+            'name': ['', Validators.compose([
+                            Validators.required,
+                            ExtendedValidators.nameValidator])
+            ],
             'code': ['', Validators.required],
             'unitPrice': ['', Validators.required],
             'quantityInStock': ['', Validators.required],

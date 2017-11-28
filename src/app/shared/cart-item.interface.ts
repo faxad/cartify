@@ -1,7 +1,9 @@
 export interface ICartItem {
+    _id: string;
     userId: string;
-    itemId: number;
+    itemId?: string;
+    item?: any;
     quantity: number;
-    unitPrice: number;
-    paid: boolean;
+    unitPrice?: number;
+    lastModified?: string;
 }

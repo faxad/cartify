@@ -27,18 +27,18 @@
                     <img src="http://placehold.it/320x150" alt="">
                     <div class="caption">
                         <h4 class="pull-right">${{shopItem.unitPrice}}</h4>
-                        <h4 id='shopItem{{shopItem.id}}Title'>{{shopItem.name}}
-                          <a data-toggle="modal" href="#{{shopItem.id}}" *ngIf='auth.isUserAdmin()'>
+                        <h4 id='shopItem{{shopItem._id}}Title'>{{shopItem.name}}
+                          <a data-toggle="modal" href="#{{shopItem._id}}" *ngIf='auth.isUserAdmin()'>
                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                           </a>
                        </h4>
                         <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
                     </div>
                     <div class="ratings">
-                        <p class="pull-right">{{cartItemReviews[shopItem.id]}} reviews</p>
+                        <p class="pull-right">{{shopItem.reviewsCount}} reviews</p>
                         <div class="crop">
                             <div style="width: 86px">
-                                <p-rating [(ngModel)]="shopItemRatings[shopItem.id]" [cancel]="false" readonly="true"></p-rating>
+                                <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating>
                             </div>
                         </div>
                     </div>
@@ -48,9 +48,9 @@
                                 <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy
                             </button>
                             <a href="#" class="btn btn-default btn disabled" role="button">
-                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{customerCartItems[shopItem.id]}}</span>
+                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{shopItem.cartCount}}</span>
                             </a>
-                            <a [routerLink]="['/item', shopItem.id]" class="btn btn-success" role="button">
+                            <a [routerLink]="['/item', shopItem._id]" class="btn btn-success" role="button">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                             </a>
                             <shop-item-form [shopItem]='shopItem' (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></shop-item-form>

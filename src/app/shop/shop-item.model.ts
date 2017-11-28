@@ -1,7 +1,7 @@
 import { IShopItem } from '../shared/shop-item.interface';
 
 export class ShopItem implements IShopItem {
-    id: number;
+    _id: string;
     name: string;
     code: string;
     releaseDate: string;

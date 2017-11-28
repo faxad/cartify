@@ -6,8 +6,9 @@ import {
     ShopService
 } from '../shared/index';
 
+import { BaseError } from '../error/base-error';
+import { NotFoundError } from '../error/not-found-error';
 import { ICartItem } from '../shared/cart-item.interface';
-import { ICartItemDetailed } from '../shared/cart-item-detailed.interface';
 
 @Component({
     templateUrl: './cart-item-list.component.html',
@@ -20,8 +21,15 @@ export class ItemCartComponent implements OnInit {
     constructor(private router: Router, private cart: CartService) {}
 
     ngOnInit(): void {
-        this.cart.getCartItemsWithDetails().subscribe(
+        this.cart.getCartItems().subscribe(
             cart => this.userCartItems = cart,
+            (error: BaseError) => {
+                if (error instanceof NotFoundError) {
+                    console.log('NOT FOUND');
+                } else {
+                    throw error;
+                }
+            },
             () => this.showLoading = false
         );
     }

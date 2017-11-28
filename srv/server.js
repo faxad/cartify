@@ -135,7 +135,6 @@ dispatcher.onPost("/add", function(req, res) {
 });
 
 function removeUnwantedKeys(body) {
-    delete body['paid'];
     delete body['name'];
     delete body['code'];
     delete body['unitPrice'];

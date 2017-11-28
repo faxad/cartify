@@ -1,9 +1,9 @@
 import { ICartItem } from '../shared/cart-item.interface';
 
 export class CartItem implements ICartItem {
+    _id: string;
     userId: string;
-    itemId: number;
+    itemId: string;
     quantity: number;
     unitPrice: number;
-    paid: boolean;
 }

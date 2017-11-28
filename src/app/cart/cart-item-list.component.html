@@ -18,12 +18,12 @@
         </td>
     </tr>
     <tr *ngFor='let cartItem of userCartItems'>
-        <td>{{cartItem.itemId}}</td>
-        <td>{{cartItem.name}}</td>
-        <td>{{cartItem.code}}</td>
-        <td>{{cartItem.unitPrice}}</td>
+        <td>{{cartItem._id}}</td>
+        <td>{{cartItem.item.name}}</td>
+        <td>{{cartItem.item.code}}</td>
+        <td>{{cartItem.item.unitPrice}}</td>
         <td>{{cartItem.quantity}}</td>
-        <td>{{cartItem.unitPrice * cartItem.quantity}}</td>
+        <td>{{cartItem.item.unitPrice * cartItem.quantity}}</td>
         <td>
             <p>
                 <button type="button" class="btn btn-default btn-xs" (click)='increaseQuantity(cartItem)'>

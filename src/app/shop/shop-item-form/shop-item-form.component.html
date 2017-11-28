@@ -1,6 +1,6 @@
 <div
   class="modal fade"
-  [attr.id]="shopItem ? shopItem.id : 'shopItemModal'"
+  [attr.id]="shopItem ? shopItem._id : 'shopItemModal'"
   role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -25,17 +25,17 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label for="id">ID</label>
-                  <input 
-                    required
+                  <label for="_id">ID</label>
+                  <input
+                    [readonly]="true" 
                     class="form-control"
-                    id="id"
+                    id="_id"
                     placeholder="identifier"
-                    formControlName="id">
+                    formControlName="_id">
                   <div
-                    *ngIf="validation.check('id').result"
+                    *ngIf="validation.check('_id').result"
                     class="alert alert-danger">
-                    {{validation.check('id').message}}
+                    {{validation.check('_id').message}}
                   </div>
                 </div>
                 <div class="form-group">

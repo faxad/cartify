@@ -31,7 +31,7 @@
                 <div class="col-md-12">
                     <h4>Product: <small>{{ shopItem.name }}</small></h4>
                     <p>{{ shopItem.description }}</p>
-                    <p class="pull-right">{{ reviewsCount }} reviews</p>
+                    <p class="pull-right">{{ shopItem.reviewsCount }} reviews</p>
                 </div>
             </div>
             <div class="ratings">
@@ -43,7 +43,7 @@
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Customer Reviews
             </h4>
             <hr>
-            <div class="row" *ngFor='let shopItemReview of shopItemReviews'>
+            <div class="row" *ngFor='let shopItemReview of shopItem?.reviews'>
                 <div class="col-md-12">
                     <br/>
                     <p-rating [(ngModel)]="shopItemReview.rating" [cancel]="false" readonly="true"></p-rating>

@@ -1,5 +1,7 @@
+import { IShopItemReview } from './shop-item-review.interface';
+
 export interface IShopItem {
-    id: number;
+    _id: string;
     name: string;
     code: string;
     releaseDate: string;
@@ -8,4 +10,7 @@ export interface IShopItem {
     quantityInStock: number;
     rating: number;
     imageUrl: string;
+    reviews?: IShopItemReview[];
+    reviewsCount?: number;
+    cartCount?: number;
 }

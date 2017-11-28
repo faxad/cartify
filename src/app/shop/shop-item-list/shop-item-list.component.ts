@@ -14,6 +14,8 @@ import { IShopItem } from '../../shared/shop-item.interface';
 import { ShopItemFilterPipe } from './shop-item-filter.pipe';
 import { BaseError } from '../../error/base-error';
 import { NotFoundError } from '../../error/not-found-error';
+import { CartItem } from 'app/cart/cart-item.model';
+import { ICartItem } from 'app/shared/cart-item.interface';
 
 @Component({
     selector: 'list-item',
@@ -24,12 +26,8 @@ export class ShopItemListComponent implements OnInit {
     private modalIdentifier = 'shopItemModal';
     private filterBy: string;
     private customerId: string;
-    private customerCartItems = {};
-    private cartItemReviews = {};
-    private shopItemRatings = {};
     private shopItems: IShopItem[];
     private showLoading = true;
-    private ccCount = 0;
 
     constructor(
         private shop: ShopService,
@@ -40,14 +38,17 @@ export class ShopItemListComponent implements OnInit {
     ) {}
 
     getShopItems(event: any): void {
-        this.shop.getShopItems().subscribe(
+        let loggedInUserId = AuthService.getUser();
+        let getShopItems = this.shop.getShopItems()
+
+        if (loggedInUserId !== undefined) {
+            getShopItems = this.shop.getShopItems(loggedInUserId)
+        }
+
+        getShopItems.subscribe(
             shopItems => {
                 this.shopItems = shopItems;
-                for (let shopItem of shopItems) {
-                    this.shop.getShopItemReviewsCount(shopItem.id).subscribe(
-                        reviews => this.cartItemReviews[shopItem.id] = reviews,
-                    );
-                }
+                // this.appRef.tick();
             },
             (error: BaseError) => {
                 if (error instanceof NotFoundError) {
@@ -55,41 +56,50 @@ export class ShopItemListComponent implements OnInit {
                 } else {
                     throw error;
                 }
-            });
+            },
+            () => {
+                this.showLoading = false;
+            }
+        );
     }
 
     ngOnInit(): void {
-        this.route.params.subscribe(params => {
-            this.customerCartItems = {}; // re-initialize collection
-            this.customerId = AuthService.getUser();
-            this.cart.getCartItems().subscribe(
-                cartItems => {
-                    for (let cartItem of cartItems) {
-                        this.customerCartItems[cartItem.itemId] = cartItem.quantity;
-                    }
-                    this.getShopItems(null);
-                    this.appRef.tick();
-                },
-                error => console.log(error),
-                () => this.showLoading = false
-            );
-
-            this.shop.getShopItemsRating().subscribe(
-                ratings => {
-                    this.shopItemRatings = ratings;
-                }
-            );
-        });
+        this.getShopItems(null);
+        this.customerId = AuthService.getUser();
     }
 
-    addToCart(item: any): void {
-        this.cart.addOrUpdateCartItem(item, function(service, item) {
-            service.addCartItem(item).subscribe(
-                items => console.log('Added to Cart'));
-        }).subscribe(
-            () => {
-                this.customerCartItems[item.id] = this.customerCartItems[item.id] + 1;
+    updateItemCount(cartItem: ICartItem) {
+        // refresh the user interface
+        for (let shopItem of this.shopItems) {
+            // console.log(cartItem)
+            if (shopItem._id === cartItem.itemId) {
+                shopItem.cartCount = cartItem.quantity
             }
-        );
+        }
+    }
+
+    addToCart(item: IShopItem): void {
+
+        if (item.cartCount === 0) {
+            this.cart.addCartItem(item).subscribe(
+                cartItem => {
+                    this.updateItemCount(cartItem)
+                }
+            );
+        } else {
+            this.cart.getCartItem(
+                AuthService.getUser(),
+                item._id
+            ).subscribe(
+                cartItem => {
+                    // console.log(cartItem)
+                    this.cart.increaseCartItemQunatity(cartItem).subscribe(
+                        cartItem2 => {
+                            this.updateItemCount(cartItem2)
+                        }
+                    )
+                }
+            )
+        }
     }
 }
