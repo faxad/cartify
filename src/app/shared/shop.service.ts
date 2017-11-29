@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
@@ -13,36 +13,28 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ShopService implements IShopService {
-    constructor(private http: Http) {}
+    constructor(private http: HttpClient) {}
 
     getShopItems(userId?: string): Observable<IShopItem[]> {
-        let url = 'http://localhost:8080/inventory';
+        let url = 'inventory';
 
         if (userId) {
             url = url + '/' + userId;
         }
 
-        return this.http.get(url)
-            .map((response: Response) => <IShopItem[]>response.json())
-            .catch(AppError.handle);
+        return this.http.get<IShopItem[]>(url)
     }
 
     getShopItem(id: string): Observable<IShopItem> {
-        return this.http.get('http://localhost:8080/inventory/' + id + '/detail')
-            .map((response: Response) => <IShopItem>response.json())
-            .catch(AppError.handle);
+        return this.http.get<IShopItem>('inventory/' + id + '/detail')
     }
 
     addShopItem(body: any): Observable<IShopItem> {
-        return this.http.post('http://localhost:8080/inventory', body)
-            .map((response: Response) => response.json())
-            .catch(AppError.handle);
+        return this.http.post<IShopItem>('inventory', body)
     }
 
     updateShopItem(body: any): Observable<IShopItem> {
-        return this.http.put('http://localhost:8080/inventory', body)
-            .map((response: Response) => response.json())
-            .catch(AppError.handle);
+        return this.http.put<IShopItem>('inventory', body)
     }
 
     setShopItemReview(itemId: string, remarks: string, rating: number): Observable<IShopItemReview> {
@@ -54,8 +46,6 @@ export class ShopService implements IShopService {
             'rating': rating
         };
 
-        return this.http.post('http://localhost:8080/review', body)
-            .map((response: Response) => response.json())
-            .catch(AppError.handle);
+        return this.http.post<IShopItemReview>('review', body)
     }
 }

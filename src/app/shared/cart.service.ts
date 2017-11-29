@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { IShopItem } from './shop-item.interface';
@@ -13,20 +13,14 @@ import { ShopItem } from 'app/shop/shop-item.model';
 
 @Injectable()
 export class CartService implements ICartService {
-    constructor(private http: Http, private shop: ShopService) {}
+    constructor(private http: HttpClient, private shop: ShopService) {}
 
     getCartItems(): Observable<ICartItem[]> {
-        return this.http.get('http://localhost:8080/cart/' + AuthService.getUser())
-            .map((response: Response) => <ICartItem[]>response.json())
-            .catch(AppError.handle);
+        return this.http.get<ICartItem[]>('cart/' + AuthService.getUser())
     }
 
     getCartItem(userId: string, itemId: string): Observable<ICartItem> {
-        let url = 'http://localhost:8080/cart/' + userId + '?itemId=' + itemId;
-
-        return this.http.get(url)
-            .map((response: Response) => <ICartItem>response.json())
-            .catch(AppError.handle);
+        return this.http.get<ICartItem>('cart/' + userId + '?itemId=' + itemId)
     }
 
     addCartItem(shopItem: IShopItem): Observable<ICartItem> {
@@ -36,33 +30,25 @@ export class CartService implements ICartService {
             'quantity': 1,
         };
 
-        return this.http.post('http://localhost:8080/cart', body)
-            .map((response: Response) => response.json())
-            .catch(AppError.handle);
+        return this.http.post<ICartItem>('cart', body)
     }
 
     removeCartItem(cartItem: ICartItem): Observable<ICartItem> {
-        return this.http.delete('http://localhost:8080/cart/' + cartItem._id)
-            .map((response: Response) => response.json())
-            .catch(AppError.handle);
+        return this.http.delete<ICartItem>('cart/' + cartItem._id)
     }
 
     increaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
         cartItem.quantity = cartItem.quantity + 1;
         cartItem.userId = AuthService.getUser();
 
-        return this.http.put('http://localhost:8080/cart', cartItem)
-            .map((response: Response) => <ICartItem>response.json())
-            .catch(AppError.handle)
+        return this.http.put<ICartItem>('cart', cartItem)
     }
 
     decreaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
         cartItem.quantity = cartItem.quantity - 1;
         cartItem.userId = AuthService.getUser();
 
-        return this.http.put('http://localhost:8080/cart', cartItem)
-            .map((response: Response) => <ICartItem>response.json())
-            .catch(AppError.handle);
+        return this.http.put<ICartItem>('cart', cartItem)
     }
 
     checkOut(): void {} // TODO: for developers to implementation

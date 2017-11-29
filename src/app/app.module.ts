@@ -2,7 +2,7 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ErrorHandler } from '@angular/core';
 
@@ -22,6 +22,10 @@ import { AppErrorHandler } from './error/app-error-handler';
 import { AppRoutingModule } from './app-routing.module';
 import { CalendarModule, RatingModule } from 'primeng/primeng';
 
+import { API_URL } from './api-interceptor'
+import { environment } from '../environments/environment'
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ApiInterceptor } from './api-interceptor';
 
 @NgModule({
   declarations: [
@@ -32,18 +36,19 @@ import { CalendarModule, RatingModule } from 'primeng/primeng';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
+    HttpClientModule,
     RouterModule,
     AppRoutingModule,
     CalendarModule,
-    RatingModule
+    RatingModule,
   ],
   providers: [
     AuthService,
     ShopService,
     CartService,
-    Title,
-    { provide: ErrorHandler, useClass: AppErrorHandler }
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+    { provide: API_URL, useValue: environment.apiUrl },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true, deps: [API_URL] },
   ],
   bootstrap: [AppComponent]
 })
