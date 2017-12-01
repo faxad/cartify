@@ -20,7 +20,7 @@ export class AuthService implements IAuthService {
 
     static getUser(): string {
         try {
-            if (!tokenNotExpired('id_token')) { return; }
+            if (!tokenNotExpired('token')) { return; }
             return JSON.parse(localStorage.getItem(
                 'profile'))['user_id'].split('|').pop();
         } catch (e) {
@@ -30,7 +30,7 @@ export class AuthService implements IAuthService {
 
     constructor(private router: Router, private appRef: ApplicationRef) {
         this.lock.on('authenticated', (authResult) => {
-            localStorage.setItem('id_token', authResult.idToken);
+            localStorage.setItem('token', authResult.idToken);
             this.lock.getProfile(authResult.idToken, (error, profile) => {
                 localStorage.setItem('profile', JSON.stringify(profile));
                 this.navigateToHome();
@@ -45,12 +45,12 @@ export class AuthService implements IAuthService {
 
     logout(): void {
         localStorage.removeItem('profile');
-        localStorage.removeItem('id_token');
+        localStorage.removeItem('token');
         this.navigateToHome();
     }
 
     isLoggedIn(): boolean {
-         return tokenNotExpired('id_token');
+         return tokenNotExpired('token');
     }
 
     isUserAdmin(): boolean {

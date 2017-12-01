@@ -71,7 +71,6 @@ export class ShopItemListComponent implements OnInit {
     updateItemCount(cartItem: ICartItem) {
         // refresh the user interface
         for (let shopItem of this.shopItems) {
-            // console.log(cartItem)
             if (shopItem._id === cartItem.itemId) {
                 shopItem.cartCount = cartItem.quantity
             }
@@ -92,7 +91,6 @@ export class ShopItemListComponent implements OnInit {
                 item._id
             ).subscribe(
                 cartItem => {
-                    // console.log(cartItem)
                     this.cart.increaseCartItemQunatity(cartItem).subscribe(
                         cartItem2 => {
                             this.updateItemCount(cartItem2)

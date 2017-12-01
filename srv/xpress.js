@@ -1,11 +1,11 @@
-// import { request } from 'https';
-
 var mongodb = require('mongodb')
 var ObjectID = mongodb.ObjectID
 var MongoClient = require('mongodb').MongoClient
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
+const expressJwt = require('express-jwt');
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(function(req, res, next) {
@@ -20,6 +20,13 @@ const con = 'mongodb://faxad:faxad@mongodbcluster-shard-00-00-wsqeg.mongodb.net:
             'mongodbcluster-shard-00-01-wsqeg.mongodb.net:27017,' +
             'mongodbcluster-shard-00-02-wsqeg.mongodb.net:27017/' +
             'test?ssl=true&replicaSet=MongoDbCluster-shard-0&authSource=admin';
+
+
+const AUTH_SECRET = 'PTasQf3QuqubG-4u7tae2nOxobJ8QNkw26CnfLiVp5pe8jK6WK4guQd1LHI9KFNV';
+
+const checkIfAuthenticated = expressJwt({
+    secret: new Buffer(AUTH_SECRET, 'base64'),
+});
 
 /**
  * FETCH ALL records for a given collection
@@ -184,7 +191,7 @@ app.get('/inventory', function (req, res) {
  * INVENTORY (GET) - Retrieves inventory list for authenticated user
  * Includes users review count and cart count for each item
  */
-app.get('/inventory/:username', function (req, res) {
+app.get('/inventory/:username', checkIfAuthenticated, function (req, res) {
     MongoClient.connect(con, function (err, db) {
         if (err) throw err;
 
@@ -300,7 +307,7 @@ app.get('/inventory/:itemId/detail', function (req, res) {
 /**
  * ITEM/PRODUCT (POST) - Handles adding item to item/product
  */
-app.post('/inventory', (req, res) => {
+app.post('/inventory', checkIfAuthenticated, (req, res) => {
     document =  {
         name: req.body.name,
         code: req.body.code,
@@ -318,7 +325,7 @@ app.post('/inventory', (req, res) => {
 /**
  * UPDATE ITEM/PRODUCT - Handles modification of item/product
  */
-app.put('/inventory', (req, res) => {
+app.put('/inventory', checkIfAuthenticated, (req, res) => {
     condition = {
         _id: mongodb.ObjectID(req.body._id)
     }
@@ -340,7 +347,7 @@ app.put('/inventory', (req, res) => {
 /**
  * DELETE ITEM/PRODUCT - Handles removing item/product
  */
-app.delete('/inventory/:itemId', function (req, res) {
+app.delete('/inventory/:itemId', checkIfAuthenticated, function (req, res) {
     condition = {
         _id: mongodb.ObjectID(req.params.itemId)
     }
@@ -353,7 +360,7 @@ app.delete('/inventory/:itemId', function (req, res) {
 /**
  * CART (GET) - Retrieves user's cart item(s)
  */
-app.get('/cart/:username', (req, res) => {
+app.get('/cart/:username', checkIfAuthenticated, (req, res) => {
     let itemId = req.query.itemId
 
     condition = {
@@ -409,7 +416,7 @@ app.get('/cart/:username', (req, res) => {
 /**
  * CART ITEM (POST) - Handles adding item to cart
  */
-app.post('/cart', (req, res) => {
+app.post('/cart', checkIfAuthenticated, (req, res) => {
     document =  {
         userId: req.body.userId,
         itemId: mongodb.ObjectID(req.body.itemId),
@@ -422,7 +429,7 @@ app.post('/cart', (req, res) => {
 /**
  * UPDATE CART - Handles modification of cart item
  */
-app.put('/cart', (req, res) => {
+app.put('/cart', checkIfAuthenticated, (req, res) => {
     condition = {
         _id: mongodb.ObjectID(req.body._id)
     }
@@ -440,7 +447,7 @@ app.put('/cart', (req, res) => {
 /**
  * DELETE CART ITEM - Handles removing user cart item
  */
-app.delete('/cart/:cartItemId', function (req, res) {
+app.delete('/cart/:cartItemId', checkIfAuthenticated, function (req, res) {
     condition = {
         _id: mongodb.ObjectID(req.params.cartItemId)
     }
@@ -453,7 +460,7 @@ app.delete('/cart/:cartItemId', function (req, res) {
 /**
  * ITEM/PRODUCT REVIEW (POST) - Handles creation of product's review
  */
-app.post('/review', (req, res) => {
+app.post('/review', checkIfAuthenticated, (req, res) => {
     document =  {
         userId: req.body.userId,
         itemId: mongodb.ObjectID(req.body.itemId),
@@ -468,7 +475,7 @@ app.post('/review', (req, res) => {
 /**
  * DELETE ITEM/PRODUCT REVIEW - Handles removing user review
  */
-app.delete('/review/:reviewId', function (req, res) {
+app.delete('/review/:reviewId', checkIfAuthenticated, function (req, res) {
     condition = {
         _id: mongodb.ObjectID(req.params.reviewId)
     }
@@ -479,7 +486,7 @@ app.delete('/review/:reviewId', function (req, res) {
 /**
  * UPDATE ITEM/PRODUCT REVIEW - Handles modification of user review
  */
-app.put('/review', (req, res) => {
+app.put('/review', checkIfAuthenticated, (req, res) => {
     condition = {
         _id: mongodb.ObjectID(req.body._id)
     }
@@ -497,5 +504,5 @@ app.put('/review', (req, res) => {
 })
 
 app.listen(8080, function () {
-  console.log('Example app listening on port 3000!')
+  console.log('App listening on port 8080!')
 })
