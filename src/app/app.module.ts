@@ -26,6 +26,7 @@ import { API_URL } from './api-interceptor'
 import { environment } from '../environments/environment'
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './api-interceptor';
+import { AuthInterceptor } from './auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ApiInterceptor } from './api-interceptor';
     { provide: ErrorHandler, useClass: AppErrorHandler },
     { provide: API_URL, useValue: environment.apiUrl },
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true, deps: [API_URL] },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
