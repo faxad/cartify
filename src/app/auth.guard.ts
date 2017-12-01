@@ -6,5 +6,7 @@ import { tokenNotExpired } from 'angular2-jwt';
 export class AuthGuard implements CanActivate {
   canActivate() {
     return tokenNotExpired();
+
+    // TODO: Redirect to log-in / Permission denied page
   }
 }

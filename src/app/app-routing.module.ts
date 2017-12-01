@@ -11,7 +11,7 @@ const routes: Routes = [
     { path: 'items', component: ShopItemListComponent },
     { path: 'items/:reload', component: ShopItemListComponent }, // workaround to re-init loaded component
     { path: 'item/:id', component: ShopItemDetailComponent },
-    { path: 'cart/:customerId', component: ItemCartComponent },
+    { path: 'cart/:customerId', component: ItemCartComponent, canActivate: [AuthGuard] },
     // { path: '**', component: NotFoundComponenet }
 ];
 

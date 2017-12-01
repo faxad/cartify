@@ -27,6 +27,7 @@ import { environment } from '../environments/environment'
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiInterceptor } from './api-interceptor';
 import { AuthInterceptor } from './auth-interceptor';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AuthInterceptor } from './auth-interceptor';
   ],
   providers: [
     AuthService,
+    AuthGuard,
     ShopService,
     CartService,
     { provide: ErrorHandler, useClass: AppErrorHandler },
