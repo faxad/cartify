@@ -16,6 +16,7 @@ export class ShopItemDetailComponent implements OnInit {
     public shopItem: IShopItem;
     private reviewText = '';
     private starRating = 0;
+    private shopItemId = null;
 
     constructor(
         private auth: AuthService,
@@ -24,11 +25,9 @@ export class ShopItemDetailComponent implements OnInit {
         private shop: ShopService) {}
 
     ngOnInit(): void {
-        this.route.params.subscribe(param => {
-            this.shop.getShopItem(param['id']).subscribe(
-                    shopItem => this.shopItem = shopItem
-                );
-        });
+        this.shopItemId = this.route.snapshot.paramMap.get('id')
+        this.shop.getShopItem(this.shopItemId)
+            .subscribe(shopItem => this.shopItem = shopItem);
     }
 
     goBack(): void {
@@ -36,16 +35,13 @@ export class ShopItemDetailComponent implements OnInit {
     }
 
     onSubmit(remarks: string): void {
-        this.route.params.subscribe(param => {
-            this.shop.setShopItemReview(
-                param['id'], remarks, this.starRating).subscribe(
-                    shopItemReview => {
-                        this.reviewText = '';
-                        this.starRating = 0;
-                        this.ngOnInit();
-                        console.log('Review added');
-                    }
-                );
-        });
+        this.shop.setShopItemReview(this.shopItemId, remarks, this.starRating)
+            .subscribe(shopItemReview => {
+                this.reviewText = '';
+                this.starRating = 0;
+                this.ngOnInit();
+                console.log('Review added');
+            }
+        );
     }
 }
