@@ -23,9 +23,6 @@ import { ICartItem } from 'app/shared/cart-item.interface';
     styleUrls: ['./shop-item-list.component.css']
 })
 export class ShopItemListComponent implements OnInit {
-    private modalIdentifier = 'shopItemModal';
-    private filterBy: string;
-    private customerId: string;
     private shopItems: IShopItem[];
     private showLoading = true;
 
@@ -38,11 +35,11 @@ export class ShopItemListComponent implements OnInit {
     ) {}
 
     getShopItems(event: any): void {
-        let loggedInUserId = AuthService.getUser();
+        let userId = this.auth.getUser();
         let getShopItems = this.shop.getShopItems()
 
-        if (loggedInUserId !== undefined) {
-            getShopItems = this.shop.getShopItems(loggedInUserId)
+        if (userId !== undefined) {
+            getShopItems = this.shop.getShopItems(userId)
         }
 
         getShopItems.subscribe(
@@ -65,7 +62,6 @@ export class ShopItemListComponent implements OnInit {
 
     ngOnInit(): void {
         this.getShopItems(null);
-        this.customerId = AuthService.getUser();
     }
 
     updateItemCount(cartItem: ICartItem) {
@@ -78,7 +74,6 @@ export class ShopItemListComponent implements OnInit {
     }
 
     addToCart(item: IShopItem): void {
-
         if (item.cartCount === 0) {
             this.cart.addCartItem(item).subscribe(
                 cartItem => {
@@ -87,7 +82,7 @@ export class ShopItemListComponent implements OnInit {
             );
         } else {
             this.cart.getCartItem(
-                AuthService.getUser(),
+                this.auth.getUser(),
                 item._id
             ).subscribe(
                 cartItem => {

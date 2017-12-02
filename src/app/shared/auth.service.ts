@@ -18,7 +18,7 @@ export class AuthService implements IAuthService {
         }
     });
 
-    static getUser(): string {
+    getUser(): string {
         try {
             if (!tokenNotExpired('token')) { return; }
             return JSON.parse(localStorage.getItem(

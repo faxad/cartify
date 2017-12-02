@@ -13,7 +13,7 @@
                     </a>
                 </div>
                 <div class="input-group-addon" *ngIf='auth.isLoggedIn()'>
-                    <a [routerLink]="['/cart', customerId]">
+                    <a [routerLink]="['/cart', auth.getUser()]">
                         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                     </a>
                 </div>

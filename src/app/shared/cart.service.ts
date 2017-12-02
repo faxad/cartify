@@ -13,10 +13,10 @@ import { ShopItem } from 'app/shop/shop-item.model';
 
 @Injectable()
 export class CartService implements ICartService {
-    constructor(private http: HttpClient, private shop: ShopService) {}
+    constructor(private http: HttpClient, private shop: ShopService, private auth: AuthService) {}
 
     getCartItems(): Observable<ICartItem[]> {
-        return this.http.get<ICartItem[]>('cart/' + AuthService.getUser())
+        return this.http.get<ICartItem[]>('cart/' + this.auth.getUser())
     }
 
     getCartItem(userId: string, itemId: string): Observable<ICartItem> {
@@ -25,7 +25,7 @@ export class CartService implements ICartService {
 
     addCartItem(shopItem: IShopItem): Observable<ICartItem> {
         let body: any = {
-            'userId': AuthService.getUser(),
+            'userId': this.auth.getUser(),
             'itemId': shopItem._id,
             'quantity': 1,
         };
@@ -39,14 +39,14 @@ export class CartService implements ICartService {
 
     increaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
         cartItem.quantity = cartItem.quantity + 1;
-        cartItem.userId = AuthService.getUser();
+        cartItem.userId = this.auth.getUser();
 
         return this.http.put<ICartItem>('cart', cartItem)
     }
 
     decreaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
         cartItem.quantity = cartItem.quantity - 1;
-        cartItem.userId = AuthService.getUser();
+        cartItem.userId = this.auth.getUser();
 
         return this.http.put<ICartItem>('cart', cartItem)
     }

@@ -13,7 +13,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ShopService implements IShopService {
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private auth: AuthService) {}
 
     getShopItems(userId?: string): Observable<IShopItem[]> {
         let url = 'inventory';
@@ -40,7 +40,7 @@ export class ShopService implements IShopService {
     setShopItemReview(itemId: string, remarks: string, rating: number): Observable<IShopItemReview> {
         let body: any = {
             'itemId': itemId,
-            'userId': AuthService.getUser(),
+            'userId': this.auth.getUser(),
             'reviewDate': 'March 19, 2016',
             'remarks': remarks,
             'rating': rating
