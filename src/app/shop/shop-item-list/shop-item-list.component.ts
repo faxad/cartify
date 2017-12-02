@@ -36,13 +36,13 @@ export class ShopItemListComponent implements OnInit {
 
     getShopItems(event: any): void {
         let userId = this.auth.getUser();
-        let getShopItems = this.shop.getShopItems()
+        let getShopItemsObservable = this.shop.getShopItems()
 
         if (userId !== undefined) {
-            getShopItems = this.shop.getShopItems(userId)
+            getShopItemsObservable = this.shop.getShopItems(userId)
         }
 
-        getShopItems.subscribe(
+        getShopItemsObservable.subscribe(
             shopItems => {
                 this.shopItems = shopItems;
                 // this.appRef.tick();
@@ -64,35 +64,21 @@ export class ShopItemListComponent implements OnInit {
         this.getShopItems(null);
     }
 
-    updateItemCount(cartItem: ICartItem) {
-        // refresh the user interface
-        for (let shopItem of this.shopItems) {
-            if (shopItem._id === cartItem.itemId) {
-                shopItem.cartCount = cartItem.quantity
-            }
-        }
+    refreshCartCountFor(cartItem: ICartItem) {
+        this.shopItems
+            .filter(shopItem => shopItem._id === cartItem.itemId)
+            .shift()
+            .cartCount = cartItem.quantity
     }
 
     addToCart(item: IShopItem): void {
-        if (item.cartCount === 0) {
-            this.cart.addCartItem(item).subscribe(
-                cartItem => {
-                    this.updateItemCount(cartItem)
-                }
-            );
+        if (item.cartCount === 0 || 'undefined') {
+            this.cart.addCartItem(item)
+                .subscribe(cartItem => this.refreshCartCountFor(cartItem));
         } else {
-            this.cart.getCartItem(
-                this.auth.getUser(),
-                item._id
-            ).subscribe(
-                cartItem => {
-                    this.cart.increaseCartItemQunatity(cartItem).subscribe(
-                        cartItem2 => {
-                            this.updateItemCount(cartItem2)
-                        }
-                    )
-                }
-            )
+            this.cart.getCartItem(this.auth.getUser(), item._id)
+                .switchMap(cartItem => this.cart.increaseCartItemQunatity(cartItem))
+                .subscribe(cartItem => this.refreshCartCountFor(cartItem));
         }
     }
 }
