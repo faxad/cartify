@@ -1,72 +1,62 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { ApplicationRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
-import { tokenNotExpired } from 'angular2-jwt';
+import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { IAuthService } from './auth-service.interface';
+import * as moment from 'moment';
 
-const Auth0Lock = require('auth0-lock').default;
+import { IAuthService } from './auth-service.interface';
+import { IUser } from '../auth/user.interface'
+
+const jwtHelper = new JwtHelper()
+const TOKEN = 'token'
 
 @Injectable()
 export class AuthService implements IAuthService {
-    lock = new Auth0Lock('IcUyRKjbz5MnN4G377fcugQZR6BjyncA', 'fawad.auth0.com', {
-        auth: {
-            redirect: true,
-            sso: false
-        }
-    });
+    constructor(
+        private router: Router,
+        private http: HttpClient
+    ) {}
 
-    getUser(): string {
+    getAuthenticatedUserId(): string {
         try {
-            if (!tokenNotExpired('token')) { return; }
-            return JSON.parse(localStorage.getItem(
-                'profile'))['user_id'].split('|').pop();
+            if (tokenNotExpired(TOKEN)) {
+                const token = localStorage.getItem(TOKEN);
+                return jwtHelper.decodeToken(token).userId;
+            } else {
+                return;
+            }
         } catch (e) {
-            console.log('please log in!');
+            console.log(e)
         }
-    }
-
-    constructor(private router: Router, private appRef: ApplicationRef) {
-        this.lock.on('authenticated', (authResult) => {
-            localStorage.setItem('token', authResult.idToken);
-            this.lock.getProfile(authResult.idToken, (error, profile) => {
-                localStorage.setItem('profile', JSON.stringify(profile));
-                this.navigateToHome();
-                this.appRef.tick();
-            });
-        });
-    }
-
-    login(): void {
-        this.lock.show();
-    }
-
-    logout(): void {
-        localStorage.removeItem('profile');
-        localStorage.removeItem('token');
-        this.navigateToHome();
-    }
-
-    isLoggedIn(): boolean {
-         return tokenNotExpired('token');
     }
 
     isUserAdmin(): boolean {
-        try {
-          return JSON.parse(
-            localStorage.getItem('profile')
-          )['role'] === 'admin' && this.isLoggedIn() ? true : false;
-        } catch (e) {
-              return false;
-        }
+        return true;
     }
 
-    navigateToHome(): void {
-        let params = this.router.url === '/items' ? ['/items', {
-            reload: 'yes' }] : ['/items'];
+    login(username: string, password: string ): Observable<any> {
+        return this.http.post<any>('login', {
+                'username': username,
+                'password': password
+            })
+            .do(res => localStorage.setItem(TOKEN, res[TOKEN]))
+            .shareReplay();
+    }
 
-        this.router.navigate(params);
+    logout() {
+        localStorage.removeItem(TOKEN);
+        this.router.navigateByUrl('/');
+    }
+
+    isLoggedIn(): boolean {
+        const expiration = this.getExpiration()
+        return expiration ? moment().isBefore(expiration) : false;
+    }
+
+    getExpiration() {
+        const token = localStorage.getItem(TOKEN);
+        return token ? moment.unix(jwtHelper.decodeToken(token).exp) : null;
     }
 }

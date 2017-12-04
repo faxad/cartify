@@ -5,6 +5,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser');
 const expressJwt = require('express-jwt');
+const jwt = require('jsonwebtoken');
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -27,6 +28,46 @@ const AUTH_SECRET = 'PTasQf3QuqubG-4u7tae2nOxobJ8QNkw26CnfLiVp5pe8jK6WK4guQd1LHI
 const checkIfAuthenticated = expressJwt({
     secret: new Buffer(AUTH_SECRET, 'base64'),
 });
+
+// AUTH
+
+const checkAuth = expressJwt({
+    secret: 'MYSECRET'
+});
+
+app.post('/login', function (req, res) {
+    const secret = 'MYSECRET';
+    // const username = req.body.username;
+    // const password = req.body.password;
+
+    if (true) {
+        var jwtBearerToken = jwt.sign(
+            {
+                userId: '101010110101'
+            },
+            secret,
+            {
+                algorithm: 'HS256',                
+                expiresIn: 9999,
+                // notBefore: 1,
+                issuer: 'Xpress-Auth',
+                subject: 'Authenticate & Authorize'
+            }
+        );
+        // const jwtBearerToken = jwt.sign(
+        //     {},
+        //     RSA_PRIVATE_KEY,
+        //     {
+        //         algorithm: 'RS256',
+        //         expiresIn: 120,
+        //         subject: userId
+        //     }
+        // )
+        res.send({'token': jwtBearerToken}) 
+    } else {
+        res.sendStatus(401); 
+    }
+})
 
 /**
  * FETCH ALL records for a given collection
@@ -137,8 +178,7 @@ function reviseOne(req, res, collection, condition, document) {
 //     fetchAll(req, res, 'review')
 // })
 
-
-app.get('/cart', (req, res) => {
+app.get('/cart', checkAuth, (req, res) => {
     fetchAll(req, res, 'cart')
 })
 
@@ -191,7 +231,7 @@ app.get('/inventory', function (req, res) {
  * INVENTORY (GET) - Retrieves inventory list for authenticated user
  * Includes users review count and cart count for each item
  */
-app.get('/inventory/:username', checkIfAuthenticated, function (req, res) {
+app.get('/inventory/:username', checkAuth, function (req, res) {
     MongoClient.connect(con, function (err, db) {
         if (err) throw err;
 
@@ -307,7 +347,7 @@ app.get('/inventory/:itemId/detail', function (req, res) {
 /**
  * ITEM/PRODUCT (POST) - Handles adding item to item/product
  */
-app.post('/inventory', checkIfAuthenticated, (req, res) => {
+app.post('/inventory', checkAuth, (req, res) => {
     document =  {
         name: req.body.name,
         code: req.body.code,
@@ -325,7 +365,7 @@ app.post('/inventory', checkIfAuthenticated, (req, res) => {
 /**
  * UPDATE ITEM/PRODUCT - Handles modification of item/product
  */
-app.put('/inventory', checkIfAuthenticated, (req, res) => {
+app.put('/inventory', checkAuth, (req, res) => {
     condition = {
         _id: mongodb.ObjectID(req.body._id)
     }
@@ -347,7 +387,7 @@ app.put('/inventory', checkIfAuthenticated, (req, res) => {
 /**
  * DELETE ITEM/PRODUCT - Handles removing item/product
  */
-app.delete('/inventory/:itemId', checkIfAuthenticated, function (req, res) {
+app.delete('/inventory/:itemId', checkAuth, function (req, res) {
     condition = {
         _id: mongodb.ObjectID(req.params.itemId)
     }
@@ -360,7 +400,7 @@ app.delete('/inventory/:itemId', checkIfAuthenticated, function (req, res) {
 /**
  * CART (GET) - Retrieves user's cart item(s)
  */
-app.get('/cart/:username', checkIfAuthenticated, (req, res) => {
+app.get('/cart/:username', checkAuth, (req, res) => {
     let itemId = req.query.itemId
 
     condition = {
@@ -416,7 +456,7 @@ app.get('/cart/:username', checkIfAuthenticated, (req, res) => {
 /**
  * CART ITEM (POST) - Handles adding item to cart
  */
-app.post('/cart', checkIfAuthenticated, (req, res) => {
+app.post('/cart', checkAuth, (req, res) => {
     document =  {
         userId: req.body.userId,
         itemId: mongodb.ObjectID(req.body.itemId),
@@ -429,7 +469,7 @@ app.post('/cart', checkIfAuthenticated, (req, res) => {
 /**
  * UPDATE CART - Handles modification of cart item
  */
-app.put('/cart', checkIfAuthenticated, (req, res) => {
+app.put('/cart', checkAuth, (req, res) => {
     condition = {
         _id: mongodb.ObjectID(req.body._id)
     }
@@ -447,7 +487,7 @@ app.put('/cart', checkIfAuthenticated, (req, res) => {
 /**
  * DELETE CART ITEM - Handles removing user cart item
  */
-app.delete('/cart/:cartItemId', checkIfAuthenticated, function (req, res) {
+app.delete('/cart/:cartItemId', checkAuth, function (req, res) {
     condition = {
         _id: mongodb.ObjectID(req.params.cartItemId)
     }
@@ -460,7 +500,7 @@ app.delete('/cart/:cartItemId', checkIfAuthenticated, function (req, res) {
 /**
  * ITEM/PRODUCT REVIEW (POST) - Handles creation of product's review
  */
-app.post('/review', checkIfAuthenticated, (req, res) => {
+app.post('/review', checkAuth, (req, res) => {
     document =  {
         userId: req.body.userId,
         itemId: mongodb.ObjectID(req.body.itemId),
@@ -475,7 +515,7 @@ app.post('/review', checkIfAuthenticated, (req, res) => {
 /**
  * DELETE ITEM/PRODUCT REVIEW - Handles removing user review
  */
-app.delete('/review/:reviewId', checkIfAuthenticated, function (req, res) {
+app.delete('/review/:reviewId', checkAuth, function (req, res) {
     condition = {
         _id: mongodb.ObjectID(req.params.reviewId)
     }
@@ -486,7 +526,7 @@ app.delete('/review/:reviewId', checkIfAuthenticated, function (req, res) {
 /**
  * UPDATE ITEM/PRODUCT REVIEW - Handles modification of user review
  */
-app.put('/review', checkIfAuthenticated, (req, res) => {
+app.put('/review', checkAuth, (req, res) => {
     condition = {
         _id: mongodb.ObjectID(req.body._id)
     }
@@ -502,7 +542,7 @@ app.put('/review', checkIfAuthenticated, (req, res) => {
 
     reviseOne(req, res, 'review', condition, document)
 })
-
+    
 app.listen(8080, function () {
   console.log('App listening on port 8080!')
 })

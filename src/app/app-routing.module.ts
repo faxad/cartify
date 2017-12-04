@@ -5,6 +5,7 @@ import { AuthGuard } from './auth.guard';
 import { ShopItemListComponent } from './shop/shop-item-list/shop-item-list.component';
 import { ShopItemDetailComponent } from './shop/shop-item-detail/shop-item-detail.component';
 import { ItemCartComponent } from './cart/cart-item-list.component';
+import { LoginComponent } from './auth/auth-component';
 
 const routes: Routes = [
     { path: '', component: ShopItemListComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
     { path: 'items/:reload', component: ShopItemListComponent }, // workaround to re-init loaded component
     { path: 'item/:id', component: ShopItemDetailComponent },
     { path: 'cart/:customerId', component: ItemCartComponent, canActivate: [AuthGuard] },
+    { path: 'login', component: LoginComponent },
     // { path: '**', component: NotFoundComponenet }
 ];
 

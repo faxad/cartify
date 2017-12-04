@@ -1,5 +1,5 @@
 export interface IAuthService {
-    login(): void;
+    login(email: string, password: string): any;
     logout(): void;
     isLoggedIn(): boolean;
     isUserAdmin(): boolean;

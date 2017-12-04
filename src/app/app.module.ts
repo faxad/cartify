@@ -12,6 +12,7 @@ import { ShopItemListComponent } from './shop/shop-item-list/shop-item-list.comp
 import { ShopItemDetailComponent } from './shop/shop-item-detail/shop-item-detail.component';
 import { ItemCartComponent } from './cart/cart-item-list.component';
 import { FormComponent } from './shop/shop-item-form/shop-item-form.component';
+import { LoginComponent } from './auth/auth-component';
 import { ShopItemFilterPipe } from './shop/shop-item-list//shop-item-filter.pipe';
 
 import { AuthService } from './shared/auth.service';
@@ -31,7 +32,13 @@ import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [
-    AppComponent, ShopItemListComponent, ShopItemDetailComponent, ItemCartComponent, ShopItemFilterPipe, FormComponent
+    AppComponent,
+    ShopItemListComponent,
+    ShopItemDetailComponent,
+    ItemCartComponent,
+    ShopItemFilterPipe,
+    FormComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

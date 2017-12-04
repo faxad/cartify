@@ -35,7 +35,7 @@ export class ShopItemListComponent implements OnInit {
     ) {}
 
     getShopItems(event: any): void {
-        let userId = this.auth.getUser();
+        let userId = this.auth.getAuthenticatedUserId();
         let getShopItemsObservable = this.shop.getShopItems()
 
         if (userId !== undefined) {
@@ -72,11 +72,11 @@ export class ShopItemListComponent implements OnInit {
     }
 
     addToCart(item: IShopItem): void {
-        if (item.cartCount === 0 || 'undefined') {
+        if ([0, 'undefined'].indexOf(item.cartCount) > -1) {
             this.cart.addCartItem(item)
                 .subscribe(cartItem => this.refreshCartCountFor(cartItem));
         } else {
-            this.cart.getCartItem(this.auth.getUser(), item._id)
+            this.cart.getCartItem(this.auth.getAuthenticatedUserId(), item._id)
                 .switchMap(cartItem => this.cart.increaseCartItemQunatity(cartItem))
                 .subscribe(cartItem => this.refreshCartCountFor(cartItem));
         }

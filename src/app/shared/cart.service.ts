@@ -13,10 +13,14 @@ import { ShopItem } from 'app/shop/shop-item.model';
 
 @Injectable()
 export class CartService implements ICartService {
-    constructor(private http: HttpClient, private shop: ShopService, private auth: AuthService) {}
+    constructor(
+        private auth: AuthService,
+        private http: HttpClient,
+        private shop: ShopService
+    ) {}
 
     getCartItems(): Observable<ICartItem[]> {
-        return this.http.get<ICartItem[]>('cart/' + this.auth.getUser())
+        return this.http.get<ICartItem[]>('cart/' + this.auth.getAuthenticatedUserId())
     }
 
     getCartItem(userId: string, itemId: string): Observable<ICartItem> {
@@ -25,7 +29,7 @@ export class CartService implements ICartService {
 
     addCartItem(shopItem: IShopItem): Observable<ICartItem> {
         let body: any = {
-            'userId': this.auth.getUser(),
+            'userId': this.auth.getAuthenticatedUserId(),
             'itemId': shopItem._id,
             'quantity': 1,
         };
@@ -39,14 +43,14 @@ export class CartService implements ICartService {
 
     increaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
         cartItem.quantity = cartItem.quantity + 1;
-        cartItem.userId = this.auth.getUser();
+        cartItem.userId = this.auth.getAuthenticatedUserId();
 
         return this.http.put<ICartItem>('cart', cartItem)
     }
 
     decreaseCartItemQunatity(cartItem: ICartItem): Observable<ICartItem> {
         cartItem.quantity = cartItem.quantity - 1;
-        cartItem.userId = this.auth.getUser();
+        cartItem.userId = this.auth.getAuthenticatedUserId();
 
         return this.http.put<ICartItem>('cart', cartItem)
     }

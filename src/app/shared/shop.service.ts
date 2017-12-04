@@ -40,7 +40,7 @@ export class ShopService implements IShopService {
     setShopItemReview(itemId: string, remarks: string, rating: number): Observable<IShopItemReview> {
         let body: any = {
             'itemId': itemId,
-            'userId': this.auth.getUser(),
+            'userId': this.auth.getAuthenticatedUserId(),
             'reviewDate': 'March 19, 2016',
             'remarks': remarks,
             'rating': rating
