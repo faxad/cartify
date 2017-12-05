@@ -1,13 +1,11 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
-import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable';
 
 import { IAuthService } from './auth-service.interface';
-import { IUser } from '../auth/user.interface'
 
 const jwtHelper = new JwtHelper()
 const TOKEN = 'token'

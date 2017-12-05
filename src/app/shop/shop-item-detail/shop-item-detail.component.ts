@@ -1,12 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { AuthService, ShopService } from '../../shared/index';
 import { IShopItem } from '../../shared/shop-item.interface';
-
-import {
-    AuthService,
-    ShopService,
-} from '../../shared/index';
 
 @Component({
     templateUrl: './shop-item-detail.component.html',
@@ -23,7 +19,7 @@ export class ShopItemDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private shop: ShopService) {}
-
+å
     ngOnInit(): void {
         this.shopItemId = this.route.snapshot.paramMap.get('id')
         this.shop.getShopItem(this.shopItemId)

@@ -1,11 +1,8 @@
+import 'rxjs/Rx';
+
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import 'rxjs/Rx';
-
-import { ShopItemListComponent } from './shop/shop-item-list/shop-item-list.component';
-import { ShopItemDetailComponent } from './shop/shop-item-detail/shop-item-detail.component';
-import { ItemCartComponent } from './cart/cart-item-list.component';
 import { AuthService } from './shared/auth.service';
 
 @Component({

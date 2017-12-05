@@ -1,10 +1,10 @@
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import { BaseError } from '../error/base-error';
 import { BadInputError } from '../error/bad-input-error';
-import { NotFoundError } from '../error/not-found-error';
+import { BaseError } from '../error/base-error';
 import { ForbiddenError } from '../error/forbidden-error';
+import { NotFoundError } from '../error/not-found-error';
 import { UnreachableError } from '../error/unreachable-error';
 
 export class AppError {

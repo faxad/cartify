@@ -1,15 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { IShopItem } from './shop-item.interface';
+import { AuthService } from './auth.service';
 import { ICartItem } from './cart-item.interface';
 import { ICartService } from './cart-service.interface';
-
-import { AuthService } from './auth.service';
+import { IShopItem } from './shop-item.interface';
 import { ShopService } from './shop.service';
-import { AppError } from '../error/app-error';
-import { ShopItem } from 'app/shop/shop-item.model';
 
 @Injectable()
 export class CartService implements ICartService {

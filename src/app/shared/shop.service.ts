@@ -1,15 +1,14 @@
-import { Injectable } from '@angular/core';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
+
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
-import { IShopItem } from './shop-item.interface';
 import { IShopItemReview } from './shop-item-review.interface';
+import { IShopItem } from './shop-item.interface';
 import { IShopService } from './shop-service.interface';
-import { AppError } from '../error/app-error';
-
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ShopService implements IShopService {
