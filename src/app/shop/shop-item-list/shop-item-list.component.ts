@@ -1,21 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { ApplicationRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import {
-    AuthService,
-    CartService,
-    ShopService,
-} from '../../shared/index';
-
-import { FormComponent } from '../shop-item-form/shop-item-form.component';
-import { IShopItem } from '../../shared/shop-item.interface';
-import { ShopItemFilterPipe } from './shop-item-filter.pipe';
-import { BaseError } from '../../error/base-error';
-import { NotFoundError } from '../../error/not-found-error';
-import { CartItem } from 'app/cart/cart-item.model';
-import { ICartItem } from 'app/shared/cart-item.interface';
+import { BaseError, NotFoundError } from '../../error';
+import { ICartItem, IShopItem } from '../../shared';
+import { AuthService, CartService, ShopService } from '../../shared/index';
 
 @Component({
     selector: 'list-item',

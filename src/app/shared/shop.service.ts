@@ -6,9 +6,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
-import { IShopItemReview } from './shop-item-review.interface';
-import { IShopItem } from './shop-item.interface';
-import { IShopService } from './shop-service.interface';
+import { IShopItem, IShopItemReview, IShopService } from '../shared';
 
 @Injectable()
 export class ShopService implements IShopService {

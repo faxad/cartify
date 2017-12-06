@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { BaseError } from '../error/base-error';
-import { NotFoundError } from '../error/not-found-error';
-import { ICartItem } from '../shared/cart-item.interface';
-import { CartService, ShopService } from '../shared/index';
+import { BaseError, NotFoundError } from '../error';
+import { CartService, ICartItem, ShopService } from '../shared';
 
 @Component({
     templateUrl: './cart-item-list.component.html',
