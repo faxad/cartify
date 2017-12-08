@@ -5,8 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from './auth.service';
-import { IShopItem, IShopItemReview, IShopService } from '../shared';
+import { AuthService } from '../services/auth.service'
+import { IShopService } from '../contracts/shop-service.interface';
+import { IShopItem, IShopItemReview } from '../../shared';
 
 @Injectable()
 export class ShopService implements IShopService {

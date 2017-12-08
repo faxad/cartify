@@ -5,7 +5,7 @@ import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
 
-import { IAuthService } from './auth-service.interface';
+import { IAuthService } from '../contracts/auth-service.interface';
 
 const jwtHelper = new JwtHelper()
 const TOKEN = 'token'

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 
-import { IShopItem } from './shop-item.interface';
+import { IShopItem } from '../../shared';
 
 export interface IShopService {
     getShopItems(): Observable<IShopItem[]>;

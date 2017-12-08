@@ -50,7 +50,7 @@
                             <a href="#" class="btn btn-default btn disabled" role="button">
                                 <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{shopItem.cartCount}}</span>
                             </a>
-                            <a [routerLink]="['/item', shopItem._id]" class="btn btn-success" role="button">
+                            <a [routerLink]="['/items', shopItem._id]" class="btn btn-success" role="button">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                             </a>
                             <shop-item-form [shopItem]='shopItem' (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></shop-item-form>

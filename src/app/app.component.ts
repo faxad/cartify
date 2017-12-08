@@ -3,7 +3,7 @@ import 'rxjs/Rx';
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
-import { AuthService } from './shared/auth.service';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
     selector: 'app-content',
@@ -18,7 +18,7 @@ import { AuthService } from './shared/auth.service';
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">
+              <a class="navbar-brand" href="/items">
                   <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true">Cartify</span>
               </a>
             </div>

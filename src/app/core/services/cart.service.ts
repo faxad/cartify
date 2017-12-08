@@ -2,11 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { AuthService } from './auth.service';
-import { ICartItem } from './cart-item.interface';
-import { ICartService } from './cart-service.interface';
-import { IShopItem } from './shop-item.interface';
-import { ShopService } from './shop.service';
+import { ICartItem, IShopItem } from '../../shared';
+import { ICartService } from '../contracts/cart-service.interface';
+import { AuthService } from '../services/auth.service';
+import { ShopService } from '../services/shop.service';
 
 @Injectable()
 export class CartService implements ICartService {
