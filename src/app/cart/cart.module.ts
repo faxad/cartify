@@ -7,7 +7,6 @@ import { CartRoutingModule } from './cart-routing.module';
 
 @NgModule({
   imports: [
-    CommonModule,
     CartRoutingModule,
     SharedModule
   ],

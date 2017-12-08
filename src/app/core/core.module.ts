@@ -6,9 +6,7 @@ import { CartService } from '../core/services/cart.service';
 import { ShopService } from '../core/services/shop.service';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
+  imports: [],
   declarations: [],
   providers: [
     AuthService,
