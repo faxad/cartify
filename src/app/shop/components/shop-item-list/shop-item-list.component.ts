@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ApplicationRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { AuthService } from '../../core/services/auth.service';
-import { CartService } from '../../core/services/cart.service';
-import { ShopService } from '../../core/services/shop.service';
-import { BaseError, NotFoundError } from '../../error';
-import { ICartItem, IShopItem } from '../../shared';
+import { AuthService } from '../../../core/services/auth.service';
+import { CartService } from '../../../core/services/cart.service';
+import { ShopService } from '../../../core/services/shop.service';
+import { BaseError, NotFoundError } from '../../../error';
+import { ICartItem, IShopItem } from '../../../shared';
 
 @Component({
     selector: 'list-item',

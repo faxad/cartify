@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ShopService } from '../../core/services/shop.service';
-import { IShopItem } from '../../shared';
-import { ValidationService } from './validation.service';
-import { ExtendedValidators } from './validators';
+import { ShopService } from '../../../core/services/shop.service';
+import { IShopItem } from '../../../shared';
+import { ValidationService } from './form-validation.service';
+import { ShopItemFormValidators } from './shop-item-form.validators';
 
 @Component({
     selector: 'shop-item-form',
@@ -39,7 +39,7 @@ export class FormComponent implements OnInit {
             '_id': [{ value: null, disabled: false }],
             'name': ['', Validators.compose([
                             Validators.required,
-                            ExtendedValidators.nameValidator])
+                            ShopItemFormValidators.nameValidator])
             ],
             'code': ['', Validators.required],
             'unitPrice': ['', Validators.required],

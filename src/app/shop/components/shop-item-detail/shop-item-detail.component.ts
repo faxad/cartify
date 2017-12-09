@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthService } from '../../core/services/auth.service';
-import { ShopService } from '../../core/services/shop.service';
-import { IShopItem } from '../../shared';
+import { AuthService } from '../../../core/services/auth.service';
+import { ShopService } from '../../../core/services/shop.service';
+import { IShopItem } from '../../../shared';
 
 @Component({
     templateUrl: './shop-item-detail.component.html',

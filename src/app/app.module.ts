@@ -5,14 +5,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
 import { environment } from '../environments/environment';
-import { API_URL } from './api-interceptor';
-import { ApiInterceptor } from './api-interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthInterceptor } from './auth-interceptor';
 import { AuthGuard } from './auth.guard';
 import { CoreModule } from './core/core.module';
 import { AppErrorHandler } from './error/app-error-handler';
+import { API_URL, ApiInterceptor } from './interceptors/api.interceptor';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
