@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
-import { ICartItem, IShopItem } from '../../shared';
+import { ICartItem, IShopItem } from 'shared';
 import { ICartService } from '../contracts/cart-service.interface';
 import { AuthService } from '../services/auth.service';
 import { ShopService } from '../services/shop.service';

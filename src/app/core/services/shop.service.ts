@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../services/auth.service'
 import { IShopService } from '../contracts/shop-service.interface';
-import { IShopItem, IShopItemReview } from '../../shared';
+import { IShopItem, IShopItemReview } from 'shared';
 
 @Injectable()
 export class ShopService implements IShopService {

@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 
-import { ICartItem, IShopItem } from '../../shared';
+import { ICartItem, IShopItem } from 'shared';
 
 export interface ICartService {
     getCartItems(): Observable<ICartItem[]>;

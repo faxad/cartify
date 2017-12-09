@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CalendarModule, RatingModule } from 'primeng/primeng';
 
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from 'shared';
 import { ShopItemDetailComponent } from './components/shop-item-detail/shop-item-detail.component';
-import { FormComponent } from './components/shop-item-form';
-import { ShopItemFilterPipe, ShopItemListComponent } from './components/shop-item-list';
+import { FormComponent } from './components/shop-item-form/shop-item-form.component';
+import { ShopItemListComponent } from './components/shop-item-list/shop-item-list.component';
+import { ShopItemFilterPipe } from './components/shop-item-list/shop-item-filter.pipe'
 import { ShopRoutingModule } from './shop-routing.module';
 
 @NgModule({

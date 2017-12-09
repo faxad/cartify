@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ShopService } from '../../../core/services/shop.service';
-import { IShopItem } from '../../../shared';
+import { ShopService } from 'core';
+import { IShopItem } from 'shared';
 import { ValidationService } from './form-validation.service';
 import { ShopItemFormValidators } from './shop-item-form.validators';
 

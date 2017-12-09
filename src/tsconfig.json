@@ -13,9 +13,13 @@
     "typeRoots": [
       "../node_modules/@types"
     ],
-    "baseUrl": "../src",
+    "baseUrl": ".",
     "paths": {
-      "error/*": ["app/error/*"]
+      "auth": ["app/auth"],      
+      "core": ["app/core"],
+      "error": ["app/error"],
+      "shared": ["app/shared"],
+      "shop": ["app/shop"]      
     }
   }
 }
