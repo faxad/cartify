@@ -7,7 +7,6 @@ import { BaseError, NotFoundError } from 'error';
 import { ICartItem, IShopItem } from 'shared';
 
 @Component({
-    selector: 'list-item',
     templateUrl: './shop-item-list.component.html',
     styleUrls: ['./shop-item-list.component.css']
 })

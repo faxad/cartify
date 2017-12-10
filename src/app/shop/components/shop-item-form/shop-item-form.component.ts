@@ -7,7 +7,7 @@ import { ValidationService } from './form-validation.service';
 import { ShopItemFormValidators } from './shop-item-form.validators';
 
 @Component({
-    selector: 'shop-item-form',
+    selector: 'app-shop-item-form',
     templateUrl: './shop-item-form.component.html',
     styleUrls: ['./shop-item-form.component.css'],
     providers: [ValidationService]
@@ -50,15 +50,11 @@ export class FormComponent implements OnInit {
 
         if (this.shopItem) {
             this.isCreateForm = false;
-            for (let key in this.shopItemForm.controls) {
-                let value;
-                if  (key === 'releaseDate') {
-                    value = new Date(this.shopItem[key]);
-                } else {
-                    value = this.shopItem[key];
-                }
-
-                (this.shopItemForm.controls[key] as FormControl).setValue(value); // updateValue
+            for (let key of Object.keys(this.shopItemForm.controls)) {
+                (this.shopItemForm.controls[key] as FormControl).setValue(
+                    (key === 'releaseDate') ? new Date(
+                        this.shopItem[key]) : this.shopItem[key]
+                ); // updateValue
             }
         }
 

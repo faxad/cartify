@@ -1,5 +1,5 @@
 <div>
-    <shop-item-form (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></shop-item-form>
+    <app-shop-item-form (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></app-shop-item-form>
     <div class='panel-body'>
         <div class='row'>
             <div class="input-group">
@@ -53,7 +53,7 @@
                             <a [routerLink]="['/items', shopItem._id]" class="btn btn-success" role="button">
                                 <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
                             </a>
-                            <shop-item-form [shopItem]='shopItem' (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></shop-item-form>
+                            <app-shop-item-form [shopItem]='shopItem' (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></app-shop-item-form>
                         </div>
                     </div>
                 </div>
