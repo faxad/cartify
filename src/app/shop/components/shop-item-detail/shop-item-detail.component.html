@@ -1,5 +1,5 @@
 <div class='panel-body'>
-    <div class="col-md-11">
+    <div class="col-md-11" *ngIf='shopItem$ | async as shopItem'>
         <ol class="breadcrumb">
             <li><a class="btn btn-default btn-link" role="button" (click)='goBack()'>Home</a></li>
             <li class="active">Detail</li>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <br/>
-            <form (ngSubmit)="onSubmit(remarks.value)">
+            <form (ngSubmit)="onSubmit(shopItem._id, remarks.value)">
                 <div class="row">
                     <div class="col-xs-12 col-md-8">
                         <h4>

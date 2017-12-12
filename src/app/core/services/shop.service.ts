@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from '../services/auth.service'
 import { IShopService } from '../contracts/shop-service.interface';
+import { BaseError, NotFoundError } from 'error';
 import { IShopItem, IShopItemReview } from 'shared';
 
 @Injectable()
@@ -20,7 +21,23 @@ export class ShopService implements IShopService {
             url = url + '/' + userId;
         }
 
-        return this.http.get<IShopItem[]>(url)
+        const network$ = this.http
+            .get<IShopItem[]>(url)
+            .publishReplay(1, 5000)
+            .refCount();
+
+        network$.subscribe(
+            () => console.log('HTTP GET successful'),
+            (error: BaseError) => {
+                if (error instanceof NotFoundError) {
+                    console.log('NOT FOUND');
+                } else {
+                    throw error;
+                }
+            },
+        );
+
+        return network$;
     }
 
     getShopItem(id: string): Observable<IShopItem> {

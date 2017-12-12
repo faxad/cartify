@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 
 import { CartService } from '../core/services/cart.service';
 import { ShopService } from '../core/services/shop.service'
-import { BaseError, NotFoundError } from '../error';
 import { ICartItem } from '../shared';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators'
 
 
 @Component({
@@ -12,23 +13,15 @@ import { ICartItem } from '../shared';
     providers: [CartService, ShopService]
 })
 export class ItemCartComponent implements OnInit {
-    private userCartItems: ICartItem[];
+    private userCartItems$: Observable<ICartItem[]>;
     private showLoading = true;
 
     constructor(private router: Router, private cart: CartService) {}
 
     ngOnInit(): void {
-        this.cart.getCartItems().subscribe(
-            cart => this.userCartItems = cart,
-            (error: BaseError) => {
-                if (error instanceof NotFoundError) {
-                    console.log('NOT FOUND');
-                } else {
-                    throw error;
-                }
-            },
-            () => this.showLoading = false
-        );
+        this.userCartItems$ = this.cart.getCartItems().pipe(
+            tap(() => this.showLoading = false)
+        )
     }
 
     increaseQuantity(item: ICartItem): void {

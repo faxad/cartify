@@ -3,7 +3,6 @@ import { ApplicationRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { AuthService, CartService, ShopService } from 'core';
-import { BaseError, NotFoundError } from 'error';
 import { ICartItem, IShopItem } from 'shared';
 
 @Component({
@@ -30,17 +29,13 @@ export class ShopItemListComponent implements OnInit {
             getShopItemsObservable = this.shop.getShopItems(userId)
         }
 
-        getShopItemsObservable.subscribe(
+        this.shop.getShopItems(userId).subscribe(
             shopItems => {
                 this.shopItems = shopItems;
                 // this.appRef.tick();
             },
-            (error: BaseError) => {
-                if (error instanceof NotFoundError) {
-                    console.log('NOT FOUND');
-                } else {
-                    throw error;
-                }
+            () => {
+                console.log('Error has occured')
             },
             () => {
                 this.showLoading = false;

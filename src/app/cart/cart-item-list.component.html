@@ -17,7 +17,7 @@
             <p *ngIf='showLoading' style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
         </td>
     </tr>
-    <tr *ngFor='let cartItem of userCartItems'>
+    <tr *ngFor='let cartItem of userCartItems$ | async'>
         <td>{{cartItem._id}}</td>
         <td>{{cartItem.item.name}}</td>
         <td>{{cartItem.item.code}}</td>

@@ -3,16 +3,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AuthService, ShopService } from 'core';
 import { IShopItem } from 'shared';
+import { Observable } from 'rxjs';
 
 @Component({
     templateUrl: './shop-item-detail.component.html',
     providers: [ShopService]
 })
 export class ShopItemDetailComponent implements OnInit {
-    public shopItem: IShopItem;
+    private shopItem$: Observable<IShopItem>;
     private reviewText = '';
     private starRating = 0;
-    private shopItemId = null;
 
     constructor(
         private auth: AuthService,
@@ -21,17 +21,17 @@ export class ShopItemDetailComponent implements OnInit {
         private shop: ShopService) {}
 
     ngOnInit(): void {
-        this.shopItemId = this.route.snapshot.paramMap.get('id')
-        this.shop.getShopItem(this.shopItemId)
-            .subscribe(shopItem => this.shopItem = shopItem);
+        this.shopItem$ = this.shop.getShopItem(
+            this.route.snapshot.paramMap.get('id')
+        );
     }
 
     goBack(): void {
         this.router.navigate(['/items']);
     }
 
-    onSubmit(remarks: string): void {
-        this.shop.setShopItemReview(this.shopItemId, remarks, this.starRating)
+    onSubmit(shopItemId: string, remarks: string): void {
+        this.shop.setShopItemReview(shopItemId, remarks, this.starRating)
             .subscribe(shopItemReview => {
                 this.reviewText = '';
                 this.starRating = 0;
