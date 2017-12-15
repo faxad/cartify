@@ -20,40 +20,44 @@
             </div>
         </div>
         <br/>
-        <p *ngIf='!shopItems' style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
-        <div class="row" *ngIf='shopItems && shopItems.length'>
-            <div class="col-sm-4 col-lg-4 col-md-4" *ngFor='let shopItem of shopItems | shopItemFilter:filterBy'>
-                <div class="thumbnail">
-                    <img src="http://placehold.it/320x150" alt="">
-                    <div class="caption">
-                        <h4 class="pull-right">${{shopItem.unitPrice}}</h4>
-                        <h4 id='shopItem{{shopItem._id}}Title'>{{shopItem.name}}
-                          <a data-toggle="modal" href="#{{shopItem._id}}" *ngIf='auth.isUserAdmin()'>
-                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                          </a>
-                       </h4>
-                        <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
-                    </div>
-                    <div class="ratings">
-                        <p class="pull-right">{{shopItem.reviewsCount}} reviews</p>
-                        <div class="crop">
-                            <div style="width: 86px">
-                                <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating>
+        <ng-template #loading>
+                <p style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
+        </ng-template>
+        <div *ngIf="(shopItems$ | async) as shopItems else loading">
+            <div class="row" *ngIf='shopItems && shopItems.length'>
+                <div class="col-sm-4 col-lg-4 col-md-4" *ngFor='let shopItem of shopItems | shopItemFilter:filterBy'>
+                    <div class="thumbnail">
+                        <img src="http://placehold.it/320x150" alt="">
+                        <div class="caption">
+                            <h4 class="pull-right">${{shopItem.unitPrice}}</h4>
+                            <h4 id='shopItem{{shopItem._id}}Title'>{{shopItem.name}}
+                            <a data-toggle="modal" href="#{{shopItem._id}}" *ngIf='auth.isUserAdmin()'>
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </a>
+                        </h4>
+                            <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+                        </div>
+                        <div class="ratings">
+                            <p class="pull-right">{{shopItem.reviewsCount}} reviews</p>
+                            <div class="crop">
+                                <div style="width: 86px">
+                                    <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <button type="button" class="btn btn-primary" (click)='addToCart(shopItem)' [disabled]='!auth.isLoggedIn()'>
-                                <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy
-                            </button>
-                            <a href="#" class="btn btn-default btn disabled" role="button">
-                                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{shopItem.cartCount}}</span>
-                            </a>
-                            <a [routerLink]="['/items', shopItem._id]" class="btn btn-success" role="button">
-                                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                            </a>
-                            <app-shop-item-form [shopItem]='shopItem' (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></app-shop-item-form>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <button type="button" class="btn btn-primary" (click)='addToCart(shopItem)' [disabled]='!auth.isLoggedIn()'>
+                                    <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy
+                                </button>
+                                <a href="#" class="btn btn-default btn disabled" role="button">
+                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{shopItem.cartCount}}</span>
+                                </a>
+                                <a [routerLink]="['/items', shopItem._id]" class="btn btn-success" role="button">
+                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                </a>
+                                <app-shop-item-form [shopItem]='shopItem' (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></app-shop-item-form>
+                            </div>
                         </div>
                     </div>
                 </div>

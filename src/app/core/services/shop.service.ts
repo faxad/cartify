@@ -8,11 +8,18 @@ import { Observable } from 'rxjs/Observable';
 import { AuthService } from '../services/auth.service'
 import { IShopService } from '../contracts/shop-service.interface';
 import { BaseError, NotFoundError } from 'error';
-import { IShopItem, IShopItemReview } from 'shared';
+import { IShopItem, IShopItemReview, ICartItem } from 'shared';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class ShopService implements IShopService {
-    constructor(private http: HttpClient, private auth: AuthService) {}
+    private subject = new BehaviorSubject<IShopItem[]>([])
+    public shopItems$: Observable<IShopItem[]> = this.subject.asObservable()
+
+    constructor(
+        private http: HttpClient,
+        private auth: AuthService
+    ) {}
 
     getShopItems(userId?: string): Observable<IShopItem[]> {
         let url = 'inventory';
@@ -27,7 +34,10 @@ export class ShopService implements IShopService {
             .refCount();
 
         network$.subscribe(
-            () => console.log('HTTP GET successful'),
+            shopItems => {
+                console.log('HTTP GET successful')
+                this.subject.next(shopItems);
+            },
             (error: BaseError) => {
                 if (error instanceof NotFoundError) {
                     console.log('NOT FOUND');
@@ -62,5 +72,14 @@ export class ShopService implements IShopService {
         };
 
         return this.http.post<IShopItemReview>('review', body)
+    }
+
+    refreshCartCountFor(cartItem: ICartItem) {
+        this.subject.value
+            .filter(shopItem => shopItem._id === cartItem.itemId)
+            .shift()
+            .cartCount = cartItem.quantity
+
+        this.subject.next(this.subject.value);
     }
 }
