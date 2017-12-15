@@ -52,6 +52,9 @@ export class ShopItemListComponent implements OnInit {
             this.cart.getCartItem(this.auth.getAuthenticatedUserId(), item._id)
                 .switchMap(cartItem => this.cart.increaseCartItemQunatity(cartItem))
                 .subscribe(cartItem => this.refreshCartCountFor(cartItem));
+                // .first() ensure first observable completes
+                // .publishLast() publish only when the last observable is completed
+                // .refCount() keep it in memeory
         }
     }
 }

@@ -1,3 +1,5 @@
+import { BehaviorSubject } from 'rxjs/Rx';
+import { IUser } from '../../auth';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,13 +11,24 @@ import { IAuthService } from '../contracts/auth-service.interface';
 
 const jwtHelper = new JwtHelper()
 const TOKEN = 'token'
+const UNKNOWN_USER: IUser = {
+    username: undefined
+}
 
 @Injectable()
 export class AuthService implements IAuthService {
+    private subject = new BehaviorSubject(UNKNOWN_USER);
+    public user$: Observable<IUser> = this.subject.asObservable();
+
     constructor(
         private router: Router,
         private http: HttpClient
-    ) {}
+    ) {
+        console.log('Auth service initialized!')
+        if (this.isLoggedIn()) {
+            this.subject.next({'username': 'fawad'}) // TODO: replace with actual users
+        }
+    }
 
     getAuthenticatedUserId(): string {
         try {
@@ -40,12 +53,14 @@ export class AuthService implements IAuthService {
                 'password': password
             })
             .do(res => localStorage.setItem(TOKEN, res[TOKEN]))
-            .shareReplay();
+            .do(() => this.subject.next({'username': username}))
+            .shareReplay(); // TODO: check .publishLast().refCount()
     }
 
     logout() {
         localStorage.removeItem(TOKEN);
-        this.router.navigateByUrl('/');
+        this.subject.next(UNKNOWN_USER);
+        this.router.navigateByUrl('/items');
     }
 
     isLoggedIn(): boolean {
