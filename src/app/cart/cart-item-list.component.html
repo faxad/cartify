@@ -2,7 +2,10 @@
     <li><a class="btn btn-default btn-link" role="button" (click)='goBack()'>Home</a></li>
     <li class="active">Cart</li>
 </ol>
-<table class="table table-striped">
+<ng-template #loading>
+    <p style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
+</ng-template>
+<table *ngIf="(userCartItems$ | async) as cartItems else loading" class="table table-striped">
     <tr>
         <th>Ref.</th>
         <th>Name</th>
@@ -12,12 +15,7 @@
         <th>Net Price</th>
         <th></th>
     </tr>
-    <tr>
-        <td colspan=6>
-            <p *ngIf='showLoading' style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
-        </td>
-    </tr>
-    <tr *ngFor='let cartItem of userCartItems$ | async'>
+    <tr *ngFor='let cartItem of cartItems'>
         <td>{{cartItem._id}}</td>
         <td>{{cartItem.item.name}}</td>
         <td>{{cartItem.item.code}}</td>

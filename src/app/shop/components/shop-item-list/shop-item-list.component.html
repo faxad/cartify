@@ -21,7 +21,7 @@
         </div>
         <br/>
         <ng-template #loading>
-                <p style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
+            <p style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
         </ng-template>
         <div *ngIf="(shopItems$ | async) as shopItems else loading">
             <div class="row" *ngIf='shopItems && shopItems.length'>
