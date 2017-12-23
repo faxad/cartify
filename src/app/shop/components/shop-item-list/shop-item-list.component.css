@@ -1,3 +1,18 @@
 thead {
 	color: #337AB7;
 }
+
+.material-card {
+	width: 400px;
+  }
+  
+.card-header-image {
+	background-image: url('http://placehold.it/320x150');
+	background-size: cover;
+}
+
+.flex-fill-remaining-space { flex: 1 1 auto; }
+
+.search-form-field {
+	width: 80%
+}

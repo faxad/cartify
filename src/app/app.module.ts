@@ -1,3 +1,4 @@
+import '../polyfills';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +13,7 @@ import { CoreModule } from './core/core.module';
 import { AppErrorHandler } from './error/app-error-handler';
 import { API_URL, ApiInterceptor } from './interceptors/api.interceptor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     RouterModule,
     AppRoutingModule,
     CoreModule,
+    MaterialModule
   ],
   providers: [
     AuthGuard,

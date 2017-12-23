@@ -5,6 +5,9 @@ import { AuthService, CartService, ShopService } from 'core';
 import { IShopItem, ICartItem } from 'shared';
 import { Observable } from 'rxjs/Observable';
 
+import { MatDialog } from '@angular/material';
+import { FormComponent } from '../shop-item-form/shop-item-form.component'
+
 @Component({
     templateUrl: './shop-item-list.component.html',
     styleUrls: ['./shop-item-list.component.css']
@@ -16,8 +19,29 @@ export class ShopItemListComponent implements OnInit {
         private shop: ShopService,
         private auth: AuthService,
         private cart: CartService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        public dialog: MatDialog
     ) {}
+
+    openDialog(shopItem?): void {
+        let dialogRef = this.dialog.open(FormComponent, {
+            width: '650px',
+            height: '500px',
+            data: {
+                _id: shopItem ? shopItem._id : undefined,
+                name: shopItem ? shopItem.name : undefined,
+                code: shopItem ? shopItem.code : undefined,
+                unitPrice: shopItem ? shopItem.unitPrice : undefined,
+                quantityInStock: shopItem ? shopItem.quantityInStock : undefined,
+                // releaseDate: shopItem ? shopItem.releaseDate : undefined,
+                description: shopItem ? shopItem.description : undefined,
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+        });
+    }
 
     getShopItems(event: any): void {
         const userId = this.auth.getAuthenticatedUserId();

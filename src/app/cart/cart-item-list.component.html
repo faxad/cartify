@@ -1,11 +1,7 @@
-<ol class="breadcrumb">
-    <li><a class="btn btn-default btn-link" role="button" (click)='goBack()'>Home</a></li>
-    <li class="active">Cart</li>
-</ol>
 <ng-template #loading>
     <p style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
 </ng-template>
-<table *ngIf="(userCartItems$ | async) as cartItems else loading" class="table table-striped">
+<table *ngIf="(userCartItems$ | async) as cartItems else loading">
     <tr>
         <th>Ref.</th>
         <th>Name</th>
@@ -23,15 +19,15 @@
         <td>{{cartItem.quantity}}</td>
         <td>{{cartItem.item.unitPrice * cartItem.quantity}}</td>
         <td>
-            <p>
-                <button type="button" class="btn btn-default btn-xs" (click)='increaseQuantity(cartItem)'>
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="btn btn-default btn-xs" (click)='decreaseQunatity(cartItem)'>
-                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="btn btn-danger btn-xs" (click)='removeCartItem(cartItem)'>Delete</button>
-            </p>
+            <button mat-icon-button (click)="increaseQuantity(cartItem)">
+                <mat-icon>add_box</mat-icon>
+            </button>
+            <button mat-icon-button (click)="decreaseQunatity(cartItem)">
+                <mat-icon>indeterminate_check_box</mat-icon>
+            </button>
+            <button mat-icon-button (click)="removeCartItem(cartItem)">
+                <mat-icon>delete_forever</mat-icon>
+            </button>
         </td>
     </tr>
 </table>

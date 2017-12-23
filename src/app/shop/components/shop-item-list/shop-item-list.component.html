@@ -1,67 +1,67 @@
-<div>
-    <app-shop-item-form (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></app-shop-item-form>
-    <div class='panel-body'>
-        <div class='row'>
-            <div class="input-group">
-                <div class="input-group-addon">
-                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                </div>
-                <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search for..." [(ngModel)]='filterBy'>
-                <div class="input-group-addon" *ngIf='auth.isUserAdmin()'>
-                    <a data-toggle="modal" href="#shopItemModal">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                    </a>
-                </div>
-                <div class="input-group-addon" *ngIf='auth.isLoggedIn()'>
-                    <a [routerLink]="['/cart', auth.getAuthenticatedUserId()]">
-                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <br/>
-        <ng-template #loading>
-            <p style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
-        </ng-template>
-        <div *ngIf="(shopItems$ | async) as shopItems else loading">
-            <div class="row" *ngIf='shopItems && shopItems.length'>
-                <div class="col-sm-4 col-lg-4 col-md-4" *ngFor='let shopItem of shopItems | shopItemFilter:filterBy'>
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/320x150" alt="">
-                        <div class="caption">
-                            <h4 class="pull-right">${{shopItem.unitPrice}}</h4>
-                            <h4 id='shopItem{{shopItem._id}}Title'>{{shopItem.name}}
-                            <a data-toggle="modal" href="#{{shopItem._id}}" *ngIf='auth.isUserAdmin()'>
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </a>
-                        </h4>
-                            <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
-                        </div>
-                        <div class="ratings">
-                            <p class="pull-right">{{shopItem.reviewsCount}} reviews</p>
-                            <div class="crop">
-                                <div style="width: 86px">
-                                    <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <button type="button" class="btn btn-primary" (click)='addToCart(shopItem)' [disabled]='!auth.isLoggedIn()'>
-                                    <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Buy
-                                </button>
-                                <a href="#" class="btn btn-default btn disabled" role="button">
-                                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>&nbsp;<span class="badge">{{shopItem.cartCount}}</span>
-                                </a>
-                                <a [routerLink]="['/items', shopItem._id]" class="btn btn-success" role="button">
-                                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                                </a>
-                                <app-shop-item-form [shopItem]='shopItem' (shopItemsUpdated)="getShopItems($event);" *ngIf='auth.isUserAdmin()'></app-shop-item-form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div layout="row" flex layout-align="center center">
+    <a mat-icon-button disabled>
+        <mat-icon>search</mat-icon>
+    </a>
+    <mat-form-field class="search-form-field">
+        <input matInput type="text" placeholder="Search for..." [(ngModel)]="filterBy"/>
+        <button mat-button *ngIf="filterBy" matSuffix mat-icon-button aria-label="Clear" (click)="filterBy=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <button mat-icon-button (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+    </button> <!-- *ngIf='auth.isUserAdmin()' -->
+    <a mat-icon-button [routerLink]="['/cart', auth.getAuthenticatedUserId()]">
+        <mat-icon>shopping_cart</mat-icon>
+    </a> <!-- *ngIf='auth.isUserAdmin()' -->
 </div>
+        
+<ng-template #loading>
+    <p style="text-align:center"><br/><br/><br/><br/><img src="assets/spin.svg"/></p>
+</ng-template>
+
+<mat-grid-list cols="3" rowHeight="550" *ngIf="(shopItems$ | async) as shopItems else loading">
+    <mat-grid-tile *ngFor='let shopItem of shopItems | shopItemFilter:filterBy'>
+        <mat-card class="material-card">
+            <mat-card-header>
+                <div mat-card-avatar class="card-header-image"></div>
+                <mat-card-title>{{shopItem.name}}</mat-card-title>
+                <mat-card-subtitle>
+                    <span>Dog Breed</span>
+                </mat-card-subtitle>
+                <span class="flex-fill-remaining-space"></span>
+                <span>${{shopItem.unitPrice}}</span>
+            </mat-card-header>
+            <img mat-card-image src="http://placehold.it/320x150" alt="Photo of a Shiba Inu">
+            <mat-card-content>
+                <p>
+                The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                bred for hunting.
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <mat-toolbar>
+                    <p-rating [(ngModel)]="shopItem.rating" [cancel]="false" readonly="true"></p-rating>
+                    <span class="flex-fill-remaining-space"></span>
+                    <mat-chip-list>
+                        <mat-chip>{{shopItem.reviewsCount}} reviews</mat-chip>
+                    </mat-chip-list>
+                </mat-toolbar>
+            </mat-card-actions>
+            <mat-card-actions align="end">
+                <button mat-icon-button (click)='addToCart(shopItem)' [disabled]='!auth.isLoggedIn()'>
+                    <mat-icon>add_shopping_cart</mat-icon>
+                    {{shopItem.cartCount}}
+                </button> 
+                <a mat-icon-button [routerLink]="['/items', shopItem._id]">
+                    <mat-icon>info_outline</mat-icon>
+                </a>
+                <span class="flex-fill-remaining-space"></span>
+                <button mat-icon-button (click)="openDialog(shopItem)">
+                    <mat-icon>open_in_new</mat-icon>
+                </button> <!-- *ngIf='auth.isUserAdmin()' -->                        
+            </mat-card-actions>
+            </mat-card>
+    </mat-grid-tile>
+</mat-grid-list>

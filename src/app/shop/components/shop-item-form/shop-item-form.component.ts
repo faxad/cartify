@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ShopService } from 'core';
 import { IShopItem } from 'shared';
 import { ValidationService } from './form-validation.service';
 import { ShopItemFormValidators } from './shop-item-form.validators';
+
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
     selector: 'app-shop-item-form',
@@ -21,7 +23,14 @@ export class FormComponent implements OnInit {
     constructor(
         private shop: ShopService,
         private validation: ValidationService,
-        private formBuilder: FormBuilder) {}
+        private formBuilder: FormBuilder,
+        public dialogRef: MatDialogRef<FormComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) {}
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
 
     submitItem(form: any): void {
         if (form.valid) {
@@ -29,34 +38,36 @@ export class FormComponent implements OnInit {
             this.shop[action](form.value).subscribe(
                 shopItem => { this.shopItemsUpdated.emit(null); },
             );
+            this.dialogRef.close();
         } else {
             alert('Form Validation Failed! Please Re-Submit.');
         }
     }
 
     ngOnInit(): void {
+        this.isCreateForm = this.data._id === undefined ? true : false
         this.shopItemForm = this.formBuilder.group({
-            '_id': [{ value: null, disabled: false }],
-            'name': ['', Validators.compose([
+            '_id': [{ value: this.data ? this.data._id : '', disabled: false }],
+            'name': [this.data ? this.data.name : '', Validators.compose([
                             Validators.required,
                             ShopItemFormValidators.nameValidator])
             ],
-            'code': ['', Validators.required],
-            'unitPrice': ['', Validators.required],
-            'quantityInStock': ['', Validators.required],
-            'releaseDate': [''],
-            'description': ['']
+            'code': [this.data ? this.data.code : '', Validators.required],
+            'unitPrice': [this.data ? this.data.unitPrice : '', Validators.required],
+            'quantityInStock': [this.data ? this.data.quantityInStock : '', Validators.required],
+            // 'releaseDate': [this.data ? this.data.releaseDate : ''],
+            'description': [this.data ? this.data.description : '']
         });
 
-        if (this.shopItem) {
-            this.isCreateForm = false;
-            for (let key of Object.keys(this.shopItemForm.controls)) {
-                (this.shopItemForm.controls[key] as FormControl).setValue(
-                    (key === 'releaseDate') ? new Date(
-                        this.shopItem[key]) : this.shopItem[key]
-                ); // updateValue
-            }
-        }
+        // if (this.shopItem) {
+        //     this.isCreateForm = false;
+        //     for (let key of Object.keys(this.shopItemForm.controls)) {
+        //         (this.shopItemForm.controls[key] as FormControl).setValue(
+        //             (key === 'releaseDate') ? new Date(
+        //                 this.shopItem[key]) : this.shopItem[key]
+        //         ); // updateValue
+        //     }
+        // }
 
         this.validation.configure(
             this.shopItemForm,

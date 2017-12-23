@@ -1,145 +1,56 @@
-<div
-  class="modal fade"
-  [attr.id]="shopItem ? shopItem._id : 'shopItemModal'"
-  role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button 
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" id="shopItemModalLabel">
-          <span
-            class="glyphicon glyphicon-edit"
-            aria-hidden="true">
-          </span>
-          Shop Item
-        </h4>
+<h1 mat-dialog-title>Title</h1>
+<div mat-dialog-content>
+  <form novalidate [formGroup]="shopItemForm">
+      <div style="display: flex">
+          <div style="flex: 1">
+            <mat-form-field>
+              <input matInput placeholder="ID" formControlName="_id">
+              <mat-error *ngIf="validation.check('_id').result">
+                {{validation.check('_id').message}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Product Name" formControlName="name" required>
+              <mat-error *ngIf="validation.check('name').result">
+                {{validation.check('name').message}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Product Code" placeholder="e.g. KPX-285C" formControlName="code" required>
+              <mat-error *ngIf="validation.check('code').result">
+                {{validation.check('code').message}}
+              </mat-error>
+            </mat-form-field>  
+          </div>
+          <div style="flex: 1">
+            <mat-form-field>
+              <input matInput placeholder="Unit Price" formControlName="unitPrice" required>
+              <mat-error *ngIf="validation.check('unitPrice').result">
+                {{validation.check('unitPrice').message}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Quantity In Stock" formControlName="quantityInStock" required>
+              <mat-error *ngIf="validation.check('quantityInStock').result">
+                {{validation.check('quantityInStock').message}}
+              </mat-error>
+            </mat-form-field>
+          </div>
       </div>
-        <div class="modal-body">
-          <form novalidate [formGroup]="shopItemForm">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="_id">ID</label>
-                  <input
-                    [readonly]="true" 
-                    class="form-control"
-                    id="_id"
-                    placeholder="identifier"
-                    formControlName="_id">
-                  <div
-                    *ngIf="validation.check('_id').result"
-                    class="alert alert-danger">
-                    {{validation.check('_id').message}}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="name">Product Name</label>
-                  <input
-                    required
-                    class="form-control"
-                    id="name"
-                    formControlName="name">
-                  <div
-                    *ngIf="validation.check('name').result"
-                    class="alert alert-danger">
-                    {{validation.check('name').message}}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="code">Product Code</label>
-                  <input
-                    required
-                    class="form-control"
-                    id="code"
-                    placeholder="e.g. KPX-285C"
-                    formControlName="code">
-                  <div
-                    *ngIf="validation.check('code').result"
-                    class="alert alert-danger">
-                    {{validation.check('code').message}}
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="unitPrice">Unit Price</label>
-                  <input
-                    required
-                    class="form-control"
-                    id="unitPrice"
-                    formControlName="unitPrice">
-                  <div
-                    *ngIf="validation.check('unitPrice').result"
-                    class="alert alert-danger">
-                    {{validation.check('unitPrice').message}}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="quantityInStock">Quantity In Stock</label>
-                  <input
-                    required
-                    class="form-control"
-                    id="quantityInStock"
-                    formControlName="quantityInStock">
-                  <div
-                    *ngIf="validation.check('quantityInStock').result"
-                    class="alert alert-danger">
-                    {{validation.check('quantityInStock').message}}
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="releaseDate">Release Date</label>
-                  <p-calendar
-                    id="releaseDate"
-                    placeholder="mm/dd/yyyy"
-                    inputStyleClass="form-control"
-                    formControlName="releaseDate">
-                  </p-calendar>
-                  <div
-                    *ngIf="validation.check('releaseDate').result"
-                    class="alert alert-danger">
-                    {{validation.check('releaseDate').message}}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-12">
-                <label for="description">Description</label>
-                <textarea
-                  class="form-control"
-                  id="description"
-                  placeholder="a brief description of the product"
-                  formControlName="description">
-                </textarea>
-                <div
-                  *ngIf="validation.check('description').result"
-                  class="alert alert-danger">
+      <div style="display: flex">
+          <div style="flex: 1 1 auto">
+              <mat-form-field>
+                <input matInput placeholder="Description" placeholder="a brief description of the product" formControlName="description">
+                <mat-error *ngIf="validation.check('description').result">
                   {{validation.check('description').message}}
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-12">
-                <button
-                  [disabled]="!shopItemForm.valid"
-                  type="button"
-                  class="btn btn-primary pull-right"
-                  data-dismiss="modal"
-                  (click)='submitItem(shopItemForm)'>
-                  Save & Close
-                </button>                                            
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer"></div>
-    </div>
-  </div>
+                </mat-error>
+              </mat-form-field>
+          </div>
+      </div>
+    </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.animal">Ok</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="submitItem(shopItemForm)">Save</button> <!-- [disabled]="!shopItemForm.valid" -->
 </div>

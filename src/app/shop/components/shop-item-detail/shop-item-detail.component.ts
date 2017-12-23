@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 @Component({
     templateUrl: './shop-item-detail.component.html',
+    styleUrls: ['./shop-item-detail.component.css'],
     providers: [ShopService]
 })
 export class ShopItemDetailComponent implements OnInit {

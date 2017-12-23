@@ -365,7 +365,8 @@ app.post('/inventory', checkAuth, (req, res) => {
 /**
  * UPDATE ITEM/PRODUCT - Handles modification of item/product
  */
-app.put('/inventory', checkAuth, (req, res) => {
+//app.put('/inventory', checkAuth, (req, res) => {
+    app.put('/inventory', (req, res) => {
     condition = {
         _id: mongodb.ObjectID(req.body._id)
     }

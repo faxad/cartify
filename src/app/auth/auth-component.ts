@@ -20,7 +20,7 @@ import { AuthService } from 'core';
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
                     <div class="col-sm-8">
-                    <input type="password" class="form-control" name="password" placeholder="Password" formControlName="password" required>
+                     <input type="password" class="form-control" name="password" placeholder="Password" formControlName="password" required>
                     </div>
                 </div>
                 <div class="form-group">

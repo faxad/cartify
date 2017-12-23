@@ -8,7 +8,8 @@ import { tap } from 'rxjs/operators'
 
 
 @Component({
-    templateUrl: './cart-item-list.component.html'
+    templateUrl: './cart-item-list.component.html',
+    styleUrls: ['./cart-item-list.component.css']
 })
 export class ItemCartComponent implements OnInit {
     private userCartItems$: Observable<ICartItem[]>;
