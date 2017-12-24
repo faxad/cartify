@@ -26,7 +26,6 @@ export class ShopItemListComponent implements OnInit {
     openDialog(shopItem?): void {
         let dialogRef = this.dialog.open(FormComponent, {
             width: '650px',
-            height: '500px',
             data: {
                 _id: shopItem ? shopItem._id : undefined,
                 name: shopItem ? shopItem.name : undefined,

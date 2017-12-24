@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { MaterialModule } from '../material.module';
 
 @NgModule({
@@ -9,6 +11,7 @@ import { MaterialModule } from '../material.module';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
+    FlexLayoutModule,
   ],
   declarations: [],
   providers: [],
@@ -16,7 +19,8 @@ import { MaterialModule } from '../material.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ]
 })
 export class SharedModule { }

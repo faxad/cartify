@@ -1,56 +1,72 @@
 <h1 mat-dialog-title>Title</h1>
 <div mat-dialog-content>
   <form novalidate [formGroup]="shopItemForm">
-      <div style="display: flex">
-          <div style="flex: 1">
-            <mat-form-field>
-              <input matInput placeholder="ID" formControlName="_id">
-              <mat-error *ngIf="validation.check('_id').result">
-                {{validation.check('_id').message}}
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Product Name" formControlName="name" required>
-              <mat-error *ngIf="validation.check('name').result">
-                {{validation.check('name').message}}
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Product Code" placeholder="e.g. KPX-285C" formControlName="code" required>
-              <mat-error *ngIf="validation.check('code').result">
-                {{validation.check('code').message}}
-              </mat-error>
-            </mat-form-field>  
+      <div fxLayout="column">
+          <div fxFlex>
+            <!-- Fields -->
+            <div fxLayout="row" fxLayoutAlign="space-around center">
+                <div fxFlex="50%">
+                    <div fxLayout="column" fxLayoutAlign="space-around">
+                        <div fxFlex>
+                            <mat-form-field>
+                                <input matInput placeholder="ID" formControlName="_id">
+                                <mat-error *ngIf="validation.check('_id').result">
+                                    {{validation.check('_id').message}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex>
+                            <mat-form-field>
+                                <input matInput placeholder="Product Name" formControlName="name" required>
+                                <mat-error *ngIf="validation.check('name').result">
+                                    {{validation.check('name').message}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex>
+                            <mat-form-field>
+                                <input matInput placeholder="Product Code" placeholder="e.g. KPX-285C" formControlName="code" required>
+                                <mat-error *ngIf="validation.check('code').result">
+                                    {{validation.check('code').message}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex="50%">
+                    <div fxLayout="column" fxLayoutAlign="space-around">
+                        <div fxFlex>
+                            <mat-form-field>
+                                <input matInput placeholder="Unit Price" formControlName="unitPrice" required>
+                                <mat-error *ngIf="validation.check('unitPrice').result">
+                                {{validation.check('unitPrice').message}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex>
+                            <mat-form-field>
+                                <input matInput placeholder="Quantity In Stock" formControlName="quantityInStock" required>
+                                <mat-error *ngIf="validation.check('quantityInStock').result">
+                                    {{validation.check('quantityInStock').message}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
           </div>
-          <div style="flex: 1">
+          <div fxFlex>
             <mat-form-field>
-              <input matInput placeholder="Unit Price" formControlName="unitPrice" required>
-              <mat-error *ngIf="validation.check('unitPrice').result">
-                {{validation.check('unitPrice').message}}
+              <input matInput placeholder="Description" placeholder="a brief description of the product" formControlName="description">
+              <mat-error *ngIf="validation.check('description').result">
+                {{validation.check('description').message}}
               </mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <input matInput placeholder="Quantity In Stock" formControlName="quantityInStock" required>
-              <mat-error *ngIf="validation.check('quantityInStock').result">
-                {{validation.check('quantityInStock').message}}
-              </mat-error>
-            </mat-form-field>
+            </mat-form-field>            
+          </div>  
+          <div fxFlex>
+              <button mat-button [mat-dialog-close]="data.animal">Ok</button>
+              <button mat-button (click)="onNoClick()">Cancel</button>
+              <button mat-button (click)="submitItem(shopItemForm)">Save</button> <!-- [disabled]="!shopItemForm.valid" -->          </div>          
           </div>
-      </div>
-      <div style="display: flex">
-          <div style="flex: 1 1 auto">
-              <mat-form-field>
-                <input matInput placeholder="Description" placeholder="a brief description of the product" formControlName="description">
-                <mat-error *ngIf="validation.check('description').result">
-                  {{validation.check('description').message}}
-                </mat-error>
-              </mat-form-field>
-          </div>
-      </div>
     </form>
-</div>
-<div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="data.animal">Ok</button>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button (click)="submitItem(shopItemForm)">Save</button> <!-- [disabled]="!shopItemForm.valid" -->
 </div>

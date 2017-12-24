@@ -3,25 +3,25 @@
         <button mat-icon-button (click)='drawer.toggle()'>
             <mat-icon>menu</mat-icon>
         </button>
-        <a mat-icon-button [routerLink]="['/items']">Cartify</a>
-        <span class="flex-fill-remaining-space"></span>
-        <form class="navbar-form navbar-right">
-            <a mat-icon-button color="basic" [routerLink]="['/login']" *ngIf="!(isLoggedIn$ | async)">
-                Sign In
-            </a>
-            <button mat-icon-button color="basic" (click)="logout()" *ngIf="isLoggedIn$ | async">
-                Sign Out
-            </button>
-        </form>
+        <a mat-icon-button color="basic" [routerLink]="['/items']">Cartify</a>
+        <div class="flex-fill-remaining-space"></div>
+        <a mat-icon-button color="basic" [routerLink]="['/login']" *ngIf="!(isLoggedIn$ | async)">
+            Sign In
+        </a>
+        <button mat-icon-button color="basic" (click)="logout()" *ngIf="isLoggedIn$ | async">
+            Sign Out
+        </button>
     </mat-toolbar>
-    <mat-drawer #drawer class="drawer-sidenav" mode="side">
-        <p>Sidebar content placeholder</p>
-    </mat-drawer>
-    <div class="drawer-sidenav-content">
-        <main>
-            <router-outlet>
+    <mat-drawer #drawer mode="side"></mat-drawer>
+    <main>
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+            <div fxFlex="2%"></div>
+            <div fxFlex>
                 <br/>
-            </router-outlet>
-        </main>
-    </div>
+                <router-outlet></router-outlet>
+                <br/>
+            </div>
+            <div fxFlex="2%"></div>
+        </div>
+    </main>
 </mat-drawer-container>
