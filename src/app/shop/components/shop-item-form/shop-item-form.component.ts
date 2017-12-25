@@ -29,17 +29,16 @@ export class FormComponent implements OnInit {
     ) {}
 
     onNoClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.close(null);
     }
 
     submitItem(form: any): void {
         if (form.valid) {
             let action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
-            this.shop[action](form.value)
-                .subscribe(shopItem => {
-                    this.shopItemsUpdated.emit(null)
-                });
-            this.dialogRef.close();
+            this.shop[action](form.value).subscribe(shopItem => {
+                this.shopItemsUpdated.emit(null)
+                this.dialogRef.close(shopItem);
+            });
         }
     }
 

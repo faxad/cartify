@@ -11,6 +11,8 @@ import { BaseError, NotFoundError } from 'error';
 import { IShopItem, IShopItemReview, ICartItem } from 'shared';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
+const _array = require('lodash/array');
+
 @Injectable()
 export class ShopService implements IShopService {
     private subject = new BehaviorSubject<IShopItem[]>([])
@@ -81,5 +83,18 @@ export class ShopService implements IShopService {
             .cartCount = cartItem.quantity
 
         this.subject.next(this.subject.value);
+    }
+
+    refreshShopItem(shopItem: IShopItem) {
+        const shopItems = this.subject.value
+        const index = _array.findIndex(shopItems, {_id: shopItem._id});
+
+        if (index !== -1) {
+            shopItem.reviewsCount = shopItems[index].reviewsCount
+            shopItem.cartCount = shopItems[index].cartCount
+            this.subject.value.splice(index, 1, shopItem);
+        } else {
+            this.subject.value.push(shopItem);
+        }
     }
 }
