@@ -35,39 +35,43 @@ export class FormComponent implements OnInit {
     submitItem(form: any): void {
         if (form.valid) {
             let action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
-            this.shop[action](form.value).subscribe(
-                shopItem => { this.shopItemsUpdated.emit(null); },
-            );
+            this.shop[action](form.value)
+                .subscribe(shopItem => {
+                    this.shopItemsUpdated.emit(null)
+                });
             this.dialogRef.close();
-        } else {
-            alert('Form Validation Failed! Please Re-Submit.');
         }
     }
 
     ngOnInit(): void {
         this.isCreateForm = this.data._id === undefined ? true : false
         this.shopItemForm = this.formBuilder.group({
-            '_id': [{ value: this.data ? this.data._id : '', disabled: false }],
-            'name': [this.data ? this.data.name : '', Validators.compose([
-                            Validators.required,
-                            ShopItemFormValidators.nameValidator])
+            '_id': [{
+                value: this.data ? this.data._id : '',
+                disabled: false
+            }],
+            'name': [
+                this.data ? this.data.name : '',
+                Validators.compose([
+                    Validators.required,
+                    ShopItemFormValidators.nameValidator])
             ],
-            'code': [this.data ? this.data.code : '', Validators.required],
-            'unitPrice': [this.data ? this.data.unitPrice : '', Validators.required],
-            'quantityInStock': [this.data ? this.data.quantityInStock : '', Validators.required],
-            // 'releaseDate': [this.data ? this.data.releaseDate : ''],
-            'description': [this.data ? this.data.description : '']
+            'code': [
+                this.data ? this.data.code : '',
+                Validators.required
+            ],
+            'unitPrice': [
+                this.data ? this.data.unitPrice : '',
+                Validators.required
+            ],
+            'quantityInStock': [
+                this.data ? this.data.quantityInStock : '',
+                Validators.required
+            ],
+            'description': [
+                this.data ? this.data.description : ''
+            ]
         });
-
-        // if (this.shopItem) {
-        //     this.isCreateForm = false;
-        //     for (let key of Object.keys(this.shopItemForm.controls)) {
-        //         (this.shopItemForm.controls[key] as FormControl).setValue(
-        //             (key === 'releaseDate') ? new Date(
-        //                 this.shopItem[key]) : this.shopItem[key]
-        //         ); // updateValue
-        //     }
-        // }
 
         this.validation.configure(
             this.shopItemForm,

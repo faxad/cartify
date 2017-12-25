@@ -10,15 +10,18 @@
             <div fxFlex="50%">
                 <mat-form-field class="standard">
                     <input
-                        matInput placeholder="ID"
-                        formControlName="_id">
+                        matInput
+                        placeholder="ID"
+                        formControlName="_id"
+                        readonly>
                     <mat-error *ngIf="validation.check('_id').result">
                         {{validation.check('_id').message}}
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="standard">
                     <input
-                        matInput placeholder="Product Name"
+                        matInput
+                        placeholder="Product Name"
                         formControlName="name"
                         required>
                     <mat-error *ngIf="validation.check('name').result">
@@ -27,7 +30,7 @@
                 </mat-form-field>
                 <mat-form-field class="standard">
                     <input 
-                        matInput placeholder="Product Code" 
+                        matInput
                         placeholder="e.g. KPX-285C"
                         formControlName="code"
                         required>
@@ -39,7 +42,8 @@
             <div fxFlex="50%">
                 <mat-form-field class="standard">
                     <input
-                        matInput placeholder="Unit Price"
+                        matInput
+                        placeholder="Unit Price"
                         formControlName="unitPrice"
                         required>
                     <mat-error *ngIf="validation.check('unitPrice').result">
@@ -48,7 +52,8 @@
                 </mat-form-field>
                 <mat-form-field class="standard">
                     <input
-                        matInput placeholder="Quantity In Stock"
+                        matInput
+                        placeholder="Quantity In Stock"
                         formControlName="quantityInStock"
                         required>
                     <mat-error *ngIf="validation.check('quantityInStock').result">
