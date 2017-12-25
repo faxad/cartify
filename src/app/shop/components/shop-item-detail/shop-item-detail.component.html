@@ -1,102 +1,86 @@
 <div fxLayout="column" *ngIf='shopItem$ | async as shopItem'>
-    <div fxFlex>
-        <!-- Image, Desc. & Summary -->
-        <div fxLayout="row" fxLayoutAlign="space-around center">
-            <div fxFlex="80%" fxFlexAlign="start">
-                <!-- Image & Desc. -->
-                <div fxLayout="column" fxLayoutAlign="start">
-                    <div fxFlex>
-                        <!-- Image -->
-                        <img src="http://placehold.it/800x300" alt="">
+    <!-- Image, Desc. & Summary -->
+    <div fxLayout="row" fxLayoutAlign="space-around start">
+        <div fxFlex="80%">
+            <!-- Image & Desc. -->
+            <div fxLayout="column">
+                <img src="http://placehold.it/800x300" alt="">
+                <!-- Desc. -->
+                <div fxLayout="row" layout-wrap>
+                    <div fxFlex="100%">
+                        <h4>{{shopItem.name}}</h4>
                     </div>
                     <div fxFlex>
-                        <!-- Desc. -->
-                        <div fxLayout="row" fxLayoutAlign="start" layout-wrap>
-                            <div fxFlex="100%">
-                                <h4>{{shopItem.name}}</h4>
-                            </div>
-                            <div fxFlex>
-                                <p>{{shopItem.description}}</p>
-                            </div>
-                        </div>
+                        <p>{{shopItem.description}}</p>
                     </div>
                 </div>
             </div>
-            <div fxFlex fxFlexAlign="start">
-                <!-- Summary -->
-                <mat-list>
-                    <h4>
-                        <mat-chip>
-                            <mat-icon>info</mat-icon>
-                        </mat-chip>
-                        Product's Highlight
-                    </h4>           
-                    <mat-divider></mat-divider>
-                    <mat-list-item>
-                        <h4 mat-line>Code:</h4>
-                        <p mat-line>{{shopItem.code}}</p>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <h4 mat-line>Quantity</h4>
-                        <p mat-line>{{shopItem.quantityInStock}}</p>
-                    </mat-list-item>
-                    <mat-list-item>
-                            <h4 mat-line>Price</h4>
-                            <p mat-line>${{shopItem.unitPrice}}</p>
-                        </mat-list-item>
-                    <mat-list-item>
-                        <h4 mat-line>Released</h4>
-                        <p mat-line>{{shopItem.releaseDate}}</p>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <h4 mat-line>
-                            <p-rating [(ngModel)]="shopItem.rating"
-                                      [cancel]="false"
-                                      readonly="true">
-                            </p-rating>
-                        </h4>
-                    </mat-list-item>
-                    <mat-list-item>
-                        <h4 mat-line>
-                            <mat-chip>{{shopItem.reviewsCount}} reviews</mat-chip>
-                        </h4>
-                    </mat-list-item>
-                </mat-list>
-            </div>
         </div>
+        <!-- Summary -->
+        <mat-list fxFlex fxFlexAlign="start" fxFlexOffset="5%">
+            <h4>
+                <mat-icon>info</mat-icon>
+                Product's Highlight
+            </h4>           
+            <mat-divider></mat-divider>
+            <mat-list-item>
+                <h4 mat-line>Code:</h4>
+                <p mat-line>{{shopItem.code}}</p>
+            </mat-list-item>
+            <mat-list-item>
+                <h4 mat-line>Quantity</h4>
+                <p mat-line>{{shopItem.quantityInStock}}</p>
+            </mat-list-item>
+            <mat-list-item>
+                    <h4 mat-line>Price</h4>
+                    <p mat-line>${{shopItem.unitPrice}}</p>
+                </mat-list-item>
+            <mat-list-item>
+                <h4 mat-line>Released</h4>
+                <p mat-line>{{shopItem.releaseDate}}</p>
+            </mat-list-item>
+            <mat-list-item>
+                <h4 mat-line>
+                    <p-rating
+                        [(ngModel)]="shopItem.rating"
+                        [cancel]="false"
+                        readonly="true">
+                    </p-rating>
+                </h4>
+            </mat-list-item>
+            <mat-list-item>
+                <h4 mat-line>
+                    <mat-chip>{{shopItem.reviewsCount}} reviews</mat-chip>
+                </h4>
+            </mat-list-item>
+        </mat-list>
     </div>
-    <div  fxFlex>
-        <!-- Reviews -->
+    <!-- Reviews -->
+    <div fxFlex>
         <h4>
-            <mat-chip>
-                <mat-icon>people</mat-icon>
-            </mat-chip>
+            <mat-icon>people</mat-icon>
             Customers Reviews
         </h4>
         <mat-divider></mat-divider>
-        <mat-card fxLayout="row" 
-                  fxLayoutAlign="start"
-                  layout-wrap
-                  *ngFor='let shopItemReview of shopItem?.reviews'>
+        <mat-card
+            fxLayout="row" 
+            fxLayoutAlign="start"
+            layout-wrap
+            *ngFor='let shopItemReview of shopItem?.reviews'>
+            <!-- Avatar, Rating etc. -->
             <div fxFlex="20%">
-                <!-- Avatar, Rating etc. -->
                 <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="20px">
-                    <div fxFlex >
-                        <mat-icon style="font-size: 50px">perm_identity</mat-icon>
-                    </div>
-                    <div fxFlex>
-                        <p-rating [(ngModel)]="shopItemReview.rating"
-                                  [cancel]="false"
-                                  readonly="true">
-                        </p-rating>
-                    </div>
-                    <div fxFlex>
-                        <p>10 days ago</p>- by {{shopItemReview.userId}}
-                    </div>
+                    <mat-icon style="font-size: 50px">perm_identity</mat-icon>
+                    <p-rating
+                        [(ngModel)]="shopItemReview.rating"
+                        [cancel]="false"
+                        readonly="true">
+                    </p-rating>
+                    <p>10 days ago</p>- by {{shopItemReview.userId}}
                 </div>
             </div>
+            <!-- Remarks -->
             <div fxFlex="80%">
-                <!-- Remarks -->
                 <p>{{shopItemReview.remarks}}</p>
             </div>
         </mat-card>
@@ -104,50 +88,42 @@
     <div fxFlex>
         <!-- Review Form -->
         <h4>
-            <mat-chip>
-                <mat-icon>rate_review</mat-icon>
-            </mat-chip>
+            <mat-icon>rate_review</mat-icon>
             Compose
         </h4>
         <mat-divider></mat-divider>
-        <form (ngSubmit)="onSubmit(shopItem._id, remarks.value)">
-            <div fxLayout="row" fxLayoutAlign="start">
-                <div fxFlex="30%"></div>
-                <div fxFlex="40%">
-                    <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="20px">
-                        <div fxFlex>
-                            <mat-form-field style="width: 100%">
-                                <textarea matInput
-                                          #remarks
-                                          placeholder="Share with us your thoughts & experience"
-                                          matTextareaAutosize
-                                          matAutosizeMinRows="3"
-                                          matAutosizeMaxRows="5"
-                                          [(ngModel)]="reviewText"
-                                          [ngModelOptions]="{standalone: true}"
-                                          [disabled]='!auth.isLoggedIn()'>
-                                </textarea>
-                            </mat-form-field>                
-                        </div>
-                        <div fxFlex>
-                            <div fxLayout="row" fxLayoutAlign="start">
-                                <div fxFlex="40%">
-                                    <p-rating name="rating" [(ngModel)]="starRating"></p-rating>
-                                </div>
-                                <div fxFlex="60%" fxLayoutAlign="end center">
-                                    <button mat-raised-button
-                                            color="primary"
-                                            [disabled]='!auth.isLoggedIn()'>
-                                            Submit Review
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+        <form
+            fxLayout="row"
+            fxLayoutAlign="start"
+            (ngSubmit)="onSubmit(shopItem._id, remarks.value)">
+            <div fxFlex="30%"></div>
+            <div fxFlex="40%">
+                <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="20px">
+                    <mat-form-field style="width: 100%">
+                        <textarea 
+                            matInput
+                            #remarks
+                            placeholder="Share with us your thoughts & experience"
+                            matTextareaAutosize
+                            matAutosizeMinRows="3"
+                            matAutosizeMaxRows="5"
+                            [(ngModel)]="reviewText"
+                            [ngModelOptions]="{standalone: true}"
+                            [disabled]='!auth.isLoggedIn()'>
+                        </textarea>
+                    </mat-form-field>
+                    <div fxLayout="row" fxLayoutAlign="space-between">
+                        <p-rating name="rating" [(ngModel)]="starRating"></p-rating>
+                        <button 
+                            mat-raised-button
+                            color="primary"
+                            [disabled]='!auth.isLoggedIn()'>
+                            Submit Review
+                        </button>
                     </div>
                 </div>
-                <div fxFlex="30%"></div>
             </div>
+            <div fxFlex="30%"></div>
         </form>
     </div>
 </div>
-     

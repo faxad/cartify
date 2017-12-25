@@ -1,7 +1,7 @@
-input.ng-valid[required] {
-  border-left: 5px solid #ffffff; /* green */
+.standard {
+  width: 80%
 }
 
-input.ng-invalid {
-  border-left: 5px solid #ffffff; /* red */
+.large {
+  width: 100%
 }
