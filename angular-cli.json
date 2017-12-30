@@ -21,7 +21,6 @@
         "styles.css"
       ],
       "scripts": [
-        "../node_modules/bootstrap/dist/js/bootstrap.js",
         "../node_modules/reflect-metadata/Reflect.js",
         "../node_modules/systemjs/dist/system.src.js",
         "../node_modules/rxjs/bundles/Rx.js"
