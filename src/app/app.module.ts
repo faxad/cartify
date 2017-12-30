@@ -1,10 +1,11 @@
 import '../polyfills';
+
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,26 +18,26 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { MaterialModule } from './material.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    RouterModule,
-    AppRoutingModule,
-    CoreModule,
-    MaterialModule,
-    FlexLayoutModule
-  ],
-  providers: [
-    AuthGuard,
-    { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: API_URL, useValue: environment.apiUrl },
-    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true, deps: [API_URL] },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        RouterModule,
+        AppRoutingModule,
+        CoreModule,
+        MaterialModule,
+        FlexLayoutModule
+    ],
+    providers: [
+        AuthGuard,
+        { provide: ErrorHandler, useClass: AppErrorHandler },
+        { provide: API_URL, useValue: environment.apiUrl },
+        { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true, deps: [API_URL] },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

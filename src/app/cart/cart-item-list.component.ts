@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { CartService } from '../core/services/cart.service';
 import { ICartItem } from '../shared';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators'
 
 
 @Component({

@@ -3,13 +3,13 @@ import 'rxjs/add/operator/catch';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-
-import { AuthService } from '../services/auth.service'
-import { IShopService } from '../contracts/shop-service.interface';
 import { BaseError, NotFoundError } from 'error';
-import { IShopItem, IShopItemReview, ICartItem } from 'shared';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import { ICartItem, IShopItem, IShopItemReview } from 'shared';
+
+import { IShopService } from '../contracts/shop-service.interface';
+import { AuthService } from '../services/auth.service';
 
 const _array = require('lodash/array');
 

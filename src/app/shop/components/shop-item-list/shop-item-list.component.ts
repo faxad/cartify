@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import { AuthService, CartService, ShopService } from 'core';
-import { IShopItem, ICartItem } from 'shared';
-import { Observable } from 'rxjs/Observable';
-
 import { MatDialog } from '@angular/material';
-import { FormComponent } from '../shop-item-form/shop-item-form.component'
+import { ActivatedRoute } from '@angular/router';
+import { AuthService, CartService, ShopService } from 'core';
+import { Observable } from 'rxjs/Observable';
+import { ICartItem, IShopItem } from 'shared';
+
+import { FormComponent } from '../shop-item-form/shop-item-form.component';
 
 @Component({
     templateUrl: './shop-item-list.component.html',

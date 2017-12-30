@@ -1,12 +1,12 @@
-import { BehaviorSubject } from 'rxjs/Rx';
-import { IUser } from '../../auth';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import * as moment from 'moment';
 import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/Rx';
 
+import { IUser } from '../../auth';
 import { IAuthService } from '../contracts/auth-service.interface';
 
 const jwtHelper = new JwtHelper()

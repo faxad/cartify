@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { AuthService, ShopService } from 'core';
-import { IShopItem } from 'shared';
 import { Observable } from 'rxjs';
+import { IShopItem } from 'shared';
 
 @Component({
     templateUrl: './shop-item-detail.component.html',

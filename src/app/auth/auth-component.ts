@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'core';
 
 @Component({
-    selector: 'login',
+    selector: 'app-login',
     template: `
     <div class="row row-offset-top-10">
         <div class="col-md-4 "></div>

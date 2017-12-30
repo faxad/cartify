@@ -16,35 +16,35 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
-  imports: [
-    MatButtonModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatCardModule,
-    MatChipsModule,
-    MatIconModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatListModule,
-    MatTableModule
-  ],
-  exports: [
-    MatButtonModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatCardModule,
-    MatChipsModule,
-    MatIconModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatListModule,
-    MatTableModule
-  ]
+    imports: [
+        MatButtonModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatGridListModule,
+        MatCardModule,
+        MatChipsModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatListModule,
+        MatTableModule
+    ],
+    exports: [
+        MatButtonModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatGridListModule,
+        MatCardModule,
+        MatChipsModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatProgressSpinnerModule,
+        MatListModule,
+        MatTableModule
+    ]
 })
 export class MaterialModule { }
