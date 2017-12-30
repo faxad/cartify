@@ -1,0 +1,23 @@
+<form fxLayout="column" fxLayoutAlign="center center" novalidate [formGroup]="logInForm">
+    <mat-form-field class="standard">
+        <input
+            matInput
+            placeholder="Email"
+            formControlName="email"
+            required>
+    </mat-form-field>
+    <mat-form-field class="standard">
+        <input
+            matInput
+            placeholder="Password"
+            formControlName="password"
+            [type]="hide ? 'text' :'password'"
+            required>
+        <mat-icon
+            matSuffix
+            (click)="hide = !hide">
+            {{hide ? 'visibility' : 'visibility_off'}}
+        </mat-icon>
+    </mat-form-field>
+    <button mat-button (click)="login()">Sign In</button>
+</form>
