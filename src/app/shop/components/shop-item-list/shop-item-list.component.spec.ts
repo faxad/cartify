@@ -1,93 +1,87 @@
-// /* tslint:disable:no-unused-variable */
+import { HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { BaseRequestOptions, Http, Response, ResponseOptions } from '@angular/http';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { MatDialog } from '@angular/material';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CoreModule } from 'app/core/core.module';
+import { ShopModule } from 'app/shop/shop.module';
+import { ShopService } from 'core';
 
-// import { TestBed, ComponentFixture, async, inject} from '@angular/core/testing';
-// import { BaseRequestOptions, Response, ResponseOptions, Http } from '@angular/http';
-// import { MockBackend, MockConnection } from '@angular/http/testing';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ShopItemListComponent } from './shop-item-list.component';
 
-// import { CalendarModule, RatingModule } from 'primeng/primeng';
+describe('ShopItemListComponent', () => {
+    let component: ShopItemListComponent;
+    let fixture: ComponentFixture<ShopItemListComponent>;
+    let shopItemData = [{
+        '_id': '5a2ef031e00a432a5c18d94e',
+        'name': 'Walter Rake',
+        'code': 'GDN-0011',
+        'releaseDate': 'March 19, 2016',
+        'description': 'Lorem ipsum dolor....',
+        'unitPrice': 19.95,
+        'quantityInStock': 13,
+        'rating': 3.2,
+        'imageUrl': 'http://placehold.it/320x150'
+    }];
 
-// import { ShopItemListComponent } from './shop-item-list.component';
-// import { CartService } from '../../shared/cart.service';
-// import { ShopService } from '../../shared/shop.service';
-// import { AuthService } from '../../shared/auth.service';
-// import { FormComponent } from '../shop-item-form/shop-item-form.component';
-// import { ShopItemFilterPipe } from './shop-item-filter.pipe';
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule,
+                RouterTestingModule,
+                ShopModule,
+                CoreModule
+            ],
+            declarations: [],
+            providers: [
+                MatDialog,
+                MockBackend,
+                BaseRequestOptions,
+                {
+                    provide: Http,
+                    useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
+                        return new Http(backend, defaultOptions);
+                    },
+                    deps: [MockBackend, BaseRequestOptions],
+                },
+            ]
+        }).compileComponents();
 
-// describe('ShopItemListComponent', () => {
-//     let component: ShopItemListComponent;
-//     let fixture: ComponentFixture<ShopItemListComponent>;
-//     let shopItemData = [{
-//         'id': 1765,
-//         'name': 'Walter Rake',
-//         'code': 'GDN-0011',
-//         'releaseDate': 'March 19, 2016',
-//         'description': 'Lorem ipsum dolor....',
-//         'unitPrice': 19.95,
-//         'quantityInStock': 13,
-//         'rating': 3.2,
-//         'imageUrl': 'http://placehold.it/320x150'
-//     }];
+        fixture = TestBed.createComponent(ShopItemListComponent);
+        component = fixture.componentInstance;
+    });
 
-//     beforeEach(() => {
-//         TestBed.configureTestingModule({
-//             imports: [ FormsModule, ReactiveFormsModule, RouterTestingModule, CalendarModule, RatingModule ],
-//             declarations: [
-//                 ShopItemListComponent,
-//                 ShopItemFilterPipe,
-//                 FormComponent
-//             ],
-//             providers: [
-//                 ShopService,
-//                 CartService,
-//                 AuthService,
-//                 MockBackend,
-//                 BaseRequestOptions,
-//                 {
-//                     provide: Http,
-//                     useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-//                         return new Http(backend, defaultOptions);
-//                         },
-//                     deps: [MockBackend, BaseRequestOptions],
-//                 },
-//             ]
-//         }).compileComponents();
+    it('should create the ShopItemList component', async(() => {
+        fixture = TestBed.createComponent(ShopItemListComponent);
+        let app = fixture.debugElement.componentInstance;
+        expect(app).toBeTruthy();
+    }));
 
-//         fixture = TestBed.createComponent(ShopItemListComponent);
-//         component = fixture.componentInstance;
-//     });
+    it('should create a shop service', inject([ShopService], (shopService: ShopService) => {
+        expect(shopService).toBeTruthy();
+    }));
 
-//     it('should create the ShopItemList component', async(() => {
-//         fixture = TestBed.createComponent(ShopItemListComponent);
-//         let app = fixture.debugElement.componentInstance;
-//         expect(app).toBeTruthy();
-//     }));
+    it('should confirm shop items', inject(
+        [ShopService, MockBackend], (shopService: ShopService, backendMock: MockBackend) => {
+            let response = new ResponseOptions({
+                body: JSON.stringify(shopItemData)
+            });
 
-//     it('should create a shop service', inject([ShopService], (shopService: ShopService) => {
-//         expect(shopService).toBeTruthy();
-//     }));
+            backendMock.connections.subscribe(
+                (c: MockConnection) => c.mockRespond(new Response(response))
+            );
 
-//     it('should confirm shop items', inject(
-//         [ShopService, MockBackend], (shopService: ShopService, backendMock: MockBackend) => {
-//             let response = new ResponseOptions({
-//                 body: JSON.stringify(shopItemData)
-//             });
+            shopService.getShopItems().subscribe( data => {
 
-//             backendMock.connections.subscribe(
-//                 (c: MockConnection) => c.mockRespond(new Response(response))
-//             );
+                expect(data).toEqual(shopItemData);
 
-//             shopService.getShopItems().subscribe( data => {
+                fixture.detectChanges();
+                let compiled = fixture.debugElement.nativeElement;
 
-//                 expect(data).toEqual(shopItemData);
-
-//                 fixture.detectChanges();
-//                 let compiled = fixture.debugElement.nativeElement;
-
-//                 expect(compiled.querySelector(
-//                     '#shopItem1765Title').textContent).toContain('Walter');
-//             });
-//         }
-//     ));
-// });
+                expect(compiled.querySelector(
+                    '#shopItem1765Title').textContent).toContain('Walter');
+            });
+        }
+    ));
+});

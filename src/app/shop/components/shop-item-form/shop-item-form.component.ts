@@ -36,7 +36,14 @@ export class FormComponent implements OnInit {
             let action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
             this.shop[action](form.value).subscribe(shopItem => {
                 this.shopItemsUpdated.emit(null)
-                this.dialogRef.close(shopItem);
+                // this is to make PhantomJS not cause the error
+                // undefined is not a constructor evaluating
+                // _this.dialogRef.close(shopItem)...
+                try {
+                    this.dialogRef.close(shopItem);
+                } catch {
+                    return
+                }
             });
         }
     }

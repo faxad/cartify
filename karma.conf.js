@@ -14,7 +14,8 @@ module.exports = function (config) {
     ],
     files: [
       "./node_modules/babel-polyfill/dist/polyfill.js",
-      "./node_modules/jquery/dist/jquery.min.js",      
+      "./node_modules/jquery/dist/jquery.min.js",
+      "./node_modules/web-animations-js/web-animations.min.js",
       { pattern: './src/test.ts', watched: false },
     ],
     preprocessors: {
