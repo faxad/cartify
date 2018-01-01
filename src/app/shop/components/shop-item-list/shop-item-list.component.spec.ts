@@ -10,7 +10,7 @@ import { ShopService } from 'core';
 
 import { ShopItemListComponent } from './shop-item-list.component';
 
-describe('ShopItemListComponent', () => {
+describe('Shop Item List Component', () => {
     let component: ShopItemListComponent;
     let fixture: ComponentFixture<ShopItemListComponent>;
     let shopItemData = [{
@@ -22,7 +22,8 @@ describe('ShopItemListComponent', () => {
         'unitPrice': 19.95,
         'quantityInStock': 13,
         'rating': 3.2,
-        'imageUrl': 'http://placehold.it/320x150'
+        'imageUrl': 'http://placehold.it/320x150',
+        'cartCount': 0
     }];
 
     beforeEach(() => {
@@ -46,41 +47,35 @@ describe('ShopItemListComponent', () => {
                     deps: [MockBackend, BaseRequestOptions],
                 },
             ]
-        }).compileComponents();
+        })
 
         fixture = TestBed.createComponent(ShopItemListComponent);
         component = fixture.componentInstance;
     });
 
-    it('should create the ShopItemList component', async(() => {
-        fixture = TestBed.createComponent(ShopItemListComponent);
+    it('should be able to instantiate itself', async(() => {
         let app = fixture.debugElement.componentInstance;
         expect(app).toBeTruthy();
     }));
 
-    it('should create a shop service', inject([ShopService], (shopService: ShopService) => {
-        expect(shopService).toBeTruthy();
-    }));
+    it('should get an injected instance of shop service', inject(
+        [ShopService], (shopService: ShopService) => {
+            expect(shopService).toBeTruthy();
+        }
+    ));
 
     it('should confirm shop items', inject(
         [ShopService, MockBackend], (shopService: ShopService, backendMock: MockBackend) => {
-            let response = new ResponseOptions({
-                body: JSON.stringify(shopItemData)
-            });
-
             backendMock.connections.subscribe(
-                (c: MockConnection) => c.mockRespond(new Response(response))
+                (connection: MockConnection) => {
+                    connection.mockRespond(new Response(
+                        new ResponseOptions({ body: shopItemData })
+                    ));
+                }
             );
 
-            shopService.getShopItems().subscribe( data => {
-
+            shopService.getShopItems().subscribe(data => {
                 expect(data).toEqual(shopItemData);
-
-                fixture.detectChanges();
-                let compiled = fixture.debugElement.nativeElement;
-
-                expect(compiled.querySelector(
-                    '#shopItem1765Title').textContent).toContain('Walter');
             });
         }
     ));

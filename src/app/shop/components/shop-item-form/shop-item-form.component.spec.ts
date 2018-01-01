@@ -1,9 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, inject, TestBed } from '@angular/core/testing';
-import { BaseRequestOptions, Http } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from '@angular/material';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from 'app/core/core.module';
 import { MaterialModule } from 'app/material.module';
@@ -14,11 +11,10 @@ import { Observable } from 'rxjs/Observable';
 import { ValidationService } from './form-validation.service';
 import { FormComponent } from './shop-item-form.component';
 
-describe('FormComponent', () => {
+describe('Form Component', () => {
     let component: FormComponent;
     let fixture: ComponentFixture<FormComponent>;
-    let shopService;
-    let dialog: MatDialog;
+    let shopService: ShopService;
 
     let shopItemData = {
         '_id': '5a2ef031e00a432a5c18d94e',
@@ -33,7 +29,6 @@ describe('FormComponent', () => {
     };
 
     beforeEach(() => {
-
         TestBed.configureTestingModule({
             imports: [
                 RouterTestingModule,
@@ -46,61 +41,70 @@ describe('FormComponent', () => {
             declarations: [],
             providers: [
                 ValidationService,
-                MockBackend,
-                BaseRequestOptions,
-                {
-                    provide: Http,
-                    useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-                        return new Http(backend, defaultOptions);
-                        },
-                    deps: [MockBackend, BaseRequestOptions],
-                },
                 { provide: MAT_DIALOG_DATA, useValue: {} },
                 { provide: MatDialogRef, useValue: {} }
             ]
-        }).overrideModule(BrowserDynamicTestingModule, {
-            set: {
-                 entryComponents: [FormComponent],
-            },
-        }).compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(FormComponent);
-                component = fixture.componentInstance;
-        });
+        })
 
         fixture = TestBed.createComponent(FormComponent);
         component = fixture.componentInstance;
+        component.data = shopItemData
+        component.ngOnInit();
+
         shopService = fixture.debugElement.injector.get(ShopService);
     });
 
-    it('should create the FormComponent component', async(() => {
-        fixture = TestBed.createComponent(FormComponent);
+    it('should be able to instantiate itself', async(() => {
         let app = fixture.debugElement.componentInstance;
-        component.shopItem = shopItemData;
-        component.ngOnInit();
 
         expect(app).toBeTruthy();
     }));
 
-    it('should create form validation service', inject(
+    it('should get an injected instance of form validation service', inject(
         [ValidationService], (validationService: ValidationService) => {
             expect(validationService).toBeTruthy();
-    }));
+        }
+    ));
 
-    it('should confirm update shop item', fakeAsync(() => {
+    it('should contain all the form fields e.g. name, code etc..', () => {
+        expect(component.shopItemForm.contains('name')).toBeTruthy();
+    });
+
+    it('should invalidate the form control if value is empty', () => {
+        let nameControl = component.shopItemForm.get('name');
+        nameControl.setValue('');
+
+        expect(nameControl.valid).toBeFalsy();
+    });
+
+    it('should confirm service call to update using the revised value', fakeAsync(() => {
         spyOn(shopService, 'updateShopItem')
             .and.returnValue(Observable.of(shopItemData));
 
-        component.data = shopItemData
+        // arrange
+        let shopItemForm = component.shopItemForm
+        let revisedName = 'abc Walter Rake (updated)'
+
+        shopItemForm.controls['name'].setValue(revisedName);
+        shopItemForm.value['name'] = revisedName;
+
+        // act
+        component.submitItem(shopItemForm);
+
+        // assert
+        expect(shopService.updateShopItem)
+            .toHaveBeenCalledWith(shopItemForm.value);
+    }));
+
+    it('should disable service call to update if form is empty', fakeAsync(() => {
+        spyOn(shopService, 'updateShopItem')
+            .and.returnValue(Observable.of(shopItemData));
+
+        component.data = [];
         component.ngOnInit();
 
-        let shopItemForm = component.shopItemForm
-        let controls = shopItemForm.controls;
-        controls['name'].setValue('abc Walter Rake (updated)')
+        component.submitItem(component.shopItemForm);
 
-        component.submitItem(shopItemForm)
-
-        expect(shopService.updateShopItem).toHaveBeenCalledWith(
-            shopItemForm.value);
+        expect(shopService.updateShopItem).not.toHaveBeenCalled();
     }));
 });

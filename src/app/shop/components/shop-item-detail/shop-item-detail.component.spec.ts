@@ -1,7 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
-import { BaseRequestOptions, Http } from '@angular/http';
-import { MockBackend } from '@angular/http/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from 'app/core/core.module';
@@ -11,10 +9,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { ShopItemDetailComponent } from './shop-item-detail.component';
 
-describe('ShopItemDetailComponent', () => {
+describe('Shop Item Detail Component', () => {
     let component: ShopItemDetailComponent;
     let fixture: ComponentFixture<ShopItemDetailComponent>;
-    let shopService;
+    let shopService: ShopService;
 
     let shopItemData = {
         '_id': '5a2ef031e00a432a5c18d94e',
@@ -25,17 +23,25 @@ describe('ShopItemDetailComponent', () => {
         'unitPrice': 19.95,
         'quantityInStock': 13,
         'rating': 3.2,
-        'imageUrl': 'http://placehold.it/320x150'
-        };
+        'imageUrl': 'http://placehold.it/320x150',
+        'reviews': [{
+            '_id': '5a2ef031e00a432a5c18d94f',
+            'itemId': '5a2ef031e00a432a5c18d94e',
+            'userId': 'john.doe',
+            'reviewDate': 'March 19, 2016',
+            'remarks': 'this is my first review',
+            'rating': 2
+        }]
+    };
 
-    let shopItemReviews = [{
+    let shopItemReviews = {
         '_id': '5a2ef031e00a432a5c18d94f',
         'itemId': '5a2ef031e00a432a5c18d94e',
         'userId': 'john.doe',
-        'reviewDate': 'March 19, 2016',
-        'remarks': 'this is my first review',
-        'rating': 2
-    }];
+        'reviewDate': 'March 20, 2016',
+        'remarks': 'this is my second review',
+        'rating': 3
+    };
 
     let shopItemReviewsCount = 2;
 
@@ -49,61 +55,44 @@ describe('ShopItemDetailComponent', () => {
                 CoreModule
             ],
             declarations: [],
-            providers: [
-                MockBackend,
-                BaseRequestOptions,
-                {
-                    provide: Http,
-                    useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-                        return new Http(backend, defaultOptions);
-                        },
-                    deps: [MockBackend, BaseRequestOptions],
-                },
-            ]
-        }).compileComponents();
+            providers: []
+        })
 
         fixture = TestBed.createComponent(ShopItemDetailComponent);
         component = fixture.componentInstance;
         shopService = fixture.debugElement.injector.get(ShopService);
     });
 
-    it('should create the ShopItemDetail component', async(() => {
-        let fixture = TestBed.createComponent(ShopItemDetailComponent);
+    it('should be able to instantiate itself', async(() => {
         let app = fixture.debugElement.componentInstance;
 
         expect(app).toBeTruthy();
     }));
 
-    it('should confirm shop item detail', fakeAsync(() => {
+    it('should contain the provided information as detail', fakeAsync(() => {
         spyOn(shopService, 'getShopItem')
             .and.returnValue(Observable.of(shopItemData));
+
         fixture.detectChanges();
 
-        expect(fixture.debugElement.nativeElement.querySelector(
-            'p').textContent).toContain('Lorem ipsum');
+        expect(fixture.debugElement.nativeElement.querySelector('p').textContent)
+            .toContain('Lorem ipsum');
     }));
 
-    // it('should confirm shop item reviews', fakeAsync(() => {
-    //     spyOn(shopService, 'getShopItemReviews')
-    //         .and.returnValue(Observable.of(shopItemReviews));
-    //     fixture.detectChanges();
+    it('should contain user reviews', fakeAsync(() => {
+        spyOn(shopService, 'getShopItem')
+            .and.returnValue(Observable.of(shopItemData));
 
-    //     expect(fixture.debugElement.nativeElement.textContent).toContain(
-    //         'this is my first review');
-    // }));
+        fixture.detectChanges();
 
-    // it('should confirm shop item reviews count', fakeAsync(() => {
-    //     spyOn(shopService, 'getShopItemReviewsCount')
-    //         .and.returnValue(Observable.of(shopItemReviewsCount));
-    //     component.shopItem = shopItemData;
-    //     fixture.detectChanges();
+        expect(fixture.debugElement.nativeElement.textContent).toContain(
+            'this is my first review');
+    }));
 
-    //     expect(fixture.debugElement.nativeElement.textContent).toContain('2 reviews');
-    // }));
-
-    it('should confirm setting shop item review', fakeAsync(() => {
+    it('should confirm service call to set review using the provided value', fakeAsync(() => {
         spyOn(shopService, 'setShopItemReview')
-            .and.returnValue(Observable.of(shopItemReviews[0]));
+            .and.returnValue(Observable.of(shopItemReviews));
+
         component.onSubmit('5a2ef031e00a432a5c18d94e', 'these are my remarks')
 
         expect(shopService.setShopItemReview).toHaveBeenCalledWith(

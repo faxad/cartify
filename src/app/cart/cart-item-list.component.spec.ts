@@ -1,122 +1,87 @@
-// /* tslint:disable:no-unused-variable */
+import { HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CartModule } from 'app/cart/cart.module';
+import { CoreModule } from 'app/core/core.module';
+import { AuthService, CartService } from 'core';
+import { CalendarModule, RatingModule } from 'primeng/primeng';
+import { Observable } from 'rxjs/Observable';
 
-// import { TestBed, ComponentFixture, async, fakeAsync, inject} from '@angular/core/testing';
-// import { BaseRequestOptions, Response, ResponseOptions, Http } from '@angular/http';
-// import { MockBackend, MockConnection } from '@angular/http/testing';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ItemCartComponent } from './cart-item-list.component';
 
-// import { Observable } from 'rxjs/Observable';
-// import { CalendarModule, RatingModule } from 'primeng/primeng';
+describe('Cart Item Component', () => {
+    let component: ItemCartComponent;
+    let fixture: ComponentFixture<ItemCartComponent>;
+    let cartService: CartService;
 
-// import { ItemCartComponent } from './cart-item-list.component';
-// import { CartService } from '../shared/cart.service';
-// import { AuthService } from '../shared/auth.service';
+    let cartItemsData = [{
+        '_id': '10ef43hdg342kdn4',
+        'itemId': '1765',
+        'userId': 'john.doe',
+        'name': 'Walter Rake',
+        'code': 'GDN-0011',
+        'unitPrice': 15.00,
+        'quantity': 2,
+    }];
 
-// describe('ItemCartComponent', () => {
-//     let component: ItemCartComponent;
-//     let fixture: ComponentFixture<ItemCartComponent>;
-//     let cartService;
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule,
+                FormsModule,
+                ReactiveFormsModule,
+                RouterTestingModule,
+                CalendarModule,
+                RatingModule,
+                CartModule,
+                CoreModule
+            ],
+            declarations: [],
+            providers: [
+                CartService,
+                AuthService
+            ]
+        })
 
-//     let cartItemDetailedData = [{
-//         '_id': '10ef43hdg342kdn4',
-//         'itemId': '1765',
-//         'userId': 'john.doe',
-//         'name': 'Walter Rake',
-//         'code': 'GDN-0011',
-//         'unitPrice': 15.00,
-//         'quantity': 2,
-//     }];
+        fixture = TestBed.createComponent(ItemCartComponent);
+        component = fixture.componentInstance;
+        cartService = fixture.debugElement.injector.get(CartService);
+    });
 
-//     let cartItemQty1 = {
-//         '_id': '10928hdg3hd',
-//         'userId': 'john.doe',
-//         'itemId': '1765',
-//         'quantity': 1,
-//         'unitPrice': 15.00,
-//     }
+    it('should be able to instantiate itself', async(() => {
+        let app = fixture.debugElement.componentInstance;
 
-//     let cartItemQty2 = {
-//         '_id': '64837hdg3fq',
-//         'userId': 'john.doe',
-//         'itemId': '1765',
-//         'quantity': 2,
-//         'unitPrice': 15.00,
-//     }
+        expect(app).toBeTruthy();
+    }));
 
-//     beforeEach(() => {
-//         TestBed.configureTestingModule({
-//             imports: [
-//                 FormsModule,
-//                 ReactiveFormsModule,
-//                 RouterTestingModule,
-//                 CalendarModule,
-//                 RatingModule
-//             ],
-//             declarations: [ItemCartComponent],
-//             providers: [
-//                 CartService,
-//                 AuthService,
-//                 MockBackend,
-//                 BaseRequestOptions,
-//                 {
-//                     provide: Http,
-//                     useFactory: (backend: MockBackend, defaultOptions: BaseRequestOptions) => {
-//                             return new Http(backend, defaultOptions);
-//                         },
-//                     deps: [MockBackend, BaseRequestOptions],
-//                 },
-//             ]
-//         }).compileComponents();
+    it('should confirm service call to increase quantity receives initial quantity', () => {
+        spyOn(cartService, 'increaseCartItemQunatity')
+            .and.returnValue(Observable.empty());
 
-//         fixture = TestBed.createComponent(ItemCartComponent);
-//         component = fixture.componentInstance;
-//         cartService = fixture.debugElement.injector.get(CartService);
-//     });
+        component.increaseQuantity(cartItemsData[0])
 
-//     it('should create the CartItemList component', async(() => {
-//         fixture = TestBed.createComponent(ItemCartComponent);
-//         let app = fixture.debugElement.componentInstance;
+        expect(cartService.increaseCartItemQunatity)
+            .toHaveBeenCalledWith(cartItemsData[0]);
+    });
 
-//         expect(app).toBeTruthy();
-//     }));
+    it('should confirm service call to decrease quantity receives initial quantity', () => {
+        spyOn(cartService, 'decreaseCartItemQunatity')
+            .and.returnValue(Observable.empty());
 
-//     // it('should confirm cart item list', fakeAsync(() => {
-//     //     spyOn(cartService, 'getCartItemsWithDetails')
-//     //         .and.returnValue(Observable.of(cartItemDetailedData));
-//     //     fixture.detectChanges();
+        component.decreaseQunatity(cartItemsData[0])
 
-//     //     expect(fixture.debugElement.nativeElement.textContent).toContain(
-//     //         'Walter Rake');
-//     // }));
+        expect(cartService.decreaseCartItemQunatity)
+            .toHaveBeenCalledWith(cartItemsData[0]);
+    });
 
-//     it('should confirm incrementing cart item quantity', fakeAsync(() => {
-//         spyOn(cartService, 'increaseCartItemQunatity')
-//             .and.returnValue(Observable.of(cartItemQty2));
-//         component.increaseQuantity(cartItemQty1)
-//         fixture.detectChanges();
+    it('should confirm service call to receive the desired cart item for deletion', (() => {
+        spyOn(cartService, 'removeCartItem')
+            .and.returnValue(Observable.of(cartItemsData[0]));
 
-//         expect(cartService.increaseCartItemQunatity).toHaveBeenCalledWith(
-//             cartItemQty1);
-//     }));
+        component.removeCartItem(cartItemsData[0])
 
-//     it('should confirm decrementing cart item', fakeAsync(() => {
-//         spyOn(cartService, 'decreaseCartItemQunatity')
-//             .and.returnValue(Observable.of(cartItemQty1));
-//         component.decreaseQunatity(cartItemQty2)
-//         fixture.detectChanges();
-
-//         expect(cartService.decreaseCartItemQunatity).toHaveBeenCalledWith(
-//             cartItemQty2);
-//     }));
-
-//     it('should confirm deleting cart item', fakeAsync(() => {
-//         spyOn(cartService, 'removeCartItem')
-//             .and.returnValue(Observable.of(cartItemQty1));
-//         component.removeCartItem(cartItemQty1)
-//         fixture.detectChanges();
-
-//         expect(cartService.removeCartItem).toHaveBeenCalledWith(
-//             cartItemQty1);
-//     }));
-// });
+        expect(cartService.removeCartItem)
+            .toHaveBeenCalledWith(cartItemsData[0]);
+    }));
+});

@@ -24,7 +24,6 @@ export class AuthService implements IAuthService {
         private router: Router,
         private http: HttpClient
     ) {
-        console.log('Auth service initialized!')
         if (this.isLoggedIn()) {
             this.subject.next({'username': 'fawad'}) // TODO: replace with actual users
         }
