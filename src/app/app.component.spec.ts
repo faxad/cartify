@@ -1,33 +1,42 @@
-// /* tslint:disable:no-unused-variable */
+import { HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { CoreModule } from 'app/core/core.module';
+import { MaterialModule } from 'app/material.module';
+import { AuthService } from 'core';
 
-// import { TestBed, async } from '@angular/core/testing';
-// import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
 
-// import { AppComponent } from './app.component';
-// import { AuthService } from './shared/auth.service';
+describe('App Component', () => {
+    let fixture: ComponentFixture<AppComponent>;
 
-// describe('AppComponent', () => {
-//     beforeEach(() => {
-//         TestBed.configureTestingModule({
-//             declarations: [ AppComponent ],
-//             imports: [ RouterTestingModule ],
-//             providers: [ AuthService ]
-//         });
-//         TestBed.compileComponents();
-//     });
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            declarations: [AppComponent],
+            imports: [
+                NoopAnimationsModule,
+                HttpClientModule,
+                RouterTestingModule,
+                MaterialModule,
+                CoreModule
+            ],
+            providers: [AuthService]
+        });
 
-//     it('should create the app component', async(() => {
-//         let fixture = TestBed.createComponent(AppComponent);
-//         let app = fixture.debugElement.componentInstance;
+        fixture = TestBed.createComponent(AppComponent);
+    });
 
-//         expect(app).toBeTruthy();
-//     }));
+    it('should create the app component', async(() => {
+        let app = fixture.debugElement.componentInstance;
 
-//     it(`should have as title 'Cartify'`, async(() => {
-//         let fixture = TestBed.createComponent(AppComponent);
-//         let app = fixture.debugElement.componentInstance;
-//         let title = app.titleService.getTitle();
+        expect(app).toBeTruthy();
+    }));
 
-//         expect(title).toEqual('Cartify');
-//     }));
-// });
+    it(`should have as title 'Cartify'`, async(() => {
+        let app = fixture.debugElement.componentInstance;
+        let title = app.titleService.getTitle();
+
+        expect(title).toEqual('Cartify');
+    }));
+});
