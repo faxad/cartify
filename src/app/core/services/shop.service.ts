@@ -40,12 +40,11 @@ export class ShopService implements IShopService {
                 console.log('HTTP GET successful')
                 this.subject.next(shopItems);
             },
-            (error: BaseError) => {
-                if (error instanceof NotFoundError) {
-                    console.log('NOT FOUND');
-                } else {
-                    throw error;
-                }
+            (error) => {
+                throw {
+                    error,
+                    message: 'Something went wrong :('
+                };
             },
         );
 
