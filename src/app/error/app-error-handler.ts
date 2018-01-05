@@ -1,14 +1,14 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandler } from '@angular/core';
+import { BadInputError } from 'app/error/bad-input-error';
+import { BaseError } from 'app/error/base-error';
+import { ForbiddenError } from 'app/error/forbidden-error';
+import { NotFoundError } from 'app/error/not-found-error';
+import { UnreachableError } from 'app/error/unreachable-error';
 import * as Raven from 'raven-js';
 
 import { environment } from '../../environments/environment';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { UnreachableError } from 'app/error/unreachable-error';
-import { BadInputError } from 'app/error/bad-input-error';
-import { ForbiddenError } from 'app/error/forbidden-error';
-import { NotFoundError } from 'app/error/not-found-error';
-import { BaseError } from 'app/error/base-error';
+import { CustomError } from './custom-error';
 
 Raven
     .config(environment.sentryDns)
@@ -16,50 +16,61 @@ Raven
 
 export class AppErrorHandler implements ErrorHandler {
     handleError(err) {
-        let error = err.error;
-        let customError = null;
-        let customMessage = null;
+        let error: any = null;
+        let message: any = null;
 
-        if (error instanceof Error) {
-            customMessage = 'CLIENT: Error';
+        if (err instanceof CustomError) {
+            error = err.originalError;
+            message = err.message;
         } else {
+            error = err;
+        }
+
+        if (error instanceof HttpErrorResponse) {
+            message = 'BACKEND: ' + message
+
             switch (error.status) {
                 case 0: {
-                    customError = new UnreachableError(error);
-                    customMessage = 'BACKEND: Unreachable Error';
+                    error = new UnreachableError(error.error);
+                    message = message + ' - Unreachable Error';
                     break;
                 }
                 case 400: {
-                    customError = new BadInputError(error);
-                    customMessage = 'BACKEND: Bad Input Error';
+                    error = new BadInputError(error.error);
+                    message = message + ' - Bad Input Error';
                     break;
                 }
                 case 403: {
-                    customError = new ForbiddenError(error);
-                    customMessage = 'BACKEND: Forbidden Error';
+                    error = new ForbiddenError(error.error);
+                    message = message + ' - Forbidden Error';
                     break;
                 }
                 case 404: {
-                    customError = new NotFoundError(error);
-                    customMessage = 'BACKEND: Not Found Error';
+                    error = new NotFoundError(error.error);
+                    message = message + ' - Not Found Error';
                     break;
                 }
                 default: {
-                    customError = new BaseError(error)
-                    customMessage = 'BACKEND: Base Error';
+                    error = new BaseError(error.error)
+                    message = message + ' - Base Error';
                     break;
                 }
             }
+        } else if (error instanceof Error) {
+            message = 'FRONTEND: ' + message
+            // Additional processing for GENERAL exceptions
+        } else {
+            // For anything else
         }
 
         console.log(error);
+        console.log(message);
 
         Raven.captureMessage(error, {
             level: 'info',
             extra: {
                 error: error,
-                friendly: customMessage,
-                additional: err.message
+                message: message,
             }
         });
     }

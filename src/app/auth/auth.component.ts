@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'core';
+import { CustomError } from 'app/error/custom-error';
 
 @Component({
     selector: 'app-login',
@@ -30,9 +31,11 @@ export class LoginComponent {
             this.authService.login(val.email, val.password)
                 .subscribe(
                     () => {
-                        console.log('User is logged in');
                         this.router.navigateByUrl('/items');
-                    }
+                    },
+                    (err) => {
+                        throw new CustomError(err, 'Unable to log-in')
+                    },
                 );
         }
     }

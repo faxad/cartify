@@ -10,6 +10,7 @@ import { ICartItem, IShopItem, IShopItemReview } from 'shared';
 
 import { IShopService } from '../contracts/shop-service.interface';
 import { AuthService } from '../services/auth.service';
+import { CustomError } from 'app/error/custom-error';
 
 const _array = require('lodash/array');
 
@@ -40,11 +41,8 @@ export class ShopService implements IShopService {
                 console.log('HTTP GET successful')
                 this.subject.next(shopItems);
             },
-            (error) => {
-                throw {
-                    error,
-                    message: 'Something went wrong :('
-                };
+            (err) => {
+                throw new CustomError(err, 'Something went wrong :(')
             },
         );
 
