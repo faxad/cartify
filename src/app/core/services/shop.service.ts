@@ -3,14 +3,14 @@ import 'rxjs/add/operator/catch';
 
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseError, NotFoundError } from 'error';
+import { CustomError } from 'app/error/custom-error';
+import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { ICartItem, IShopItem, IShopItemReview } from 'shared';
 
 import { IShopService } from '../contracts/shop-service.interface';
 import { AuthService } from '../services/auth.service';
-import { CustomError } from 'app/error/custom-error';
 
 const _array = require('lodash/array');
 
@@ -38,7 +38,6 @@ export class ShopService implements IShopService {
 
         network$.subscribe(
             shopItems => {
-                console.log('HTTP GET successful')
                 this.subject.next(shopItems);
             },
             (err) => {
@@ -65,7 +64,7 @@ export class ShopService implements IShopService {
         let body: any = {
             'itemId': itemId,
             'userId': this.auth.authenticatedUserId,
-            'reviewDate': 'March 19, 2016',
+            'reviewDate': moment().format('LLL'),
             'remarks': remarks,
             'rating': rating
         };
