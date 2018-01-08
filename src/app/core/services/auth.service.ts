@@ -10,7 +10,7 @@ import { IUser } from '../../auth';
 import { IAuthService } from '../contracts/auth-service.interface';
 
 const jwtHelper = new JwtHelper()
-const TOKEN = 'token'
+const TOKEN_KEY = 'token'
 const UNKNOWN_USER: IUser = {
     username: undefined
 }
@@ -25,15 +25,24 @@ export class AuthService implements IAuthService {
         private http: HttpClient
     ) {
         if (this.isLoggedIn()) {
-            this.subject.next({'username': 'fawad'}) // TODO: replace with actual users
+            // TODO: replace with actual users
+            this.subject.next({'username': 'fawad'})
         }
     }
 
-    getAuthenticatedUserId(): string {
+    private get token(): any {
+        const token = localStorage.getItem(TOKEN_KEY);
+        return token ? jwtHelper.decodeToken(token) : null
+    }
+
+    private get tokenExpiration(): any {
+        return this.token ? moment.unix(this.token.exp) : null;
+    }
+
+    get authenticatedUserId(): string {
         try {
-            if (tokenNotExpired(TOKEN)) {
-                const token = localStorage.getItem(TOKEN);
-                return jwtHelper.decodeToken(token).userId;
+            if (tokenNotExpired(TOKEN_KEY)) {
+                return this.token.userId;
             } else {
                 return;
             }
@@ -43,7 +52,12 @@ export class AuthService implements IAuthService {
     }
 
     isUserAdmin(): boolean {
-        return true;
+        return this.token ? this.token.scope.includes('admin') : false
+    }
+
+    isLoggedIn(): boolean {
+        const expiration = this.tokenExpiration;
+        return expiration ? moment().isBefore(expiration) : false;
     }
 
     login(username: string, password: string ): Observable<any> {
@@ -51,24 +65,14 @@ export class AuthService implements IAuthService {
                 'username': username,
                 'password': password
             })
-            .do(res => localStorage.setItem(TOKEN, res[TOKEN]))
+            .do(res => localStorage.setItem(TOKEN_KEY, res[TOKEN_KEY]))
             .do(() => this.subject.next({'username': username}))
             .shareReplay(); // TODO: check .publishLast().refCount()
     }
 
     logout() {
-        localStorage.removeItem(TOKEN);
+        localStorage.removeItem(TOKEN_KEY);
         this.subject.next(UNKNOWN_USER);
         this.router.navigateByUrl('/items');
-    }
-
-    isLoggedIn(): boolean {
-        const expiration = this.getExpiration()
-        return expiration ? moment().isBefore(expiration) : false;
-    }
-
-    getExpiration() {
-        const token = localStorage.getItem(TOKEN);
-        return token ? moment.unix(jwtHelper.decodeToken(token).exp) : null;
     }
 }

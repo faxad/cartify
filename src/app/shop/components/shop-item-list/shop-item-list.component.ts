@@ -44,7 +44,7 @@ export class ShopItemListComponent implements OnInit {
     }
 
     getShopItems(event: any): void {
-        const userId = this.auth.getAuthenticatedUserId();
+        const userId = this.auth.authenticatedUserId;
         this.shopItems$ = (userId !== undefined) ?
             this.shop.getShopItems(userId) : this.shop.getShopItems()
     }
@@ -59,7 +59,7 @@ export class ShopItemListComponent implements OnInit {
         if ([0, 'undefined', undefined].indexOf(item.cartCount) > -1) {
             cartItem$ = this.cart.addCartItem(item)
         } else {
-            cartItem$ = this.cart.getCartItem(this.auth.getAuthenticatedUserId(), item._id)
+            cartItem$ = this.cart.getCartItem(this.auth.authenticatedUserId, item._id)
                 .switchMap(cartItem => this.cart.increaseCartItemQunatity(cartItem))
         }
 

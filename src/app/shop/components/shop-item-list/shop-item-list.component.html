@@ -8,10 +8,10 @@
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
-    <button mat-icon-button (click)="openDialog()">
+    <button mat-icon-button (click)="openDialog()" *ngIf='auth.isUserAdmin()'>
         <mat-icon>add</mat-icon>
     </button> <!-- *ngIf='auth.isUserAdmin()' -->
-    <a mat-icon-button [routerLink]="['/cart', auth.getAuthenticatedUserId()]">
+    <a mat-icon-button [routerLink]="['/cart', auth.authenticatedUserId]">
         <mat-icon>shopping_cart</mat-icon>
     </a> <!-- *ngIf='auth.isUserAdmin()' -->
 </div>
