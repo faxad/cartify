@@ -11,7 +11,8 @@
     "test": "ng test -cc",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor",
-    "coveralls": "cat ./coverage/coverage.lcov | coveralls"
+    "coveralls": "cat ./coverage/coverage.lcov | coveralls",
+    "postinstall": "npm install backend"
   },
   "private": true,
   "dependencies": {
