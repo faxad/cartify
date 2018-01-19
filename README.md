@@ -19,30 +19,40 @@
 - Material Design
 - Flexbox Layout
 
-### Usage & Configuration (Update In Progress - Stay Tuned!)
+### Usage & Configuration
 
-#### Step 1: Configure SSO & Token Based Authentication Provider
-- 
-
-  ```typescript
-
+#### Step 0: Clone both Frontend & Backend
+  ```
+  git clone --recursive https://github.com/faxad/cartify.git
   ```
 
-#### Step 2: Configure Database Provider
-- 
+#### Step 1: Configure Database Provider (Optional)
+- You can either setup your own Mongo DB instance or use an existing cloud database providers 
+- Mongo DBaaS Providers: mLab, MongoDB Atlas..
 
-  ```javascript
+#### Step 2: Configure Backend - API (Optional)
+- Create a `.env` file in the root directory
+- Set the required environment variables as per the instructions mentioned [here](https://github.com/faxad/xpress)
+
+#### Step 3: Configure Frontend - Angular
+- Configure the following variables in ./src/environments/environment.ts
   ```
+  apiUrl: 'http://<BACKEND_IP>:<PORT>/',
+  sentryDns: 'https://<SENTRY_DSN>' OR use exsiting
+  ```
+- Alterntively, you can skip Step 1 - 2 if you want to use an existing Backend setup for demonstration purpose
+- Backend: https://secure-xpress-api.7e14.starter-us-west-2.openshiftapps.com/
 
 #### How to run Cartify?
 - Install required node packages
   ```
   npm install
+  npm run postinstall
   ```
   
-- Bring up the server (API)
+- Bring up the backend server (API)
   ```
-  node ./srv/server.js
+  npm run backend
   ```
   
 - Bring up the angular application
@@ -54,6 +64,6 @@
 
 #### Demo
 - Execute the above commands to start Cartify
-- Sign up for an account or browse in view only mode
-
-If you don't wish to register with the providers as mentioned in Step 1 & 2, it's ok, you can still test run the application without the permissions to perform any administrator related tasks
+- Sign in using the following credentials:
+  - administrator: admin@me.com / anything
+  - user: user@me.com / anything
