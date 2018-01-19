@@ -9,30 +9,29 @@
 **Cartify** provides the core functionality of an online Shopping Cart. The application can serve as a shell for building e-commerce web applications. Visitors can browse the list of available products, further dig deep into the detail of each individual product, search for a product, check availability, price etc. Non-authenticated users can register for an account which enables them to purchase items, manage their shopping cart and submit reviews. Users with administrator rights can manage and maintain inventory of shop items. Developers should find code organized enough to rapidly customize almost every aspect of the application as they see fit.
 
 ### Technology Stack
-- Angular 4
-- TypeScript
-- JavaScript
-- Node JS
-- MongoDB (DBaaS - Database-as-a-Service)
-- Auth0 (AaaS - Authentication-as-a-Service)
-- Bootstrap
+- Angular 5
+- Typescript
+- Reactive Style
+- Express JS as a Backend
+- MongoDB Atlas as DBaaS Provider (MongoDB Cloud Services)
+- Error Logging & Reporting using Sentry
+- DB Performance Monitoring
+- Material Design
+- Flexbox Layout
 
-### Usage & Configuration
+### Usage & Configuration (Update In Progress - Stay Tuned!)
 
 #### Step 1: Configure SSO & Token Based Authentication Provider
-- Register for authentication service at https://auth0.com
-- Configure Client ID and Domain in **cartify/.../auth.service.ts**
+- 
 
   ```typescript
-  lock = new Auth0Lock('<CLIENT ID>', '<DOMAIN>', {});
+
   ```
 
 #### Step 2: Configure Database Provider
-- Register for database service at https://mlab.com
-- Configure URI in **cartify/srv/server.js**
+- 
 
   ```javascript
-  var mongoDBUrl = '<URI>';
   ```
 
 #### How to run Cartify?
