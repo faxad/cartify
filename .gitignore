@@ -25,3 +25,12 @@ typings
 
 # Test Coverage
 coverage
+
+# dotenv environment variables file
+.env
+
+# macOS custom attributes container
+.DS_Store
+
+# api documentation
+# docs
