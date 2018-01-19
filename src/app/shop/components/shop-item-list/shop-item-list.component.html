@@ -8,12 +8,12 @@
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
-    <button mat-icon-button (click)="openDialog()" *ngIf='auth.isUserAdmin()'>
+    <button mat-icon-button (click)="openDialog()" [disabled]='!auth.isUserAdmin()'>
         <mat-icon>add</mat-icon>
-    </button> <!-- *ngIf='auth.isUserAdmin()' -->
-    <a mat-icon-button [routerLink]="['/cart', auth.authenticatedUserId]">
+    </button>
+    <a mat-icon-button [routerLink]="['/cart', auth.authenticatedUserId]" [disabled]='!auth.isLoggedIn() || auth.isUserAdmin()'>
         <mat-icon>shopping_cart</mat-icon>
-    </a> <!-- *ngIf='auth.isUserAdmin()' -->
+    </a>
 </div>
         
 <ng-template #loading>
@@ -50,7 +50,7 @@
                 </mat-toolbar>
             </mat-card-actions>
             <mat-card-actions align="end">
-                <button mat-icon-button (click)='addToCart(shopItem)' [disabled]='!auth.isLoggedIn()'>
+                <button mat-icon-button (click)='addToCart(shopItem)' [disabled]='!auth.isLoggedIn() || auth.isUserAdmin()'>
                     <mat-icon>add_shopping_cart</mat-icon>
                     {{shopItem.cartCount}}
                 </button> 
@@ -58,9 +58,9 @@
                     <mat-icon>info_outline</mat-icon>
                 </a>
                 <span class="flex-fill-remaining-space"></span>
-                <button mat-icon-button (click)="openDialog(shopItem)">
+                <button mat-icon-button (click)="openDialog(shopItem)" [disabled]='!auth.isUserAdmin()'>
                     <mat-icon>open_in_new</mat-icon>
-                </button> <!-- *ngIf='auth.isUserAdmin()' -->                        
+                </button>
             </mat-card-actions>
             </mat-card>
     </mat-grid-tile>
