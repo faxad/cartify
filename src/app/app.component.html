@@ -8,9 +8,9 @@
         <a mat-icon-button color="basic" [routerLink]="['/login']" *ngIf="!(isLoggedIn$ | async)">
             Sign In
         </a>
-        <button mat-icon-button color="basic" (click)="logout()" *ngIf="isLoggedIn$ | async">
+        <a mat-icon-button color="basic" (click)="logout()" *ngIf="(isLoggedIn$ | async)">
             Sign Out
-        </button>
+        </a>
     </mat-toolbar>
     <mat-drawer #drawer mode="side"></mat-drawer>
     <main>
