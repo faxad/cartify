@@ -11,7 +11,8 @@ import { CustomError } from 'app/error/custom-error';
     styleUrls: ['./auth.component.css']
 })
 export class LoginComponent {
-    logInForm: FormGroup;
+    public logInForm: FormGroup;
+    public hide;
 
     constructor(
         private formBuilder: FormBuilder,

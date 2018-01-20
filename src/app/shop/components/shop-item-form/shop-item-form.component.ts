@@ -21,7 +21,7 @@ export class FormComponent implements OnInit {
 
     constructor(
         private shop: ShopService,
-        private validation: ValidationService,
+        public validation: ValidationService,
         private formBuilder: FormBuilder,
         public dialogRef: MatDialogRef<FormComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any

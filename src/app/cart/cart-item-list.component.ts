@@ -11,7 +11,7 @@ import { ICartItem } from '../shared';
     styleUrls: ['./cart-item-list.component.css']
 })
 export class ItemCartComponent implements OnInit {
-    private userCartItems$: Observable<ICartItem[]>;
+    public userCartItems$: Observable<ICartItem[]>;
 
     constructor(private router: Router, private cart: CartService) {}
 

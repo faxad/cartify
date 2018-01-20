@@ -11,7 +11,7 @@ import { AuthService } from './core/services/auth.service';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-    private isLoggedIn$: Observable<boolean>;
+    public isLoggedIn$: Observable<boolean>;
 
     constructor(
       private auth: AuthService,

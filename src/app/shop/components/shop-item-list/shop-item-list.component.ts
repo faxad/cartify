@@ -12,11 +12,12 @@ import { FormComponent } from '../shop-item-form/shop-item-form.component';
     styleUrls: ['./shop-item-list.component.css']
 })
 export class ShopItemListComponent implements OnInit {
-    private shopItems$: Observable<IShopItem[]>;
+    public shopItems$: Observable<IShopItem[]>;
+    public filterBy;
 
     constructor(
         private shop: ShopService,
-        private auth: AuthService,
+        public auth: AuthService,
         private cart: CartService,
         private route: ActivatedRoute,
         public dialog: MatDialog

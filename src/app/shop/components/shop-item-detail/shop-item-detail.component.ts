@@ -10,7 +10,7 @@ import { IShopItem } from 'shared';
     providers: [ShopService]
 })
 export class ShopItemDetailComponent implements OnInit {
-    private shopItem$: Observable<IShopItem>;
+    public shopItem$: Observable<IShopItem>;
     private reviewText = '';
     private starRating = 0;
 
