@@ -21,27 +21,27 @@
 
 ### Usage & Configuration
 
-#### Step 0: Clone both Frontend & Backend
+#### Step 1: Clone!
   ```
   git clone --recursive https://github.com/faxad/cartify.git
   ```
 
-#### Step 1: Configure Database Provider (Optional)
-- You can either setup your own Mongo DB instance or use an existing cloud database providers 
-- Mongo DBaaS Providers: mLab, MongoDB Atlas..
+#### Step 2: Configure Database Provider (Optional)
+- You can either setup your own MongoDB instance or register with a Database-as-a-Service provider 
+- MongoDB DBaaS Providers: mLab, MongoDB Atlas..
 
-#### Step 2: Configure Backend - API (Optional)
-- Create a `.env` file in the root directory
-- Set the required environment variables as per the instructions mentioned [here](https://github.com/faxad/xpress)
+#### Step 3: Configure Backend - API (Optional)
+- Create a `.env` file in the project's root directory
+- Set the required environment variables as per the [instructions](https://github.com/faxad/xpress)
 
-#### Step 3: Configure Frontend - Angular
-- Configure the following variables in ./src/environments/environment.ts
+#### Step 4: Configure Frontend - Angular
+- By default, the frontend is configured to use backend hosted online which points to MongoDB on the cloud. So you don't have to worry about spinning up your own backend and database services if all you want is a quick start.
+- If you wish to run backend locally, you have to configure the following variables in ./src/environments/environment.ts
   ```
   apiUrl: 'http://<BACKEND_IP>:<PORT>/',
-  sentryDns: 'https://<SENTRY_DSN>' OR use exsiting
+  sentryDns: 'https://<SENTRY_DSN>'
   ```
-- Alterntively, you can skip Step 1 - 2 if you want to use an existing Backend setup for demonstration purpose
-- Backend: https://secure-xpress-api.7e14.starter-us-west-2.openshiftapps.com/
+- You may have to register with [Sentry](https://sentry.io) for error logging, reporting and monitoring
 
 #### How to run Cartify?
 - Install required node packages
@@ -63,7 +63,8 @@
 - Navigate to the following URL http://localhost:4200
 
 #### Demo
-- Execute the above commands to start Cartify
+
+- Execute the above commands to start Cartify **OR** visit https://faxad.github.io/cartify
 - Sign in using the following credentials:
   - administrator: admin@me.com / anything
   - user: user@me.com / anything
