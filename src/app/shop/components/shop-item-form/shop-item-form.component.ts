@@ -1,8 +1,7 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { ShopService } from 'core';
-import { IShopItem } from 'shared';
 
 import { ValidationService } from './form-validation.service';
 import { ShopItemFormValidators } from './shop-item-form.validators';
@@ -16,8 +15,6 @@ import { ShopItemFormValidators } from './shop-item-form.validators';
 export class FormComponent implements OnInit {
     public shopItemForm: FormGroup;
     private isCreateForm = true;
-    @Input() shopItem: IShopItem;
-    @Output() shopItemsUpdated: EventEmitter<any> = new EventEmitter();
 
     constructor(
         private shop: ShopService,
@@ -35,10 +32,8 @@ export class FormComponent implements OnInit {
         if (form.valid) {
             let action: string = this.isCreateForm ? 'addShopItem' : 'updateShopItem';
             this.shop[action](form.value).subscribe(shopItem => {
-                this.shopItemsUpdated.emit(null)
                 // this is to make PhantomJS not cause the error
                 // undefined is not a constructor evaluating
-                // _this.dialogRef.close(shopItem)...
                 try {
                     this.dialogRef.close(shopItem);
                 } catch {

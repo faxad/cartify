@@ -77,7 +77,12 @@
         </mat-form-field>            
         <div fxLayout="row" fxLayoutAlign="end">
             <button mat-button (click)="onNoClick()">Cancel</button>
-            <button mat-button (click)="submitItem(shopItemForm)">Save</button> <!-- [disabled]="!shopItemForm.valid" -->
+            <button
+                mat-button
+                (click)="submitItem(shopItemForm)"
+                [disabled]="!shopItemForm.valid">
+                Save
+            </button>
         </div>          
     </form>
 </div>
