@@ -29,6 +29,25 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="standard">
+                    <mat-select formControlName="category" placeholder="Category">
+                      <mat-option value="maecenas">
+                        Maecenas
+                      </mat-option>
+                      <mat-option value="nullam">
+                        Nullam
+                      </mat-option>
+                      <mat-option value="vestibulum">
+                        Vestibulum
+                      </mat-option>
+                      <mat-option value="phasellus">
+                        Phasellus
+                      </mat-option>
+                      <mat-option value="aenean">
+                        Aenean
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="standard">
                     <input 
                         matInput
                         placeholder="e.g. KPX-285C"
@@ -46,6 +65,8 @@
                         placeholder="Unit Price"
                         formControlName="unitPrice"
                         required>
+                    <span matPrefix>$&nbsp;</span>
+                    <span matSuffix>.00</span>
                     <mat-error *ngIf="validation.check('unitPrice').result">
                         {{validation.check('unitPrice').message}}
                     </mat-error>
@@ -60,6 +81,18 @@
                         {{validation.check('quantityInStock').message}}
                     </mat-error>
                 </mat-form-field>
+                <mat-form-field class="standard">
+                    <input
+                        matInput
+                        formControlName="releaseDate"
+                        [matDatepicker]="picker"
+                        placeholder="Release Date">
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="picker">
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
             </div>
         </div>
         <mat-form-field fxFlex class="large">

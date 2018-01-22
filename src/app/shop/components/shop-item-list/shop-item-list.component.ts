@@ -30,9 +30,10 @@ export class ShopItemListComponent implements OnInit {
                 _id: shopItem ? shopItem._id : undefined,
                 name: shopItem ? shopItem.name : undefined,
                 code: shopItem ? shopItem.code : undefined,
+                category: shopItem ? shopItem.category : undefined,
                 unitPrice: shopItem ? shopItem.unitPrice : undefined,
                 quantityInStock: shopItem ? shopItem.quantityInStock : undefined,
-                // releaseDate: shopItem ? shopItem.releaseDate : undefined,
+                releaseDate: shopItem ? shopItem.releaseDate : undefined,
                 description: shopItem ? shopItem.description : undefined,
             }
         });

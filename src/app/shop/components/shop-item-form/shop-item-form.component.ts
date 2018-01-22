@@ -68,6 +68,12 @@ export class FormComponent implements OnInit {
                 this.data ? this.data.quantityInStock : '',
                 Validators.required
             ],
+            'releaseDate': [
+                this.data ? this.data.releaseDate : '',
+            ],
+            'category': [
+                this.data ? this.data.category : '',
+            ],
             'description': [
                 this.data ? this.data.description : ''
             ]
@@ -78,7 +84,7 @@ export class FormComponent implements OnInit {
             {
                 'name': {
                     'condition': 'invalidName',
-                    'message': 'Name must start with abc'
+                    'message': 'Name must start with captial letter'
                 }
             },
             {}

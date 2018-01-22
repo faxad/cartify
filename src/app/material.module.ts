@@ -6,7 +6,9 @@ import {
     MatGridListModule,
     MatIconModule,
     MatInputModule,
+    MatNativeDateModule,
 } from '@angular/material';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
@@ -14,6 +16,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
     imports: [
@@ -29,7 +32,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         MatInputModule,
         MatProgressSpinnerModule,
         MatListModule,
-        MatTableModule
+        MatTableModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule
     ],
     exports: [
         MatButtonModule,
@@ -44,7 +50,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
         MatInputModule,
         MatProgressSpinnerModule,
         MatListModule,
-        MatTableModule
+        MatTableModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatSelectModule
     ]
 })
 export class MaterialModule { }

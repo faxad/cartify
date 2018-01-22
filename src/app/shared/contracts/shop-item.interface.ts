@@ -4,7 +4,8 @@ export interface IShopItem {
     _id: string;
     name: string;
     code: string;
-    releaseDate: string;
+    category: string;
+    releaseDate: Date;
     description: string;
     unitPrice: number;
     quantityInStock: number;
