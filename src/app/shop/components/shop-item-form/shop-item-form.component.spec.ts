@@ -18,9 +18,10 @@ describe('Form Component', () => {
 
     let shopItemData = {
         '_id': '5a2ef031e00a432a5c18d94e',
-        'name': 'abc Walter Rake',
+        'name': 'Walter Rake',
         'code': 'GDN-0011',
-        'releaseDate': '2017-03-07T21:00:00.000Z',
+        'releaseDate': new Date(),
+        'category': 'bar',
         'description': 'Lorem ipsum dolor....',
         'unitPrice': 19.95,
         'quantityInStock': 13,
@@ -83,7 +84,7 @@ describe('Form Component', () => {
 
         // arrange
         let shopItemForm = component.shopItemForm
-        let revisedName = 'abc Walter Rake (updated)'
+        let revisedName = 'Walter Rake (updated)'
 
         shopItemForm.controls['name'].setValue(revisedName);
         shopItemForm.value['name'] = revisedName;
