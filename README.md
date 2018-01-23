@@ -6,12 +6,14 @@
 [![dependencies Status](https://david-dm.org/faxad/cartify/status.svg)](https://david-dm.org/faxad/cartify)
 
 ### Introduction
-**Cartify** provides the core functionality of an online Shopping Cart. The application can serve as a shell for building e-commerce web applications. Visitors can browse the list of available products, further dig deep into the detail of each individual product, search for a product, check availability, price etc. Non-authenticated users can register for an account which enables them to purchase items, manage their shopping cart and submit reviews. Users with administrator rights can manage and maintain inventory of shop items. Developers should find code organized enough to rapidly customize almost every aspect of the application as they see fit.
+**Cartify** provides the core functionality of an online Shopping Cart. The application is meant to serve as a shell for building e-commerce web applications. Some of the core features include the ability to browse the list of products organized to highlight the key attributes namely category, price, reviews, rating etc. Detail of each product can be viewed along with associated user feedback.  Customers can add/remove items to/from the shopping cart. Administrators can manage inventory by adding new items and revising attributes of the existing items.
+
+**Try it out** https://faxad.github.io/cartify
 
 ### Technology Stack
 - Angular 5
 - Typescript
-- Reactive Style
+- Reactive
 - Express JS as a Backend
 - MongoDB Atlas as DBaaS Provider (MongoDB Cloud Services)
 - Error Logging & Reporting using Sentry
@@ -35,8 +37,8 @@
 - Set the required environment variables as per the [instructions](https://github.com/faxad/xpress)
 
 #### Step 4: Configure Frontend - Angular
-- By default, the frontend is configured to use backend hosted online which points to MongoDB on the cloud. So you don't have to worry about spinning up your own backend and database services if all you want is a quick start.
-- If you wish to run backend locally, you have to configure the following variables in ./src/environments/environment.ts
+- The frontend is pre-configured to use APIs hosted on OpenShift which consumes MongoDB cloud services to persists data.
+- If you wish to run backend locally, you have to configure the following variables in *./src/environments/environment.ts*
   ```
   apiUrl: 'http://<BACKEND_IP>:<PORT>/',
   sentryDns: 'https://<SENTRY_DSN>'
@@ -50,21 +52,18 @@
   npm run postinstall
   ```
   
-- Bring up the backend server (API)
+- Start the backend server (API)
   ```
   npm run backend
   ```
   
-- Bring up the angular application
+- Start the angular application
   ```
   npm start
   ```
-  
-- Navigate to the following URL http://localhost:4200
 
-#### Demo
-
-- Execute the above commands to start Cartify **OR** visit https://faxad.github.io/cartify
+#### Demo Instructions
+- Open browser and navigate to http://localhost:4200
 - Sign in using the following credentials:
-  - administrator: admin@me.com / anything
-  - user: user@me.com / anything
+  - **administrator:** admin / pass
+  - **user:** user / pass
