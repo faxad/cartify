@@ -21,4 +21,4 @@ script:
 after_success:
   - npm run coveralls
   - ng build --prod --base-href="https://faxad.github.io/cartify/"
-  - sudo ngh
+  - ngh

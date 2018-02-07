@@ -16,6 +16,7 @@ import { AppErrorHandler } from './error/app-error-handler';
 import { API_URL, ApiInterceptor } from './interceptors/api.interceptor';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { MaterialModule } from './material.module';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,8 @@ import { MaterialModule } from './material.module';
         AppRoutingModule,
         CoreModule,
         MaterialModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        OAuthModule
     ],
     providers: [
         AuthGuard,

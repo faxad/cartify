@@ -30,6 +30,7 @@
     "@angular/platform-server": "^5.1.0",
     "@angular/router": "^5.1.0",
     "angular-in-memory-web-api": "^0.5.2",
+    "angular-oauth2-oidc": "^3.1.4",
     "angular2-jwt": "^0.2.3",
     "babel-polyfill": "^6.26.0",
     "body-parser": "^1.18.2",

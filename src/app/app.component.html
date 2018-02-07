@@ -17,6 +17,23 @@
         <div fxLayout="row" fxLayoutAlign="space-around center">
             <div fxFlex="2%"></div>
             <div fxFlex>
+                    <h1 *ngIf="!name">
+                            Hallo
+                        </h1>
+                        <h1 *ngIf="name">
+                            Hallo, {{name}}
+                        </h1>
+                        
+                        <button class="btn btn-default" (click)="login()">
+                            Login
+                        </button>
+                        <button class="btn btn-default" (click)="logoff()">
+                            Logout
+                        </button>
+                        
+                        <div>
+                            Username/Passwort zum Testen: max/geheim
+                        </div>
                 <br/>
                 <router-outlet></router-outlet>
                 <br/>

@@ -14,9 +14,14 @@ export class ApiInterceptor implements HttpInterceptor {
     constructor(@Inject(API_URL) private apiUrl: string) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        req = req.clone({
-            url: this.apiUrl + req.url
-        });
+
+        //console.log(req.url.indexOf('5000') !== -1)
+
+        if (req.url.indexOf('5000') === -1) {
+            req = req.clone({
+                url: this.apiUrl + req.url
+            });
+        }
 
         return next.handle(req);
     }
