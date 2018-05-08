@@ -53,7 +53,7 @@
     "rxjs-compat": "^6.1.0",
     "systemjs": "0.21.3",
     "ts-helpers": "^1.1.2",
-    "typescript": "^2.7.2",
+    "typescript": "~2.7.2",
     "web-animations-js": "^2.3.1",
     "xpress": "file:backend",
     "zone.js": "0.8.26"
