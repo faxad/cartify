@@ -1,3 +1,4 @@
+import { of as observableOf, empty as observableEmpty, Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -6,8 +7,6 @@ import { CartModule } from 'app/cart/cart.module';
 import { CoreModule } from 'app/core/core.module';
 import { AuthService, CartService } from 'core';
 import { CalendarModule, RatingModule } from 'primeng/primeng';
-import { Observable } from 'rxjs/Observable';
-
 import { ItemCartComponent } from './cart-item-list.component';
 
 describe('Cart Item Component', () => {
@@ -57,7 +56,7 @@ describe('Cart Item Component', () => {
 
     it('should confirm service call to increase quantity receives initial quantity', () => {
         spyOn(cartService, 'increaseCartItemQunatity')
-            .and.returnValue(Observable.empty());
+            .and.returnValue(observableEmpty());
 
         component.increaseQuantity(cartItemsData[0])
 
@@ -67,7 +66,7 @@ describe('Cart Item Component', () => {
 
     it('should confirm service call to decrease quantity receives initial quantity', () => {
         spyOn(cartService, 'decreaseCartItemQunatity')
-            .and.returnValue(Observable.empty());
+            .and.returnValue(observableEmpty());
 
         component.decreaseQunatity(cartItemsData[0])
 
@@ -77,7 +76,7 @@ describe('Cart Item Component', () => {
 
     it('should confirm service call to receive the desired cart item for deletion', (() => {
         spyOn(cartService, 'removeCartItem')
-            .and.returnValue(Observable.of(cartItemsData[0]));
+            .and.returnValue(observableOf(cartItemsData[0]));
 
         component.removeCartItem(cartItemsData[0])
 

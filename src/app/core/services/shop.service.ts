@@ -1,12 +1,9 @@
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/operator/catch';
-
+import { refCount, publishReplay } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CustomError } from 'app/error/custom-error';
 import * as moment from 'moment';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject ,  Observable } from 'rxjs';
 import { ICartItem, IShopItem, IShopItemReview } from 'shared';
 
 import { IShopService } from '../contracts/shop-service.interface';
@@ -32,9 +29,9 @@ export class ShopService implements IShopService {
         }
 
         const network$ = this.http
-            .get<IShopItem[]>(url)
-            .publishReplay(1, 5000)
-            .refCount();
+            .get<IShopItem[]>(url).pipe(
+            publishReplay(1, 5000),
+            refCount(),);
 
         network$.subscribe(
             shopItems => {

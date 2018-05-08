@@ -1,3 +1,4 @@
+import { of as observableOf,  Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, inject, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material';
@@ -6,8 +7,6 @@ import { CoreModule } from 'app/core/core.module';
 import { MaterialModule } from 'app/material.module';
 import { ShopModule } from 'app/shop/shop.module';
 import { ShopService } from 'core';
-import { Observable } from 'rxjs/Observable';
-
 import { ValidationService } from './form-validation.service';
 import { FormComponent } from './shop-item-form.component';
 
@@ -80,7 +79,7 @@ describe('Form Component', () => {
 
     it('should confirm service call to update using the revised value', fakeAsync(() => {
         spyOn(shopService, 'updateShopItem')
-            .and.returnValue(Observable.of(shopItemData));
+            .and.returnValue(observableOf(shopItemData));
 
         // arrange
         let shopItemForm = component.shopItemForm
@@ -99,7 +98,7 @@ describe('Form Component', () => {
 
     it('should disable service call to update if form is empty', fakeAsync(() => {
         spyOn(shopService, 'updateShopItem')
-            .and.returnValue(Observable.of(shopItemData));
+            .and.returnValue(observableOf(shopItemData));
 
         component.data = [];
         component.ngOnInit();

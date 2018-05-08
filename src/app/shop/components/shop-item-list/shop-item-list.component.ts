@@ -1,10 +1,10 @@
+import { switchMap } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService, CartService, ShopService } from 'core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ICartItem, IShopItem } from 'shared';
-
 import { FormComponent } from '../shop-item-form/shop-item-form.component';
 
 @Component({
@@ -61,8 +61,8 @@ export class ShopItemListComponent implements OnInit {
         if ([0, 'undefined', undefined].indexOf(item.cartCount) > -1) {
             cartItem$ = this.cart.addCartItem(item)
         } else {
-            cartItem$ = this.cart.getCartItem(this.auth.authenticatedUserId, item._id)
-                .switchMap(cartItem => this.cart.increaseCartItemQunatity(cartItem))
+            cartItem$ = this.cart.getCartItem(this.auth.authenticatedUserId, item._id).pipe(
+                switchMap(cartItem => this.cart.increaseCartItemQunatity(cartItem)))
         }
 
         cartItem$.subscribe(cartItem => this.shop.refreshCartCountFor(cartItem));

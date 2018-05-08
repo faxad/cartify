@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Title } from '@angular/platform-browser';
@@ -21,8 +22,8 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.isLoggedIn$ = this.auth.user$
-          .map(user => user.username !== undefined);
+        this.isLoggedIn$ = this.auth.user$.pipe(
+          map(user => user.username !== undefined));
     }
 
     logout(): void {

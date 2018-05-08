@@ -1,9 +1,10 @@
+import { shareReplay, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
 import * as moment from 'moment';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/Rx';
 
 import { IUser } from '../../auth';
@@ -64,10 +65,10 @@ export class AuthService implements IAuthService {
         return this.http.post<any>('login', {
                 'username': username,
                 'password': password
-            })
-            .do(res => localStorage.setItem(TOKEN_KEY, res[TOKEN_KEY]))
-            .do(() => this.subject.next({'username': username}))
-            .shareReplay(); // TODO: check .publishLast().refCount()
+            }).pipe(
+            tap(res => localStorage.setItem(TOKEN_KEY, res[TOKEN_KEY])),
+            tap(() => this.subject.next({'username': username})),
+            shareReplay(),); // TODO: check .publishLast().refCount()
     }
 
     logout() {

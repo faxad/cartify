@@ -4,11 +4,11 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular/cli'],
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
     plugins: [
       require('karma-jasmine'),
       require('karma-coverage-istanbul-reporter'),
-      require('@angular/cli/plugins/karma'),
+      require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-phantomjs-launcher'),
       require('karma-spec-reporter')
     ],
@@ -16,16 +16,16 @@ module.exports = function (config) {
       "./node_modules/babel-polyfill/dist/polyfill.js",
       "./node_modules/jquery/dist/jquery.min.js",
       "./node_modules/web-animations-js/web-animations.min.js",
-      { pattern: './src/test.ts', watched: false },
+      
     ],
     preprocessors: {
-      './src/test.ts': ['@angular/cli']
+      
     },
     mime: {
       'text/x-typescript': ['ts','tsx']
     },
     coverageIstanbulReporter: {
-      reports: {
+      dir: require('path').join(__dirname, 'coverage'), reports: {
         html: 'coverage',
         lcovonly: './coverage/coverage.lcov'
       }

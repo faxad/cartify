@@ -1,3 +1,4 @@
+import { of as observableOf,  Observable } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -5,8 +6,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from 'app/core/core.module';
 import { ShopModule } from 'app/shop/shop.module';
 import { ShopService } from 'core';
-import { Observable } from 'rxjs/Observable';
-
 import { ShopItemDetailComponent } from './shop-item-detail.component';
 
 describe('Shop Item Detail Component', () => {
@@ -71,7 +70,7 @@ describe('Shop Item Detail Component', () => {
 
     it('should contain the provided information as detail', fakeAsync(() => {
         spyOn(shopService, 'getShopItem')
-            .and.returnValue(Observable.of(shopItemData));
+            .and.returnValue(observableOf(shopItemData));
 
         fixture.detectChanges();
 
@@ -81,7 +80,7 @@ describe('Shop Item Detail Component', () => {
 
     it('should contain user reviews', fakeAsync(() => {
         spyOn(shopService, 'getShopItem')
-            .and.returnValue(Observable.of(shopItemData));
+            .and.returnValue(observableOf(shopItemData));
 
         fixture.detectChanges();
 
@@ -91,7 +90,7 @@ describe('Shop Item Detail Component', () => {
 
     it('should confirm service call to set review using the provided value', fakeAsync(() => {
         spyOn(shopService, 'setShopItemReview')
-            .and.returnValue(Observable.of(shopItemReviews));
+            .and.returnValue(observableOf(shopItemReviews));
 
         component.onSubmit('5a2ef031e00a432a5c18d94e', 'these are my remarks')
 
