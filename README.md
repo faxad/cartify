@@ -50,7 +50,6 @@
 - Install required node packages
   ```
   npm install
-  npm run postinstall
   ```
   
 - Start the backend server (API)
