@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CalendarModule, RatingModule } from 'primeng/primeng';
+import { CalendarModule } from 'primeng/primeng';
+import { RatingModule } from 'primeng/rating';
 import { SharedModule } from 'shared';
 
 import { ShopItemDetailComponent } from './components/shop-item-detail/shop-item-detail.component';

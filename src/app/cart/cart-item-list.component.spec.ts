@@ -6,7 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CartModule } from 'app/cart/cart.module';
 import { CoreModule } from 'app/core/core.module';
 import { AuthService, CartService } from 'core';
-import { CalendarModule, RatingModule } from 'primeng/primeng';
+import { CalendarModule } from 'primeng/primeng';
+import { RatingModule } from 'primeng/rating';
 import { ItemCartComponent } from './cart-item-list.component';
 
 describe('Cart Item Component', () => {
