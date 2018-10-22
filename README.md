@@ -12,7 +12,7 @@
 **Try it out** https://faxad.github.io/cartify
 
 ### Technology Stack
-- Angular 6
+- Angular 7
 - Typescript
 - Reactive
 - Express JS as a Backend
