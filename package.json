@@ -39,7 +39,7 @@
     "express-jwt": "5.3.1",
     "hammerjs": "^2.0.8",
     "httpdispatcher": "2.1.2",
-    "jquery": "3.3.1",
+    "jquery": "3.4.0",
     "jsonwebtoken": "8.3.0",
     "jwks-rsa": "^1.3.0",
     "lodash": "4.17.11",
