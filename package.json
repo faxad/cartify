@@ -48,7 +48,7 @@
     "primeng": "5.2.6",
     "raven-js": "3.27.0",
     "reflect-metadata": "0.1.12",
-    "resolve-url-loader": "3.0.0",
+    "resolve-url-loader": "5.0.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "systemjs": "2.0.2",
@@ -59,7 +59,7 @@
     "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.10.2",
+    "@angular-devkit/build-angular": "^15.0.4",
     "@angular/cli": "^7.0.2",
     "@types/jasmine": "2.8.2",
     "@types/jquery": "3.3.21",
